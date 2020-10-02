@@ -1,16 +1,17 @@
 import React from 'react';
 import { StackScreenProps } from '@react-navigation/stack';
 import { Entypo } from '@expo/vector-icons';
-import { RootStackParamList } from '../types';
+import { AddTabParamList } from '../../types';
 import { StyleSheet, TouchableOpacity, Alert, Image, TouchableHighlight } from 'react-native';
-import { Text, View } from '../components/Themed';
-import useColorScheme from '../hooks/useColorScheme';
+import { Text, View } from '../../components/Themed';
+import useColorScheme from '../../hooks/useColorScheme';
+import { Camera } from 'expo-camera';
 
-export default function AddingScreen({ navigation }: StackScreenProps<RootStackParamList, 'UserProfile'>) {
+export default function ManualInputScreen({ navigation }: StackScreenProps<AddTabParamList, 'ManualInputScreen'>) {
 
   return (
     <View>
-    
+      <Text>Manual</Text>
     </View>
   );
 }

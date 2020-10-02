@@ -15,7 +15,6 @@ const data = {
 }
 
 export default function MedicineScreen({ navigation }: StackScreenProps<MedicineParamList, 'MedicineScreen'>) {
-
   const colorScheme = useColorScheme();
 
   React.useLayoutEffect(() => {
@@ -31,8 +30,9 @@ export default function MedicineScreen({ navigation }: StackScreenProps<Medicine
             backgroundColor: Colors[colorScheme].tint,
             borderRadius: 45,
           }}
+          onPress={() => { navigation.navigate("Add"); }}
         >
-          <Entypo style={{ marginTop: 3, marginLeft: 1 }} name="plus" size={40} color="white" />
+          <Entypo style={{ marginTop: 2, marginLeft: 1 }} name="plus" size={40} color="white" />
         </TouchableOpacity>
       ),
     });
@@ -40,6 +40,9 @@ export default function MedicineScreen({ navigation }: StackScreenProps<Medicine
 
   return (
     <ScrollView horizontal={true} showsHorizontalScrollIndicator={false}>
+
+      {/** ---------- fix code below ----------- */}
+
       {/* <Card imageUri={require('../assets/images/pill2.png')}
           name="Fish Oil and Omega"
           instruction="2 pill, once per day"
@@ -61,6 +64,9 @@ export default function MedicineScreen({ navigation }: StackScreenProps<Medicine
           progress={0.6}
           date="2 weeks"
         ></Card> */}
+
+      {/** ---------- fix code above ----------- */}
+
     </ScrollView>
   );
 }

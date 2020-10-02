@@ -15,6 +15,12 @@ export default {
           Medicine: {
             screens: {
               MedicineScreen: 'Medicine',
+              Add: {
+                screens: {
+                  ScanInputScreen: 'ScanInput',
+                  ManualInputScreen: 'ManualInput',
+                }
+              }
             },
           },
           Profile: {

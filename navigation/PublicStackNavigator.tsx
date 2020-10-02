@@ -1,8 +1,6 @@
 import React from 'react';
 import { createStackNavigator } from '@react-navigation/stack';
 
-import Colors from '../constants/Colors';
-import useColorScheme from '../hooks/useColorScheme';
 import SignInScreen from '../screens/public/SignInScreen';
 import RegisterScreen from '../screens/public/RegisterScreen';
 import RecoverScreen from '../screens/public/RecoverScreen';
@@ -12,7 +10,10 @@ const PublicStack = createStackNavigator<PublicStackParamList>();
 
 export default function PublicStackNavigator() {
   return (
-    <PublicStack.Navigator mode="modal" headerMode="none">
+    <PublicStack.Navigator
+      initialRouteName="SignInScreen"
+      mode="modal"
+      headerMode="none">
       <PublicStack.Screen
         name="SignInScreen"
         component={SignInScreen}

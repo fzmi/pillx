@@ -10,6 +10,7 @@ import useColorScheme from '../hooks/useColorScheme';
 import TodayScreen from '../screens/TodayScreen';
 import MedicineScreen from '../screens/MedicineScreen';
 import ProfileScreen from '../screens/ProfileScreen';
+import AddTabNavigator from '../navigation/AddTabNavigator';
 import { BottomTabParamList, TodayParamList, ProfileParamList, MedicineParamList } from '../types';
 
 const BottomTab = createBottomTabNavigator<BottomTabParamList>();
@@ -84,6 +85,10 @@ function MedicineNavigator() {
           headerTitleStyle: { fontSize: 30 },
           headerStyle: { height: 110 }
         }}
+      />
+      <MedicineStack.Screen
+        name="Add"
+        component={AddTabNavigator}
       />
     </MedicineStack.Navigator>
   );

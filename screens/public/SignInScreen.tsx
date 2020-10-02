@@ -51,13 +51,12 @@ export default function SignInScreen({ navigation }: StackScreenProps<PublicStac
             <Text style={styles.buttonText}>Sign In</Text>
           </TouchableOpacity>
 
-          <TouchableOpacity onPress={() => navigation.navigate('RegisterScreen')}>
+          <TouchableOpacity onPress={() => navigation.navigate('RegisterScreen')} style={{marginTop: 20, marginBottom: 5, paddingVertical: 10}}>
             <Text style={styles.linkText}>Not a member?&nbsp;&nbsp;Sign Up</Text>
           </TouchableOpacity>
 
-          <TouchableOpacity onPress={() => navigation.navigate('RecoverScreen')}>
-            <Text
-              style={styles.linkText}>Forgot password?</Text>
+          <TouchableOpacity onPress={() => navigation.navigate('RecoverScreen')} style={{marginTop: 5, marginBottom: 20, paddingVertical: 10}}>
+            <Text style={styles.linkText}>Forgot password?</Text>
           </TouchableOpacity>
         </View>
       </View>
@@ -97,7 +96,6 @@ const styles = StyleSheet.create({
     color: '#2e78b7',
     textAlign: 'center',
     fontWeight: 'bold',
-    marginTop: 30
   },
   logo: {
     width: 140,
