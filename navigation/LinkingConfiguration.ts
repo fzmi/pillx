@@ -1,19 +1,25 @@
 import * as Linking from 'expo-linking';
 
+// this is for url support in browsers
 export default {
   prefixes: [Linking.makeUrl('/')],
   config: {
     screens: {
       Root: {
         screens: {
-          TabOne: {
+          Today: {
             screens: {
-              TabOneScreen: 'one',
+              TodayScreen: 'Today',
             },
           },
-          TabTwo: {
+          Medicine: {
             screens: {
-              TabTwoScreen: 'two',
+              MedicineScreen: 'Medicine',
+            },
+          },
+          Settings: {
+            screens: {
+              SettingsScreen: 'Settings',
             },
           },
         },
