@@ -1,7 +1,6 @@
 // the colour of the tab bar icon when selected
-const tintColorLight = '#2f95dc';
+const tintColorLight = '#2e78b7';
 const tintColorDark = '#fff';
-const pillXBlue = '#2e78b7';
 
 export default {
   light: {
@@ -10,7 +9,7 @@ export default {
     tint: tintColorLight,
     tabIconDefault: '#ccc',
     tabIconSelected: tintColorLight,
-    buttonBlue: pillXBlue,
+    buttonBlue: tintColorLight,
   },
   dark: {
     text: '#fff',
@@ -18,6 +17,6 @@ export default {
     tint: tintColorDark,
     tabIconDefault: '#ccc',
     tabIconSelected: tintColorDark,
-    buttonBlue: pillXBlue,
+    buttonBlue: tintColorLight,
   },
 };
