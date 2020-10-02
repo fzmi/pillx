@@ -14,7 +14,7 @@ export default function MedicineScreen() {
   return (
     <View style={styles.container}>
       <ScrollView horizontal={true} showsHorizontalScrollIndicator={false}>
-
+        
       </ScrollView>
     </View>
   )

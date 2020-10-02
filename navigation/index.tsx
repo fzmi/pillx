@@ -5,12 +5,12 @@ import { NavigationContainer, DefaultTheme, DarkTheme } from '@react-navigation/
 import { createStackNavigator } from '@react-navigation/stack';
 import AsyncStorage from '@react-native-community/async-storage';
 import AuthContext from './AuthContext';
-import SignInScreen from '../screens/public/SignInScreen';
 
 import NotFoundScreen from '../screens/NotFoundScreen';
 import { RootStackParamList } from '../types';
 import BottomTabNavigator from './BottomTabNavigator';
 import LinkingConfiguration from './LinkingConfiguration';
+import PublicStackNavigator from './PublicStackNavigator';
 
 // If you are not familiar with React Navigation, we recommend going through the
 // "Fundamentals" guide: https://reactnavigation.org/docs/getting-started
@@ -108,7 +108,7 @@ function RootNavigator() {
       <Stack.Navigator screenOptions={{ headerShown: false }}>
         {state.userToken == null ? (
           // public routes
-          <Stack.Screen name="SignIn" component={SignInScreen} />
+          <Stack.Screen name="Public" component={PublicStackNavigator} />
         ) : (
           // protected routes
             <Stack.Screen name="Root" component={BottomTabNavigator} />

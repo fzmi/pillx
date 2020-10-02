@@ -24,6 +24,13 @@ export default {
           },
         },
       },
+      Public: {
+        screens: {
+          SignInScreen: 'SignIn',
+          RegisterScreen: 'Register',
+          RecoverScreen: "Recover"
+        }
+      },
       NotFound: '*',
     },
   },
