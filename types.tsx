@@ -16,7 +16,7 @@ export type PublicStackParamList = {
 export type BottomTabParamList = {
   Today: undefined;
   Medicine: undefined;
-  Settings: undefined;
+  Profile: undefined;
 };
 
 // Root stack > Button Tab > Today
@@ -29,7 +29,7 @@ export type MedicineParamList = {
   MedicineScreen: undefined;
 };
 
-// Root stack > Button Tab > Settings
-export type SettingsParamList = {
-  SettingsScreen: undefined;
+// Root stack > Button Tab > Profile
+export type ProfileParamList = {
+  ProfileScreen: undefined;
 };

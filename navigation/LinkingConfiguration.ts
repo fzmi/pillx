@@ -17,9 +17,9 @@ export default {
               MedicineScreen: 'Medicine',
             },
           },
-          Settings: {
+          Profile: {
             screens: {
-              SettingsScreen: 'Settings',
+              ProfileScreen: 'Profile',
             },
           },
         },

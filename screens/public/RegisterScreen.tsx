@@ -58,6 +58,7 @@ export default function RegisterScreen({ navigation }: StackScreenProps<PublicSt
             placeholderTextColor='#777'
             ref={textInput3}
             returnKeyType='done'
+            secureTextEntry
             style={styles.input}
             value={password}
           />

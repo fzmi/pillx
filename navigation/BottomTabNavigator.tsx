@@ -7,8 +7,8 @@ import Colors from '../constants/Colors';
 import useColorScheme from '../hooks/useColorScheme';
 import TodayScreen from '../screens/TodayScreen';
 import MedicineScreen from '../screens/MedicineScreen';
-import SettingsScreen from '../screens/SettingsScreen';
-import { BottomTabParamList, TodayParamList, SettingsParamList, MedicineParamList } from '../types';
+import ProfileScreen from '../screens/ProfileScreen';
+import { BottomTabParamList, TodayParamList, ProfileParamList, MedicineParamList } from '../types';
 
 const BottomTab = createBottomTabNavigator<BottomTabParamList>();
 
@@ -34,8 +34,8 @@ export default function BottomTabNavigator() {
         }}
       />
       <BottomTab.Screen
-        name="Settings"
-        component={SettingsNavigator}
+        name="Profile"
+        component={ProfileNavigator}
         options={{
           tabBarIcon: ({ color }) => <TabBarIcon name="ios-code" color={color} />,
         }}
@@ -80,16 +80,16 @@ function MedicineNavigator() {
   );
 }
 
-const SettingsStack = createStackNavigator<SettingsParamList>();
+const ProfileStack = createStackNavigator<ProfileParamList>();
 
-function SettingsNavigator() {
+function ProfileNavigator() {
   return (
-    <SettingsStack.Navigator>
-      <SettingsStack.Screen
-        name="SettingsScreen"
-        component={SettingsScreen}
-        options={{ headerTitle: 'Settings' }}
+    <ProfileStack.Navigator>
+      <ProfileStack.Screen
+        name="ProfileScreen"
+        component={ProfileScreen}
+        options={{ headerTitle: 'Profile' }}
       />
-    </SettingsStack.Navigator>
+    </ProfileStack.Navigator>
   );
 }

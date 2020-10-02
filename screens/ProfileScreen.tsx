@@ -4,7 +4,7 @@ import { Text, View } from '../components/Themed';
 
 import AuthContext from '../navigation/AuthContext';
 
-export default function SettingsScreen() {
+export default function ProfileScreen() {
 
   const { signOut } = React.useContext(AuthContext);
 
@@ -12,7 +12,7 @@ export default function SettingsScreen() {
     <View style={styles.container}>
       <Text style={styles.title}>Tab Two</Text>
       <View style={styles.separator} lightColor="#eee" darkColor="rgba(255,255,255,0.1)" />
-      {/* <EditScreenInfo path="/screens/SettingsScreen.js" /> */}
+      {/* <EditScreenInfo path="/screens/ProfileScreen.js" /> */}
 
       <TouchableOpacity onPress={() => signOut()} style={styles.buttonContainer}>
         <Text style={styles.buttonText}>Sign out</Text>
