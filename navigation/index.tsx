@@ -83,7 +83,7 @@ function RootNavigator() {
   const authContext = React.useMemo(
     () => ({
       signIn: async (data: any) => {
-        // todo: send username, password to the server and get a token
+        // todo: send email, password to the server and get a token
 
         // todo: persist the token using AsyncStorage or handle errors
 

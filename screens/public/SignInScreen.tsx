@@ -8,58 +8,58 @@ import Layout from '../../constants/Layout';
 import { PublicStackParamList } from '../../types';
 
 export default function SignInScreen({ navigation }: StackScreenProps<PublicStackParamList, 'SignInScreen'>) {
-  const [username, setUsername] = React.useState('');
+  const [email, setEmail] = React.useState('');
   const [password, setPassword] = React.useState('');
 
   const { signIn } = React.useContext(AuthContext);
 
   return (
-      <ScrollView
-        contentContainerStyle={{ flexGrow: 0.6, justifyContent: 'center' }}>
-        <View style={styles.container}>
-          <View style={{ width: 120, height: 120 }}>
-            <Image style={styles.logo} source={require("../../assets/images/logo.png")} />
-          </View>
-          <Text style={styles.title}>Sign In</Text>
-          <View style={styles.inputArea}>
-            <TextInput
-              autoCorrect={false}
-              blurOnSubmit={false}
-              onChangeText={setUsername}
-              // onSubmitEditing={() => { this.secondTextInput.focus(); }}
-              placeholder="Username or Email"
-              placeholderTextColor='#777'
-              returnKeyType='next'
-              style={styles.input}
-              value={username}
-            />
-            <TextInput
-              autoCorrect={false}
-              onChangeText={setPassword}
-              placeholder="Password"
-              placeholderTextColor='#777'
-              // ref={(input) => { this.secondTextInput = input; }}
-              returnKeyType='done'
-              secureTextEntry
-              style={styles.input}
-              value={password}
-            />
-
-            <TouchableOpacity onPress={() => signIn({ username, password })} style={styles.buttonContainer}>
-              <Text style={styles.buttonText}>Sign in</Text>
-            </TouchableOpacity>
-
-            <TouchableOpacity onPress={() => navigation.navigate('RegisterScreen')}>
-              <Text style={styles.linkText}>Not a member? Sign up here.</Text>
-            </TouchableOpacity>
-
-            <TouchableOpacity onPress={() => navigation.navigate('RecoverScreen')}>
-              <Text
-                style={styles.linkText}>Forgot password?</Text>
-            </TouchableOpacity>
-          </View>
+    <ScrollView
+      contentContainerStyle={{ flexGrow: 0.6, justifyContent: 'center' }}>
+      <View style={styles.container}>
+        <View style={{ width: 120, height: 120 }}>
+          <Image style={styles.logo} source={require("../../assets/images/logo.png")} />
         </View>
-      </ScrollView>
+        <Text style={styles.title}>Sign In</Text>
+        <View style={styles.inputArea}>
+          <TextInput
+            autoCorrect={false}
+            blurOnSubmit={false}
+            onChangeText={setEmail}
+            // onSubmitEditing={() => { this.secondTextInput.focus(); }}
+            placeholder="Email"
+            placeholderTextColor='#777'
+            returnKeyType='next'
+            style={styles.input}
+            value={email}
+          />
+          <TextInput
+            autoCorrect={false}
+            onChangeText={setPassword}
+            placeholder="Password"
+            placeholderTextColor='#777'
+            // ref={(input) => { this.secondTextInput = input; }}
+            returnKeyType='done'
+            secureTextEntry
+            style={styles.input}
+            value={password}
+          />
+
+          <TouchableOpacity onPress={() => signIn({ email, password })} style={styles.buttonContainer}>
+            <Text style={styles.buttonText}>Sign in</Text>
+          </TouchableOpacity>
+
+          <TouchableOpacity onPress={() => navigation.navigate('RegisterScreen')}>
+            <Text style={styles.linkText}>Not a member? Sign up here.</Text>
+          </TouchableOpacity>
+
+          <TouchableOpacity onPress={() => navigation.navigate('RecoverScreen')}>
+            <Text
+              style={styles.linkText}>Forgot password?</Text>
+          </TouchableOpacity>
+        </View>
+      </View>
+    </ScrollView>
   );
 }
 

@@ -10,7 +10,7 @@ export default function RecoverScreen({ navigation }: StackScreenProps<PublicSta
   return (
     <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
       <Text style={{ fontSize: 30 }}>Recover</Text>
-      <Button onPress={() => navigation.goBack()} title="Dismiss" />
+      <Button onPress={() => navigation.goBack()} title="Back to Sign In" />
     </View>
   )
 }
