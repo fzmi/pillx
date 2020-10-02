@@ -102,21 +102,6 @@ export default function TodayScreen({ navigation }: StackScreenProps<TodayParamL
         }}
         renderDay={(day: any, item: any) => { return (<View style={{ marginRight: 20 }} />); }}
       />
-      <TouchableOpacity
-        style={{
-          alignItems: 'center',
-          justifyContent: 'center',
-          width: 60,
-          position: 'absolute',
-          bottom: 20,
-          right: 20,
-          height: 60,
-          backgroundColor: "#20bcf0",
-          borderRadius: 100,
-        }}
-      >
-        <Entypo style={{ marginTop: 5, marginLeft: 1 }} name="plus" size={40} color="white" />
-      </TouchableOpacity>
     </View>
   );
 }

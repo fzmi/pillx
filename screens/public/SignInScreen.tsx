@@ -52,7 +52,7 @@ export default function SignInScreen({ navigation }: StackScreenProps<PublicStac
           </TouchableOpacity>
 
           <TouchableOpacity onPress={() => navigation.navigate('RegisterScreen')}>
-            <Text style={styles.linkText}>Not a member? Sign up here.</Text>
+            <Text style={styles.linkText}>Not a member?&nbsp;&nbsp;Sign Up</Text>
           </TouchableOpacity>
 
           <TouchableOpacity onPress={() => navigation.navigate('RecoverScreen')}>

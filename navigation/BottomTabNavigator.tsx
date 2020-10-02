@@ -3,6 +3,7 @@ import { Ionicons } from '@expo/vector-icons';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { createStackNavigator } from '@react-navigation/stack';
+import { createNativeStackNavigator } from 'react-native-screens/native-stack';
 
 import Colors from '../constants/Colors';
 import useColorScheme from '../hooks/useColorScheme';
@@ -56,7 +57,7 @@ export default function BottomTabNavigator() {
 
 // Each tab has its own navigation stack, you can read more about this pattern here:
 // https://reactnavigation.org/docs/tab-based-navigation#a-stack-navigator-for-each-tab
-const TodayStack = createStackNavigator<TodayParamList>();
+const TodayStack = createNativeStackNavigator<TodayParamList>();
 
 function TodayNavigator() {
   return (
@@ -64,12 +65,11 @@ function TodayNavigator() {
       <TodayStack.Screen
         name="TodayScreen"
         component={TodayScreen}
-        options={{ headerTitle: 'Today' }}
+        options={{ headerTitle: 'October 2020', headerLargeTitle: true }}
       />
     </TodayStack.Navigator>
   );
 }
-
 const MedicineStack = createStackNavigator<MedicineParamList>();
 
 function MedicineNavigator() {
@@ -78,13 +78,18 @@ function MedicineNavigator() {
       <MedicineStack.Screen
         name="MedicineScreen"
         component={MedicineScreen}
-        options={{ headerTitle: 'My Medicine' }}
+        options={{
+          headerTitle: 'My Medicine',
+          headerTitleAlign: "left",
+          headerTitleStyle: { fontSize: 30 },
+          headerStyle: { height: 110 }
+        }}
       />
     </MedicineStack.Navigator>
   );
 }
 
-const ProfileStack = createStackNavigator<ProfileParamList>();
+const ProfileStack = createNativeStackNavigator<ProfileParamList>();
 
 function ProfileNavigator() {
   return (
@@ -92,7 +97,7 @@ function ProfileNavigator() {
       <ProfileStack.Screen
         name="ProfileScreen"
         component={ProfileScreen}
-        options={{ headerTitle: 'Profile' }}
+        options={{ headerTitle: 'Profile', headerLargeTitle: true }}
       />
     </ProfileStack.Navigator>
   );

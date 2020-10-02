@@ -1,21 +1,18 @@
-import React, { Component } from "react";
+// todo: not checked
 
-import { Text, View } from '../';
-import { Image, Dimensions } from "react-native";
-import { TouchableOpacity } from "react-native-gesture-handler";
-import CommonStyles from '../../styles/CommonStyles';
-import { MaterialCommunityIcons } from '@expo/vector-icons';
-import { AntDesign } from '@expo/vector-icons';
-import * as Progress from 'react-native-progress';
-import { Entypo } from '@expo/vector-icons';
-import { FontAwesome } from '@expo/vector-icons';
+import React, { Component } from "react";
+import { Text, View } from '../Themed';
+import { Image, Dimensions, StyleSheet, TouchableOpacity } from "react-native";
+import Progress from 'react-native-progress';
+
+import { AntDesign, Entypo, FontAwesome, MaterialCommunityIcons } from '@expo/vector-icons';
 
 interface CardProps {
   imageUri: string;
   cardColor: string;
   name: string;
-  label: string;
-  instruction: string;
+  label?: string;
+  instruction?: string;
   date: string;
   progress: number;
 }
@@ -110,7 +107,7 @@ class Card extends Component<CardProps> {
 
           <View style={CommonStyles.medInfoView}>
             <View style={CommonStyles.medInfoCardContent}>
-              <Image source={this.props.imageUri} />
+              {/* <Image source={this.props.imageUri} /> */}
               <Text style={{ fontSize: 15, fontWeight: 'bold' }}>{this.props.name}</Text>
               <Text style={{ fontSize: 10, color: '#8D8D8D' }}>{this.props.instruction}</Text>
               <TouchableOpacity>
@@ -176,3 +173,75 @@ class Card extends Component<CardProps> {
   }
 }
 export default Card;
+
+const CommonStyles = StyleSheet.create({
+  header: {
+    height: 100,
+  },
+  headerProfileImage: {
+    width: 30,
+    height: 30,
+    borderRadius: 15,
+    marginRight: 20,
+  },
+
+  // Card
+  card: {
+    height: Dimensions.get('window').height * 0.65,
+    width: Dimensions.get('window').width * 0.7,
+    margin: 20,
+    marginVertical: Dimensions.get('window').height * 0.1,
+    backgroundColor: 'white'
+  },
+  medInfoView: {
+    marginTop: -30,
+    height: 200,
+    marginHorizontal: 30,
+    borderRadius: 20,
+    backgroundColor: 'white',
+    shadowOffset: { width: 0, height: 10, },
+    shadowColor: 'black',
+    shadowOpacity: 0.1,
+    marginVertical: 20,
+  },
+  medInfoCardContent: {
+    marginTop: -40,
+    alignItems: 'center'
+  },
+  medInfoEditContainer: {
+    flexDirection: 'row',
+    borderRadius: 100,
+    borderWidth: 1,
+    borderColor: '#71CDF9',
+    alignContent: 'center',
+    justifyContent: 'center',
+    paddingHorizontal: 8,
+    margin: 10
+  },
+  medInfoProgessbarText: {
+    flex: 1,
+    color: 'white',
+  },
+  reminderView: {
+    height: 200,
+    marginHorizontal: 30,
+    borderRadius: 5,
+    backgroundColor: 'white',
+    shadowOffset: { width: 0, height: 10, },
+    shadowColor: 'black',
+    shadowOpacity: 0.1,
+  },
+  reminderContent: {
+    alignContent: 'center',
+    justifyContent: 'center',
+    marginHorizontal: 40,
+    marginVertical: 20
+  },
+  reminderTopbar: {
+    flexDirection: 'row',
+    marginVertical: 10
+  },
+  reminderItem: {
+    flexDirection: 'row',
+  },
+});
