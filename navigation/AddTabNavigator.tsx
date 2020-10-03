@@ -4,24 +4,27 @@ import { createStackNavigator } from '@react-navigation/stack';
 
 import Colors from '../constants/Colors';
 import useColorScheme from '../hooks/useColorScheme';
-import { AddTabParamList, ManualInputStackParamList } from '../types';
-import FirstManualInputScreen from '../screens/add/FirstManualInputScreen';
-import SecondManualInputScreen from '../screens/add/SecondManualInputScreen';
+import { AddTabParamList, MedicineParamList } from '../types';
+import ManualInputScreen from '../screens/add/ManualInputScreen';
 import ScanInputScreen from '../screens/add/ScanInputScreen';
+import { StackScreenProps } from '@react-navigation/stack';
 
 const AddTab = createBottomTabNavigator<AddTabParamList>();
 
 // Root stack -> Button Tab -> Medicine -> Add
-export default function AddTabNavigator() {
+export default function AddTabNavigator({ navigation }: StackScreenProps<MedicineParamList, 'Add'>) {
   const colorScheme = useColorScheme();
 
   return (
     <AddTab.Navigator
       initialRouteName="ScanInputScreen"
       tabBarOptions={{
-        activeTintColor: Colors[colorScheme].tint,
+        activeTintColor: Colors[colorScheme].background,
+        activeBackgroundColor: Colors[colorScheme].tint,
         labelStyle: { fontSize: 20, fontWeight: '500' },
-        style: { height: 80 },
+        style: { height: 75, backgroundColor: Colors[colorScheme].secondaryBackground },
+        tabStyle: { justifyContent: 'center', margin: 12, borderRadius: 20 },
+        safeAreaInsets: { bottom: 0 },
       }}>
       <AddTab.Screen
         name="ScanInputScreen"
@@ -31,36 +34,12 @@ export default function AddTabNavigator() {
         }}
       />
       <AddTab.Screen
-        name="ManualInput"
-        component={ManualInputStackNavigator}
+        name="ManualInputScreen"
+        component={ManualInputScreen}
         options={{
           tabBarLabel: "Manual Input",
         }}
       />
     </AddTab.Navigator>
-  );
-}
-
-const ManualInputStack = createStackNavigator<ManualInputStackParamList>();
-
-// Root stack -> Button Tab -> Medicine -> Add -> Manual Input
-function ManualInputStackNavigator() {
-  return (
-    <ManualInputStack.Navigator
-      headerMode="none">
-      <ManualInputStack.Screen
-        name="FirstManualInputScreen"
-        component={FirstManualInputScreen}
-        options={{
-
-        }}
-      />
-      <ManualInputStack.Screen
-        name="SecondManualInputScreen"
-        component={SecondManualInputScreen}
-        options={{
-        }}
-      />
-    </ManualInputStack.Navigator>
   );
 }

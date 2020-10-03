@@ -6,7 +6,7 @@ import { CheckBox } from 'react-native-elements';
 import { StackScreenProps } from '@react-navigation/stack';
 import { PublicStackParamList } from '../../types';
 import Layout from '../../constants/Layout';
-import AuthContext from '../../navigation/AuthContext';
+import AuthContext from './AuthContext';
 
 export default function RegisterScreen({ navigation }: StackScreenProps<PublicStackParamList, 'RegisterScreen'>) {
   const [name, setName] = React.useState('');

@@ -38,11 +38,5 @@ export type ProfileParamList = {
 // Root stack -> Button Tab -> Medicine -> Add
 export type AddTabParamList = {
   ScanInputScreen: undefined;
-  ManualInput: undefined;
-}
-
-// Root stack -> Button Tab -> Medicine -> Add -> Manual Input
-export type ManualInputStackParamList = {
-  FirstManualInputScreen: undefined;
-  SecondManualInputScreen: undefined;
+  ManualInputScreen: undefined;
 }

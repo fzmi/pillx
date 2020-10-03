@@ -13,6 +13,8 @@ import ProfileScreen from '../screens/ProfileScreen';
 import AddTabNavigator from '../navigation/AddTabNavigator';
 import { BottomTabParamList, TodayParamList, ProfileParamList, MedicineParamList } from '../types';
 
+import AddContext from '../screens/add/AddContext';
+
 const BottomTab = createBottomTabNavigator<BottomTabParamList>();
 
 export default function BottomTabNavigator() {
@@ -71,30 +73,49 @@ function TodayNavigator() {
     </TodayStack.Navigator>
   );
 }
+
 const MedicineStack = createStackNavigator<MedicineParamList>();
 
 function MedicineNavigator() {
+  const [addInfo, setAddInfo] = React.useState({
+    medicineName: '',
+    frequency: '',
+    periodOfTreatment: '',
+    reminders: {},
+    imageUri: '',
+  })
+
+  // Since the screen props need to be serialisable, will use contexts instead
+  const addContext = {
+    addInfo: addInfo,
+    setAddInfo: (data: any) => {
+      setAddInfo(data);
+    }
+  }
+
   return (
-    <MedicineStack.Navigator>
-      <MedicineStack.Screen
-        name="MedicineScreen"
-        component={MedicineScreen}
-        options={{
-          headerTitle: 'My Medicine',
-          headerTitleAlign: "left",
-          headerTitleStyle: { fontSize: 30 },
-          headerStyle: { height: 110 }
-        }}
-      />
-      <MedicineStack.Screen
-        name="Add"
-        component={AddTabNavigator}
-        options={{
-          headerTitle: 'Add New',
-          headerBackTitle: 'Medicine',
-        }}
-      />
-    </MedicineStack.Navigator>
+    <AddContext.Provider value={addContext}>
+      <MedicineStack.Navigator>
+        <MedicineStack.Screen
+          name="MedicineScreen"
+          component={MedicineScreen}
+          options={{
+            headerTitle: 'My Medicine',
+            headerTitleAlign: "left",
+            headerTitleStyle: { fontSize: 30 },
+            headerStyle: { height: 110 }
+          }}
+        />
+        <MedicineStack.Screen
+          name="Add"
+          component={AddTabNavigator}
+          options={{
+            headerTitle: 'Add Medicine',
+            headerBackTitle: 'Medicine',
+          }}
+        />
+      </MedicineStack.Navigator>
+    </AddContext.Provider>
   );
 }
 

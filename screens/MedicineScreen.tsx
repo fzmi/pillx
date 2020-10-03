@@ -3,12 +3,15 @@ import { Text, View } from '../components/Themed';
 import { StyleSheet, Dimensions, ScrollView, TouchableOpacity } from 'react-native';
 
 import { StackScreenProps } from '@react-navigation/stack';
+import { useFocusEffect } from '@react-navigation/native';
 
 import { MedicineParamList } from '../types';
 import Colors from '../constants/Colors';
 import useColorScheme from '../hooks/useColorScheme';
 import { Entypo } from '@expo/vector-icons';
 import Card from '../components/medicine/Card';
+
+import AddContext from './add/AddContext';
 
 const data = {
 
@@ -30,7 +33,9 @@ export default function MedicineScreen({ navigation }: StackScreenProps<Medicine
             backgroundColor: Colors[colorScheme].tint,
             borderRadius: 45,
           }}
-          onPress={() => { navigation.navigate("Add"); }}
+          onPress={() => {
+            navigation.navigate("Add");
+          }}
         >
           <Entypo style={{ marginTop: 2, marginLeft: 1 }} name="plus" size={40} color={Colors[colorScheme].background} />
         </TouchableOpacity>

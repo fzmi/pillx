@@ -3,7 +3,7 @@ import { Image, StyleSheet, TouchableOpacity, TextInput } from 'react-native';
 import { Text, View, ScrollView } from '../../components/Themed';
 
 import { StackScreenProps } from '@react-navigation/stack';
-import AuthContext from '../../navigation/AuthContext';
+import AuthContext from './AuthContext';
 import Layout from '../../constants/Layout';
 import { PublicStackParamList } from '../../types';
 

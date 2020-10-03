@@ -14,6 +14,7 @@ export default {
     buttonBlue: tintColorLight,
     medicinePurple: colorPurple,
     medicineBlue: colorBlue,
+    secondaryBackground: '#eee',
   },
   dark: {
     text: '#fff',
@@ -24,5 +25,6 @@ export default {
     buttonBlue: tintColorLight,
     medicinePurple: '#000',
     medicineBlue: '#000',
+    secondaryBackground: '#111',
   },
 };

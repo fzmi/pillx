@@ -4,7 +4,7 @@ import { ColorSchemeName } from 'react-native';
 import { NavigationContainer, DefaultTheme, DarkTheme } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import AsyncStorage from '@react-native-community/async-storage';
-import AuthContext from './AuthContext';
+import AuthContext from '../screens/public/AuthContext';
 
 import NotFoundScreen from '../screens/NotFoundScreen';
 import { RootStackParamList } from '../types';
@@ -84,20 +84,22 @@ function RootNavigator() {
     () => ({
       signIn: async (data: any) => {
         // todo: send email, password to the server and get a token
+        let userToken = 'dummy-auth-token';
 
         // todo: persist the token using AsyncStorage or handle errors
 
         // successfully get the token and redirect to auth routes
-        dispatch({ type: 'SIGN_IN', token: 'dummy-auth-token' });
+        dispatch({ type: 'SIGN_IN', token: userToken });
       },
       signOut: () => dispatch({ type: 'SIGN_OUT' }),
       signUp: async (data: any) => {
         // todo: send user data to server and get a token
+        let userToken = 'dummy-auth-token';
 
         // todo: persist the token using AsyncStorage or handle errors
 
         // successfully get the token and redirect to auth routes
-        dispatch({ type: 'SIGN_IN', token: 'dummy-auth-token' });
+        dispatch({ type: 'SIGN_IN', token: userToken });
       },
     }),
     []

@@ -6,7 +6,7 @@ import { Entypo } from '@expo/vector-icons';
 import { StackScreenProps } from '@react-navigation/stack';
 import { ProfileParamList } from '../types';
 
-import AuthContext from '../navigation/AuthContext';
+import AuthContext from './public/AuthContext';
 
 export default function ProfileScreen({ navigation }: StackScreenProps<ProfileParamList, 'ProfileScreen'>) {
   const { signOut } = React.useContext(AuthContext);

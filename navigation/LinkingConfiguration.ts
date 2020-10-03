@@ -18,12 +18,7 @@ export default {
               Add: {
                 screens: {
                   ScanInputScreen: 'ScanInput',
-                  ManualInput: {
-                    screens: {
-                      FirstManualInputScreen: 'ManualInput1',
-                      SecondManualInputScreen: 'ManualInput2',
-                    }
-                  }
+                  ManualInputScreen: 'ManualInput',
                 }
               }
             },
