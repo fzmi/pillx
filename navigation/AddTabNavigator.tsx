@@ -46,11 +46,13 @@ const ManualInputStack = createStackNavigator<ManualInputStackParamList>();
 // Root stack -> Button Tab -> Medicine -> Add -> Manual Input
 function ManualInputStackNavigator() {
   return (
-    <ManualInputStack.Navigator>
+    <ManualInputStack.Navigator
+      headerMode="none">
       <ManualInputStack.Screen
         name="FirstManualInputScreen"
         component={FirstManualInputScreen}
         options={{
+
         }}
       />
       <ManualInputStack.Screen

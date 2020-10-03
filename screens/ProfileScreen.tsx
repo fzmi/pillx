@@ -73,11 +73,13 @@ export default function ProfileScreen({ navigation }: StackScreenProps<ProfilePa
               </View>
             </View>
           </TouchableOpacity>
-        </View>        
+        </View>
 
         <View style={styles.separator} lightColor="#eee" darkColor="rgba(255,255,255,0.1)" />
 
-        <TouchableOpacity onPress={() => signOut()} style={styles.buttonContainer}>
+        <TouchableOpacity
+          onPress={() => signOut()}
+          style={styles.buttonContainer}>
           <Text style={styles.buttonText}>Sign out this account</Text>
         </TouchableOpacity>
       </View>
@@ -89,13 +91,14 @@ const styles = StyleSheet.create({
   buttonContainer: {
     backgroundColor: '#2e78b7',
     paddingVertical: 15,
+    paddingHorizontal: 20,
     borderRadius: 8,
   },
   buttonText: {
     textAlign: 'center',
     color: '#FFFFFF',
     fontSize: 20,
-    paddingHorizontal: 20,
+    fontWeight: '600',
   },
   container: {
     flex: 1,

@@ -91,7 +91,7 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     color: '#FFFFFF',
     fontSize: 20,
-    fontWeight: 'bold',
+    fontWeight: '600',
   },
   container: {
     alignItems: 'center',

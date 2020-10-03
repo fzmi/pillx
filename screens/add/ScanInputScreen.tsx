@@ -44,19 +44,11 @@ export default function ScanInputScreen({ navigation }: StackScreenProps<AddTabP
   }
 
   return (
-    <View style={{ flex: 1 }}>
+    <View style={styles.scanView}>
       {cameraOn &&
-        <Camera style={{ flex: 1 }} type={type} ref={camera} flashMode={flash}>
+        <Camera style={styles.camera} type={type} ref={camera} flashMode={flash}>
           <View
-            style={{
-              flex: 1,
-              backgroundColor: 'transparent',
-              flexDirection: 'row',
-              // alignContent: 'center',
-              // alignItems: 'center',
-              justifyContent: 'center',
-            }}>
-
+            style={styles.cameraView}>
             <TouchableHighlight
               style={{
                 alignSelf: 'flex-end',
@@ -78,7 +70,7 @@ export default function ScanInputScreen({ navigation }: StackScreenProps<AddTabP
                 );
               }}>
               <MaterialCommunityIcons
-                style={{ marginTop: 2, marginLeft: 1 }}
+                style={styles.cameraButtonIcon}
                 name={flash === Camera.Constants.FlashMode.off ? "flashlight" : "flashlight-off"}
                 size={25}
                 color={flash === Camera.Constants.FlashMode.off ? 'white' : '#222'} />
@@ -96,7 +88,7 @@ export default function ScanInputScreen({ navigation }: StackScreenProps<AddTabP
                 padding: 10,
               }}
               onPress={() => { }}>
-              <Entypo style={{ marginTop: 2, marginLeft: 1 }} name="camera" size={40} color='white' />
+              <Entypo style={styles.cameraButtonIcon} name="camera" size={40} color='white' />
             </TouchableHighlight>
 
             <TouchableHighlight
@@ -114,12 +106,10 @@ export default function ScanInputScreen({ navigation }: StackScreenProps<AddTabP
               }}
               onPress={() => {
                 setType(
-                  type === Camera.Constants.Type.back
-                    ? Camera.Constants.Type.front
-                    : Camera.Constants.Type.back
+                  type === Camera.Constants.Type.back ? Camera.Constants.Type.front : Camera.Constants.Type.back
                 );
               }}>
-              <FontAwesome style={{ marginTop: 2, marginLeft: 1 }} name="refresh" size={25} color='white' />
+              <FontAwesome style={styles.cameraButtonIcon} name="refresh" size={25} color='white' />
             </TouchableHighlight>
           </View>
         </Camera>}
@@ -128,5 +118,21 @@ export default function ScanInputScreen({ navigation }: StackScreenProps<AddTabP
 }
 
 const styles = StyleSheet.create({
-
+  scanView: {
+    flex: 1,
+    backgroundColor: '#000',
+  },
+  camera: {
+    flex: 1,
+  },
+  cameraView: {
+    flex: 1,
+    backgroundColor: 'transparent',
+    flexDirection: 'row',
+    justifyContent: 'center',
+  },
+  cameraButtonIcon: {
+    marginTop: 2,
+    marginLeft: 1
+  }
 });
