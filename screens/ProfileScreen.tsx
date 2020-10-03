@@ -15,15 +15,12 @@ export default function ProfileScreen({ navigation }: StackScreenProps<ProfilePa
     <ScrollView>
       <View style={styles.container}>
 
-
-        {/** ---------- fix code below ----------- */}
-
         <View style={styles.topbar}>
           <TouchableOpacity onPress={() => navigation.goBack()} style={styles.link}>
             <Entypo name="chevron-thin-left" size={30} />
           </TouchableOpacity>
           <View style={styles.profile}>
-            {/* <Image style={styles.profileImage} source={require("../assets/images/Avatar.png")} /> */}
+            <Image style={styles.profileImage} source={require("../assets/images/profile/Avatar.png")} />
             <TextInput
               style={styles.textInput}
               placeholder="USER NAME"
@@ -34,7 +31,7 @@ export default function ProfileScreen({ navigation }: StackScreenProps<ProfilePa
         <View style={styles.items}>
           <TouchableOpacity onPress={() => { }} style={styles.link}>
             <View style={styles.item}>
-              {/* <Image style={styles.itemIcon} source={require("../assets/images/Name.png")} /> */}
+              <Image style={styles.itemIcon} source={require("../assets/images/profile/Name.png")} />
               <View style={styles.itemText}>
                 <Text style={styles.itemName}>Full Name</Text>
               </View>
@@ -43,7 +40,7 @@ export default function ProfileScreen({ navigation }: StackScreenProps<ProfilePa
 
           <TouchableOpacity onPress={() => { }} style={styles.link}>
             <View style={styles.item}>
-              {/* <Image style={styles.itemIcon} source={require("../assets/images/DOB.png")} /> */}
+              <Image style={styles.itemIcon} source={require("../assets/images//profile/DOB.png")} />
               <View style={styles.itemText}>
                 <Text style={styles.itemName}>Date of Birth</Text>
               </View>
@@ -52,7 +49,7 @@ export default function ProfileScreen({ navigation }: StackScreenProps<ProfilePa
 
           <TouchableOpacity onPress={() => { }} style={styles.link}>
             <View style={styles.item}>
-              {/* <Image style={styles.itemIcon} source={require("../assets/images/Gender.png")} /> */}
+              <Image style={styles.itemIcon} source={require("../assets/images/profile/Gender.png")} />
               <View style={styles.itemText}>
                 <Text style={styles.itemName}>Gender</Text>
               </View>
@@ -61,7 +58,7 @@ export default function ProfileScreen({ navigation }: StackScreenProps<ProfilePa
 
           <TouchableOpacity onPress={() => { }} style={styles.link}>
             <View style={styles.item}>
-              {/* <Image style={styles.itemIcon} source={require("../assets/images/Email.png")} /> */}
+              <Image style={styles.itemIcon} source={require("../assets/images/profile/Email.png")} />
               <View style={styles.itemText}>
                 <Text style={styles.itemName}>Email</Text>
               </View>
@@ -70,16 +67,13 @@ export default function ProfileScreen({ navigation }: StackScreenProps<ProfilePa
 
           <TouchableOpacity onPress={() => { }} style={styles.link}>
             <View style={styles.item}>
-              {/* <Image style={styles.itemIcon} source={require("../assets/images/Allergen.png")} /> */}
+              <Image style={styles.itemIcon} source={require("../assets/images/profile/Allergen.png")} />
               <View style={styles.itemText}>
                 <Text style={styles.itemName}>Allergen</Text>
               </View>
             </View>
           </TouchableOpacity>
-        </View>
-
-        {/** ---------- fix code above ----------- */}
-        
+        </View>        
 
         <View style={styles.separator} lightColor="#eee" darkColor="rgba(255,255,255,0.1)" />
 
@@ -105,8 +99,7 @@ const styles = StyleSheet.create({
   },
   container: {
     flex: 1,
-    alignItems: 'center',
-    justifyContent: 'center',
+    padding: 20,
   },
   title: {
     fontSize: 20,
@@ -116,8 +109,9 @@ const styles = StyleSheet.create({
     marginVertical: 30,
     height: 1,
     width: '80%',
+    justifyContent: 'center',
+    alignSelf: 'center'
   },
-
   link: {
     marginTop: 15,
     paddingVertical: 15,
@@ -146,15 +140,17 @@ const styles = StyleSheet.create({
   },
   items: {
     justifyContent: 'center',
+    alignItems: 'center',
   },
   item: {
     flexDirection: 'row',
     alignItems: 'center',
-    marginLeft: 70,
     height: 25,
   },
   itemText: {
-    paddingLeft: 45,
+    width: 80,
+    marginHorizontal: 50,
+    alignItems: 'center'
   },
   itemIcon: {
     width: 30,
