@@ -32,7 +32,7 @@ export default function MedicineScreen({ navigation }: StackScreenProps<Medicine
           }}
           onPress={() => { navigation.navigate("Add"); }}
         >
-          <Entypo style={{ marginTop: 2, marginLeft: 1 }} name="plus" size={40} color="white" />
+          <Entypo style={{ marginTop: 2, marginLeft: 1 }} name="plus" size={40} color={Colors[colorScheme].background} />
         </TouchableOpacity>
       ),
     });

@@ -1,21 +1,17 @@
 import React from 'react';
-import { Ionicons } from '@expo/vector-icons';
-import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { createStackNavigator } from '@react-navigation/stack';
-import { createNativeStackNavigator } from 'react-native-screens/native-stack';
 
 import Colors from '../constants/Colors';
 import useColorScheme from '../hooks/useColorScheme';
-import TodayScreen from '../screens/TodayScreen';
-import MedicineScreen from '../screens/MedicineScreen';
-import ProfileScreen from '../screens/ProfileScreen';
-import { AddTabParamList } from '../types';
-import ManualInputScreen from '../screens/add/ManualInputScreen';
+import { AddTabParamList, ManualInputStackParamList } from '../types';
+import FirstManualInputScreen from '../screens/add/FirstManualInputScreen';
+import SecondManualInputScreen from '../screens/add/SecondManualInputScreen';
 import ScanInputScreen from '../screens/add/ScanInputScreen';
 
 const AddTab = createBottomTabNavigator<AddTabParamList>();
 
+// Root stack -> Button Tab -> Medicine -> Add
 export default function AddTabNavigator() {
   const colorScheme = useColorScheme();
 
@@ -31,16 +27,38 @@ export default function AddTabNavigator() {
         name="ScanInputScreen"
         component={ScanInputScreen}
         options={{
-          tabBarLabel: "Scan Input",
+          tabBarLabel: "Scan Package",
         }}
       />
       <AddTab.Screen
-        name="ManualInputScreen"
-        component={ManualInputScreen}
+        name="ManualInput"
+        component={ManualInputStackNavigator}
         options={{
           tabBarLabel: "Manual Input",
         }}
       />
     </AddTab.Navigator>
+  );
+}
+
+const ManualInputStack = createStackNavigator<ManualInputStackParamList>();
+
+// Root stack -> Button Tab -> Medicine -> Add -> Manual Input
+function ManualInputStackNavigator() {
+  return (
+    <ManualInputStack.Navigator>
+      <ManualInputStack.Screen
+        name="FirstManualInputScreen"
+        component={FirstManualInputScreen}
+        options={{
+        }}
+      />
+      <ManualInputStack.Screen
+        name="SecondManualInputScreen"
+        component={SecondManualInputScreen}
+        options={{
+        }}
+      />
+    </ManualInputStack.Navigator>
   );
 }

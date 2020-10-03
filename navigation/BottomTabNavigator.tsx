@@ -89,6 +89,10 @@ function MedicineNavigator() {
       <MedicineStack.Screen
         name="Add"
         component={AddTabNavigator}
+        options={{
+          headerTitle: 'Add New',
+          headerBackTitle: 'Medicine',
+        }}
       />
     </MedicineStack.Navigator>
   );

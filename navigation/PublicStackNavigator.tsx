@@ -8,6 +8,7 @@ import { PublicStackParamList } from '../types';
 
 const PublicStack = createStackNavigator<PublicStackParamList>();
 
+// Root stack -> Public stack
 export default function PublicStackNavigator() {
   return (
     <PublicStack.Navigator
