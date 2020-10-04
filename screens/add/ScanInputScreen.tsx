@@ -1,6 +1,6 @@
 import React from 'react';
-import { StyleSheet, TouchableHighlight, TouchableWithoutFeedback, Modal, Alert } from 'react-native';
-import { ScrollView, Text, View } from '../../components/Themed';
+import { StyleSheet, TouchableHighlight, Platform } from 'react-native';
+import { Text, View } from '../../components/Themed';
 
 import { StackScreenProps, useHeaderHeight } from '@react-navigation/stack';
 import { useFocusEffect } from '@react-navigation/native';
@@ -67,6 +67,37 @@ export default function ScanInputScreen({ navigation }: StackScreenProps<AddTabP
     return <Text>No access to camera</Text>;
   }
 
+  const uploadImage = async (uri: string) => {
+    try {
+      const body = new FormData();
+      // uri workaround, looks like a react native bug: https://github.com/facebook/react-native/issues/29364
+      // also needs to override the typescript formdata (see global.d.ts)
+      body.append('photo', { uri: Platform.OS == 'ios' ? uri.replace("file://", "/private") : uri, name: 'image.jpg', type: 'image/jpeg' });
+      body.append('Content-Type', 'image/jpeg');
+      let response = await fetch("url", {
+        method: 'POST',
+        headers: {
+          Accept: "application/json",
+          "Content-Type": "multipart/form-data",
+        },
+        body: body
+      });
+      let responseJson = await response.json();
+      return {
+        data: responseJson,
+      }
+    } catch (error) {
+      showMessage({
+        message: "Server Error",
+        description: "Cannot upload image to PillX server.",
+        type: "danger",
+        icon: "danger",
+        duration: 2500,
+      });
+      console.log(error);
+    }
+  }
+
   return (
     <View style={{ flex: 1 }}>
       <View style={styles.scanView}>
@@ -122,26 +153,13 @@ export default function ScanInputScreen({ navigation }: StackScreenProps<AddTabP
                       if (camera.current) {
                         let photo = await camera.current.takePictureAsync();
                         let uri = photo.uri;
-                        // add the image to the addInfo state
+                        // todo: add the image to the addInfo state
+                        const response = uploadImage(uri);
+
                         setAddInfo({
                           ...addInfo,
                           imageUri: uri,
                         })
-
-                        // let body = new FormData();
-                        // body.append('photo', { uri: uri, name: 'photo.png', filename: 'imageName.png', type: 'image/png' });
-                        // body.append('Content-Type', 'image/png');
-
-                        // fetch("server-url-here", {
-                        //   method: 'POST', headers: {
-                        //     "Content-Type": "multipart/form-data",
-                        //   }, body: body
-                        // })
-
-                        // .then((res) => res.json())
-                        // .then((res) => { console.log("response" + JSON.stringify(res)); })
-                        // .catch((e) => console.log(e))
-                        // .done()
                         camera.current.pausePreview();
                         setModalVisible(true);
                       }

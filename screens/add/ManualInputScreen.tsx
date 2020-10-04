@@ -17,7 +17,6 @@ export default function ManualInputScreen({ navigation }: StackScreenProps<AddTa
   const colorScheme = useColorScheme();
   const [step, setStep] = React.useState(1);
 
-
   const [frequency, setFrequency] = React.useState<any>({
     number: 1,
     unit: 'day',
