@@ -1,5 +1,5 @@
 import React from 'react';
-import { StyleSheet, Modal, TouchableHighlight, TouchableWithoutFeedback, Alert, Image } from 'react-native';
+import { StyleSheet, Modal, TouchableHighlight, Alert, Image } from 'react-native';
 import { View, Text } from '../../Themed';
 
 import { Entypo } from '@expo/vector-icons';

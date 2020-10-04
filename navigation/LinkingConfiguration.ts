@@ -20,7 +20,14 @@ export default {
                   ScanInputScreen: 'ScanInput',
                   ManualInputScreen: 'ManualInput',
                 }
-              }
+              },
+              Data: {
+                screens: {
+                  EffectScreen: 'Effect',
+                  MethodScreen: 'Method',
+                }
+              },
+              EditScreen: 'Edit',
             },
           },
           Profile: {
@@ -34,7 +41,7 @@ export default {
         screens: {
           SignInScreen: 'SignIn',
           RegisterScreen: 'Register',
-          RecoverScreen: "Recover"
+          RecoverScreen: 'Recover',
         }
       },
       NotFound: '*',

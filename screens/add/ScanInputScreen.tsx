@@ -102,53 +102,23 @@ export default function ScanInputScreen({ navigation }: StackScreenProps<AddTabP
     <View style={{ flex: 1 }}>
       <View style={styles.scanView}>
         {cameraOn &&
-          <Camera
-            style={styles.camera}
-            ref={camera}
-            flashMode={flash}
-            zoom={zoom}>
-            <View
-              style={styles.cameraView}>
+          <Camera style={styles.camera} ref={camera} flashMode={flash} zoom={zoom}>
+            <View style={styles.cameraView}>
               <TouchableHighlight
-                style={{
-                  alignSelf: 'flex-end',
-                  alignItems: 'center',
-                  justifyContent: 'center',
-                  marginBottom: 20,
-                  backgroundColor: flash === Camera.Constants.FlashMode.off ? '#222' : 'white',
-                  borderRadius: 50,
-                  height: 50,
-                  width: 50,
-                  padding: 5,
-                  marginRight: 20,
-                }}
+                style={[styles.cameraSecondaryButton,
+                { backgroundColor: flash === Camera.Constants.FlashMode.off ? '#222' : 'white', marginRight: 20 }]}
                 onPress={() => {
-                  setFlash(
-                    flash === Camera.Constants.FlashMode.off
-                      ? Camera.Constants.FlashMode.torch
-                      : Camera.Constants.FlashMode.off
-                  );
+                  setFlash(flash === Camera.Constants.FlashMode.off ?
+                    Camera.Constants.FlashMode.torch : Camera.Constants.FlashMode.off);
                 }}>
-                <MaterialCommunityIcons
-                  style={styles.cameraButtonIcon}
-                  name="flashlight"
-                  size={25}
+                <MaterialCommunityIcons style={styles.cameraButtonIcon} name="flashlight" size={25}
                   color={flash === Camera.Constants.FlashMode.off ? 'white' : '#222'} />
               </TouchableHighlight>
 
               <AddContext.Consumer>
                 {({ addInfo, setAddInfo }) => (
                   <TouchableHighlight
-                    style={{
-                      flex: 0.3,
-                      alignSelf: 'flex-end',
-                      alignItems: 'center',
-                      justifyContent: 'center',
-                      marginBottom: 20,
-                      backgroundColor: Colors[colorScheme].buttonBlue,
-                      borderRadius: 40,
-                      padding: 10,
-                    }}
+                    style={[styles.cameraMainButton, { backgroundColor: Colors[colorScheme].buttonBlue }]}
                     onPress={async () => {
                       if (camera.current) {
                         let photo = await camera.current.takePictureAsync();
@@ -156,10 +126,7 @@ export default function ScanInputScreen({ navigation }: StackScreenProps<AddTabP
                         // todo: add the image to the addInfo state
                         const response = uploadImage(uri);
 
-                        setAddInfo({
-                          ...addInfo,
-                          imageUri: uri,
-                        })
+                        setAddInfo({ ...addInfo, imageUri: uri });
                         camera.current.pausePreview();
                         setModalVisible(true);
                       }
@@ -170,37 +137,16 @@ export default function ScanInputScreen({ navigation }: StackScreenProps<AddTabP
               </AddContext.Consumer>
 
               <TouchableHighlight
-                style={{
-                  alignSelf: 'flex-end',
-                  alignItems: 'center',
-                  justifyContent: 'center',
-                  marginBottom: 20,
-                  backgroundColor: '#222',
-                  borderRadius: 50,
-                  padding: 5,
-                  width: 50,
-                  height: 50,
-                  marginLeft: 20,
-                }}
-                onPress={() => {
-                  setZoom(zoom == 0 ? 0.2 : 0);
-                }}>
-                <Feather
-                  style={styles.cameraButtonIcon}
-                  name={zoom == 0 ? "zoom-in" : "zoom-out"}
-                  size={25}
-                  color="white" />
+                style={[styles.cameraSecondaryButton, { backgroundColor: '#222', marginLeft: 20 }]}
+                onPress={() => { setZoom(zoom == 0 ? 0.2 : 0); }}>
+                <Feather style={styles.cameraButtonIcon}
+                  name={zoom == 0 ? "zoom-in" : "zoom-out"} size={25} color="white" />
               </TouchableHighlight>
             </View>
           </Camera>}
       </View>
 
-      <ScanModal
-        modalVisible={modalVisible}
-        setModalVisible={setModalVisible}
-        camera={camera}
-        navigation={navigation}
-      />
+      <ScanModal modalVisible={modalVisible} setModalVisible={setModalVisible} camera={camera} navigation={navigation} />
     </View>
   );
 }
@@ -222,5 +168,24 @@ const styles = StyleSheet.create({
   cameraButtonIcon: {
     marginTop: 2,
     marginLeft: 1
+  },
+  cameraMainButton: {
+    flex: 0.3,
+    alignSelf: 'flex-end',
+    alignItems: 'center',
+    justifyContent: 'center',
+    marginBottom: 20,
+    borderRadius: 40,
+    padding: 10,
+  },
+  cameraSecondaryButton: {
+    alignSelf: 'flex-end',
+    alignItems: 'center',
+    justifyContent: 'center',
+    marginBottom: 20,
+    borderRadius: 50,
+    padding: 5,
+    width: 50,
+    height: 50,
   },
 });

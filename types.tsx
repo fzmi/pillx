@@ -28,6 +28,12 @@ export type TodayParamList = {
 export type MedicineParamList = {
   MedicineScreen: undefined;
   Add: undefined;
+  Data: {
+    medicineId: any;
+  };
+  EditScreen: {
+    medicineId: any;
+  };
 };
 
 // Root stack -> Button Tab -> Profile
@@ -39,4 +45,14 @@ export type ProfileParamList = {
 export type AddTabParamList = {
   ScanInputScreen: undefined;
   ManualInputScreen: undefined;
+}
+
+// Root stack -> Button Tab -> Medicine -> Data
+export type DataTabParamList = {
+  EffectScreen: {
+    medicineId: any;
+  };
+  MethodScreen: {
+    medicineId: any;
+  };
 }

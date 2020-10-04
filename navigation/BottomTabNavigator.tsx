@@ -12,6 +12,8 @@ import TodayScreen from '../screens/TodayScreen';
 import MedicineScreen from '../screens/MedicineScreen';
 import ProfileScreen from '../screens/ProfileScreen';
 import AddTabNavigator from '../navigation/AddTabNavigator';
+import DataTabNavigator from '../navigation/DataTabNavigator';
+import EditScreen from '../screens/edit/EditScreen';
 import { BottomTabParamList, TodayParamList, ProfileParamList, MedicineParamList } from '../types';
 
 import AuthContext from '../screens/public/AuthContext';
@@ -190,6 +192,23 @@ function MedicineNavigator() {
             headerBackTitle: 'Medicine',
           }}
         />
+        <MedicineStack.Screen
+          name="Data"
+          component={DataTabNavigator}
+          options={{
+            headerTitle: 'Data Visualisation',
+            headerBackTitle: 'Medicine',
+          }}
+        />
+        <MedicineStack.Screen
+          name="EditScreen"
+          component={EditScreen}
+          options={{
+            headerTitle: 'Edit Medicine',
+            headerBackTitle: 'Medicine',
+          }}
+        />
+
       </MedicineStack.Navigator>
     </AddContext.Provider>
   );

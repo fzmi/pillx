@@ -1,5 +1,5 @@
 import React from 'react';
-import { StyleSheet, Dimensions, ScrollView, TouchableOpacity } from 'react-native';
+import { StyleSheet, Dimensions, ScrollView, TouchableOpacity, Button } from 'react-native';
 import { Text, View } from '../components/Themed';
 
 import { StackScreenProps } from '@react-navigation/stack';
@@ -14,6 +14,7 @@ import UserContext from './UserContext';
 export default function MedicineScreen({ navigation }: StackScreenProps<MedicineParamList, 'MedicineScreen'>) {
   const colorScheme = useColorScheme();
 
+  // contains medicine info
   const { userInfo, isLoading } = React.useContext(UserContext);
 
   React.useLayoutEffect(() => {
@@ -41,6 +42,9 @@ export default function MedicineScreen({ navigation }: StackScreenProps<Medicine
     <ScrollView horizontal={true} showsHorizontalScrollIndicator={false}>
 
       {/** ---------- fix code below ----------- */}
+
+      <Button title="See Data" onPress={() => { navigation.navigate("Data", { medicineId: "med-id" }) }} />
+      <Button title="Edit" onPress={() => { navigation.navigate("EditScreen", { medicineId: "med-id" }) }} />
 
       {/* <Card imageUri={require('../assets/images/pill2.png')}
           name="Fish Oil and Omega"
