@@ -82,7 +82,7 @@ function RootNavigator() {
     () => ({
       signIn: async (data: any) => {
         // todo: send email, password to the server and get a token
-        let userToken = 'dummy-auth-token';
+        let userToken = 'test@test.com';
 
         // todo: persist the token using AsyncStorage or handle errors
         // successfully get the token and redirect to auth routes
@@ -95,7 +95,7 @@ function RootNavigator() {
       },
       signUp: async (data: any) => {
         // todo: send user data to server and get a token
-        let userToken = 'dummy-auth-token';
+        let userToken = 'test@test.com';
 
         // todo: persist the token using AsyncStorage or handle errors
         // successfully get the token and redirect to auth routes

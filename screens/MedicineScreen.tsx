@@ -29,9 +29,7 @@ export default function MedicineScreen({ navigation }: StackScreenProps<Medicine
             backgroundColor: Colors[colorScheme].tint,
             borderRadius: 45,
           }}
-          onPress={() => {
-            navigation.navigate("Add");
-          }}
+          onPress={() => { navigation.navigate("Add"); }}
         >
           <Entypo style={{ marginTop: 2, marginLeft: 1 }} name="plus" size={40} color={Colors[colorScheme].background} />
         </TouchableOpacity>
@@ -79,26 +77,4 @@ const styles = StyleSheet.create({
     backgroundColor: '#F0F2F4',
     padding: 0
   },
-
-  link: {
-    paddingVertical: 15,
-    // bottom: 0,
-    top: 20,
-    position: "absolute",
-    right: 0,
-  },
-  profileImage: {
-    width: 30,
-    height: 30,
-    borderRadius: 15,
-    marginRight: 20,
-  },
-  header: {
-    height: 100,
-  },
-  course: {
-    width: Dimensions.get('window').width,
-    flex: 2,
-    backgroundColor: '#F0F2F4',
-  }
 });

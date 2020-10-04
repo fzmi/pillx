@@ -17,6 +17,7 @@ import { BottomTabParamList, TodayParamList, ProfileParamList, MedicineParamList
 import AuthContext from '../screens/public/AuthContext';
 import UserContext from '../screens/UserContext';
 import AddContext from '../screens/add/AddContext';
+import { showMessage, hideMessage } from "react-native-flash-message";
 
 import AsyncStorage from '@react-native-community/async-storage';
 
@@ -25,15 +26,14 @@ const BottomTab = createBottomTabNavigator<BottomTabParamList>();
 export default function BottomTabNavigator() {
   const colorScheme = useColorScheme();
   const [user, setUser] = React.useState({
-    userInfo: { name: '', email: '', medicine: {} },
+    userInfo: { name: '', email: '', medicine: [] },
     isLoading: true
-  });
+  } as any);
 
   // Get the user data from the server
   const fetchUserData = async () => {
     try {
-      // const userToken = await AsyncStorage.getItem('userToken');
-      const userToken = "ben";
+      const userToken = await AsyncStorage.getItem('userToken');
       let response = await fetch("http://deco3801-rever.uqcloud.net/user/get?email=" + userToken, {
         method: 'GET',
         headers: {
@@ -46,7 +46,11 @@ export default function BottomTabNavigator() {
         data: responseJson,
       };
     } catch (error) {
-      Alert.alert("Network Error", "Cannot connect to PillX server.");
+      showMessage({
+        message: "Network Error",
+        description: "Cannot connect to PillX server.",
+        type: "danger",
+      });
       console.log(error);
     }
   }
@@ -60,7 +64,18 @@ export default function BottomTabNavigator() {
         userInfo: {
           name: userData?.data.fullName,
           email: userData?.data.email,
-          medicine: {}
+          // todo: will use server data
+          medicine: [{
+            name: "Pantonix 20mg",
+            description: "1 pill, once per day",
+            time: "7:00am",
+            image: require("../assets/images/pills/pill3.png"),
+          }, {
+            name: "Ferralet 90",
+            description: "1 pill, once per day",
+            time: "7:30am",
+            image: require("../assets/images/pills/pill2.png"),
+          }]
         }
       })
     };
@@ -94,7 +109,7 @@ export default function BottomTabNavigator() {
             // You can explore the built-in icon families and icons on the web at:
             // https://icons.expo.fyi/
             tabBarIcon: ({ color, focused }) => <Ionicons name="md-calendar" color={color} size={focused ? 36 : 30} style={{ marginBottom: -3 }} />,
-            tabBarBadge: 2,
+            tabBarBadge: user.userInfo.medicine.length == 0 ? undefined : user.userInfo.medicine.length,
           }}
         />
         <BottomTab.Screen

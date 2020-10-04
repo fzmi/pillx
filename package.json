@@ -34,6 +34,7 @@
     "react-native": "https://github.com/expo/react-native/archive/sdk-39.0.2.tar.gz",
     "react-native-calendars": "^1.403.0",
     "react-native-elements": "^2.3.2",
+    "react-native-flash-message": "^0.1.16",
     "react-native-gesture-handler": "~1.7.0",
     "react-native-progress": "^4.1.2",
     "react-native-safe-area-context": "3.1.4",

@@ -5,7 +5,7 @@ const UserContext = React.createContext({
   userInfo: {
     name: '',
     email: '',
-    medicine: {},
+    medicine: [],
   },
   setUserInfo: (data: any) => {},
   isLoading: true,
