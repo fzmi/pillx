@@ -3,12 +3,17 @@ import { Alert, StyleSheet, TouchableOpacity, Image } from 'react-native';
 import { View, Text } from '../Themed';
 
 import { Entypo } from '@expo/vector-icons';
+import Colors from '../../constants/Colors';
+import useColorScheme from '../../hooks/useColorScheme';
 
 interface Props {
   item: any;
 }
 
 const Todo: React.FC<Props> = props => {
+
+  const colorScheme = useColorScheme();
+
   return (
     <View style={{ backgroundColor: "transparent" }}>
       <TouchableOpacity
@@ -16,7 +21,7 @@ const Todo: React.FC<Props> = props => {
         onPress={() => Alert.alert(props.item.name)}
       >
         <View style={styles.content}>
-          <View style={{}}>
+          <View style={{ backgroundColor: "transparent" }}>
             <Text style={{ fontSize: 22, fontWeight: "bold", marginBottom: 4 }}>{props.item.name}</Text>
             <Text style={{ fontSize: 16, marginBottom: 10, color: "#444" }}>{props.item.description}</Text>
             <Text style={{ fontSize: 16, color: "#333" }}><Entypo name="clock" size={16} color={"#333"} />&nbsp;&nbsp;{props.item.time}</Text>
@@ -56,6 +61,7 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     justifyContent: "space-between",
     margin: 10,
+    backgroundColor: "transparent",
   },
   pillImage: {
     width: 100,

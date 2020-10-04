@@ -1,26 +1,30 @@
 import React from 'react';
-import { StyleSheet, TouchableHighlight } from 'react-native';
+import { StyleSheet, TouchableHighlight, TouchableWithoutFeedback, Modal, Alert } from 'react-native';
 import { ScrollView, Text, View } from '../../components/Themed';
 
-import { StackScreenProps } from '@react-navigation/stack';
+import { StackScreenProps, useHeaderHeight } from '@react-navigation/stack';
 import { useFocusEffect } from '@react-navigation/native';
 import { Entypo, Feather, MaterialCommunityIcons } from '@expo/vector-icons';
+import { Camera } from 'expo-camera';
+import BarCodeScanner from 'expo-barcode-scanner';
+import { showMessage, hideMessage } from "react-native-flash-message";
+
 import { AddTabParamList } from '../../types';
 import Colors from '../../constants/Colors';
 import useColorScheme from '../../hooks/useColorScheme';
-import { Camera } from 'expo-camera';
 import AddContext from './AddContext';
-import BarCodeScanner from 'expo-barcode-scanner';
+import ScanModal from '../../components/medicine/add/ScanModal';
 
 export default function ScanInputScreen({ navigation }: StackScreenProps<AddTabParamList, 'ScanInputScreen'>) {
+  const camera = React.useRef<Camera>(null!);
+  const colorScheme = useColorScheme();
+  const headerHeight = useHeaderHeight();
+
   const [hasPermission, setHasPermission] = React.useState<Boolean | null>(null);
   const [flash, setFlash] = React.useState(Camera.Constants.FlashMode.off);
   const [zoom, setZoom] = React.useState(0);
   const [cameraOn, setcameraOn] = React.useState(false);
-  const camera = React.useRef<Camera>(null!);
-  const colorScheme = useColorScheme();
-
-  const [scanData, setScanData] = React.useState('');
+  const [modalVisible, setModalVisible] = React.useState(false);
 
   // load component
   React.useEffect(() => {
@@ -34,8 +38,24 @@ export default function ScanInputScreen({ navigation }: StackScreenProps<AddTabP
   useFocusEffect(
     React.useCallback(() => {
       setcameraOn(true);
+      showMessage({
+        message: "Scan Instruction",
+        description: "Loacte the AUST R/L number on the package and take a picture.",
+        type: "default",
+        icon: "info",
+        autoHide: false,
+        position: {
+          top: headerHeight
+        },
+        floating: true,
+        textStyle: {
+          paddingRight: 8
+        },
+        backgroundColor: '#222'
+      });
       return () => {
         setcameraOn(false);
+        hideMessage();
       };
     }, [])
   );
@@ -122,8 +142,8 @@ export default function ScanInputScreen({ navigation }: StackScreenProps<AddTabP
                         // .then((res) => { console.log("response" + JSON.stringify(res)); })
                         // .catch((e) => console.log(e))
                         // .done()
-
-                        navigation.navigate("ManualInputScreen");
+                        camera.current.pausePreview();
+                        setModalVisible(true);
                       }
                     }}>
                     <Entypo style={styles.cameraButtonIcon} name="camera" size={40} color='white' />
@@ -157,9 +177,12 @@ export default function ScanInputScreen({ navigation }: StackScreenProps<AddTabP
           </Camera>}
       </View>
 
-      {/* <ScrollView style={{ flexGrow: 0.1 }}>
-        <Text>Take a picture of AUST R/L Number</Text>
-      </ScrollView> */}
+      <ScanModal
+        modalVisible={modalVisible}
+        setModalVisible={setModalVisible}
+        camera={camera}
+        navigation={navigation}
+      />
     </View>
   );
 }
@@ -181,5 +204,5 @@ const styles = StyleSheet.create({
   cameraButtonIcon: {
     marginTop: 2,
     marginLeft: 1
-  }
+  },
 });

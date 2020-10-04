@@ -20,7 +20,7 @@ export default function App() {
       <SafeAreaProvider>
         <Navigation colorScheme={colorScheme} />
         <StatusBar />
-        <FlashMessage position="top" duration={2000} />
+        <FlashMessage position="top" />
       </SafeAreaProvider>
     );
   }

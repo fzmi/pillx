@@ -50,6 +50,8 @@ export default function BottomTabNavigator() {
         message: "Network Error",
         description: "Cannot connect to PillX server.",
         type: "danger",
+        icon: "danger",
+        duration: 2500,
       });
       console.log(error);
     }

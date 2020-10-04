@@ -11,6 +11,7 @@ import StepIndicator from '../../components/medicine/add/StepIndicator';
 import AddContext from './AddContext';
 import { StackActions } from '@react-navigation/native';
 import { Picker } from '@react-native-community/picker';
+import { showMessage, hideMessage } from "react-native-flash-message";
 
 export default function ManualInputScreen({ navigation }: StackScreenProps<AddTabParamList, 'ManualInputScreen'>) {
   const colorScheme = useColorScheme();
@@ -28,24 +29,22 @@ export default function ManualInputScreen({ navigation }: StackScreenProps<AddTa
     <View style={{ flex: 1 }}>
 
       { step == 1 && (
-        <ScrollView style={{ backgroundColor: Colors[colorScheme].medicinePurple }}>
-          <View style={{ backgroundColor: Colors[colorScheme].medicinePurple, padding: 20 }}>
-            <StepIndicator step={1} totalSteps={2} />
+        <ScrollView style={{ backgroundColor: Colors[colorScheme].medicineStep1 }}>
+          <View style={{ backgroundColor: Colors[colorScheme].medicineStep1, padding: 20 }}>
+            <StepIndicator step={1} totalSteps={3} />
 
             <AddContext.Consumer>
               {({ addInfo, setAddInfo }) => (
                 <View style={{ marginVertical: 20, borderRadius: 10, padding: 20 }} lightColor="#fff" darkColor="#333">
                   <View style={{ flexDirection: "row", justifyContent: "space-between" }} lightColor="#fff" darkColor="#333">
                     <Text style={{ fontSize: 20, fontWeight: '600' }}>Name</Text>
-                    {addInfo.imageUri != '' && (
-                      <Image style={{ width: 100, height: 100 }} source={{ uri: addInfo.imageUri }} />
-                    )}
+                    <Entypo name="chevron-thin-right" size={24} color={Colors[colorScheme].text} />
                   </View>
 
                   <View style={styles.separator} lightColor="#eee" darkColor="rgba(255,255,255,0.1)" />
 
                   <TouchableOpacity onPress={() => setShowFrequencyPicker(!showFrequencyPicker)}>
-                    <View style={{flexDirection: "row", justifyContent: "space-between", alignItems: "center"}} lightColor="#fff" darkColor="#333">
+                    <View style={{ flexDirection: "row", justifyContent: "space-between", alignItems: "center" }} lightColor="#fff" darkColor="#333">
                       <View lightColor="#fff" darkColor="#333">
                         <Text style={{ fontSize: 20, fontWeight: '600', marginBottom: 3 }}>Frequency</Text>
                         <Text style={{ color: "#444" }}>{frequency.number != 0 && frequency.number + " " + frequency.unit}</Text>
@@ -100,12 +99,7 @@ export default function ManualInputScreen({ navigation }: StackScreenProps<AddTa
               )}
             </AddContext.Consumer>
 
-            <TouchableOpacity
-              onPress={() => {
-                // navigation.navigate("SecondManualInputScreen");
-                setStep(2);
-              }}
-              style={styles.buttonContainer}>
+            <TouchableOpacity onPress={() => { setStep(2); }} style={styles.buttonContainer}>
               <Text style={styles.buttonText}>Next Step</Text>
               <Entypo name="chevron-thin-right" size={24} color="#000" />
             </TouchableOpacity>
@@ -114,24 +108,60 @@ export default function ManualInputScreen({ navigation }: StackScreenProps<AddTa
       )}
 
       { step == 2 && (
-        <ScrollView style={{ backgroundColor: Colors[colorScheme].medicineBlue }}>
-          <View style={{ backgroundColor: Colors[colorScheme].medicineBlue, flex: 1, padding: 20 }}>
-            <StepIndicator step={2} totalSteps={2} />
+        <ScrollView style={{ backgroundColor: Colors[colorScheme].medicineStep2 }}>
+          <View style={{ backgroundColor: Colors[colorScheme].medicineStep2, flex: 1, padding: 20 }}>
+            <StepIndicator step={2} totalSteps={3} />
 
-            <View style={{ marginVertical: 20, borderRadius: 10, height: '100%' }}>
-
+            <View style={{ marginVertical: 20, borderRadius: 10, padding: 20 }}>
+              <Text style={{ fontSize: 20, fontWeight: '600' }}>Set Reminders</Text>
             </View>
+
+            <TouchableOpacity onPress={() => { setStep(3); }} style={styles.buttonContainer}>
+              <Text style={styles.buttonText}>Next Step</Text>
+              <Entypo name="chevron-thin-right" size={24} color="#000" />
+            </TouchableOpacity>
+
+            <TouchableOpacity onPress={() => { setStep(1); }} style={styles.backButtonContainer}>
+              <Entypo name="chevron-thin-left" size={24} color="white" />
+              <Text style={styles.backButtonText}>Previous Step</Text>
+            </TouchableOpacity>
+          </View>
+        </ScrollView>
+      )}
+
+      { step == 3 && (
+        <ScrollView style={{ backgroundColor: Colors[colorScheme].medicineStep3 }}>
+          <View style={{ backgroundColor: Colors[colorScheme].medicineStep3, flex: 1, padding: 20 }}>
+            <StepIndicator step={3} totalSteps={3} />
+
+            <AddContext.Consumer>
+              {({ addInfo, setAddInfo }) => (
+                <View style={{ marginVertical: 20, borderRadius: 10, padding: 20 }}>
+                  <Text style={{ fontSize: 20, fontWeight: '600' }}>Set Thumbnail</Text>
+                  {addInfo.imageUri != '' && (
+                    <Image style={{ width: 100, height: 100 }} source={{ uri: addInfo.imageUri }} />
+                  )}
+                </View>
+              )}
+            </AddContext.Consumer>
 
             <TouchableOpacity onPress={() => {
               //todo: add new medicine
 
+              showMessage({
+                message: "Added Medicine",
+                description: "Successfully added a new medicine.",
+                type: "success",
+                icon: "success",
+                duration: 3000,
+              });
               navigation.dispatch(StackActions.popToTop());
             }} style={styles.buttonContainer}>
               <Text style={styles.buttonText}>Add Medicine</Text>
               <AntDesign name="plus" size={24} color="#000" />
             </TouchableOpacity>
 
-            <TouchableOpacity onPress={() => { setStep(1); }} style={styles.backButtonContainer}>
+            <TouchableOpacity onPress={() => { setStep(2); }} style={styles.backButtonContainer}>
               <Entypo name="chevron-thin-left" size={24} color="white" />
               <Text style={styles.backButtonText}>Previous Step</Text>
             </TouchableOpacity>

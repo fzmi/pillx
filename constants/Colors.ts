@@ -2,6 +2,7 @@
 const tintColorLight = '#2e78b7';
 const tintColorDark = '#fff';
 const colorPurple = '#724ea3';
+const colorPurple2 = '#8175ea';
 const colorBlue = '#6679e4';
 
 export default {
@@ -12,8 +13,9 @@ export default {
     tabIconDefault: '#ccc',
     tabIconSelected: tintColorLight,
     buttonBlue: tintColorLight,
-    medicinePurple: colorPurple,
-    medicineBlue: colorBlue,
+    medicineStep1: colorPurple,
+    medicineStep2: colorPurple2,
+    medicineStep3: colorBlue,
     secondaryBackground: '#eee',
   },
   dark: {
@@ -23,8 +25,9 @@ export default {
     tabIconDefault: '#ccc',
     tabIconSelected: tintColorDark,
     buttonBlue: tintColorLight,
-    medicinePurple: '#000',
-    medicineBlue: '#000',
+    medicineStep1: '#000',
+    medicineStep2: '#000',
+    medicineStep3: '#000',
     secondaryBackground: '#111',
   },
 };
