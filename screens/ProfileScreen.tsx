@@ -2,23 +2,20 @@ import React from 'react';
 import { StyleSheet, Image, TextInput, TouchableOpacity } from 'react-native';
 import { ScrollView, Text, View } from '../components/Themed';
 
-import { Entypo } from '@expo/vector-icons';
 import { StackScreenProps } from '@react-navigation/stack';
 import { ProfileParamList } from '../types';
 
 import AuthContext from './public/AuthContext';
+import UserContext from './UserContext';
 
 export default function ProfileScreen({ navigation }: StackScreenProps<ProfileParamList, 'ProfileScreen'>) {
   const { signOut } = React.useContext(AuthContext);
+  const { userInfo, isLoading } = React.useContext(UserContext);
 
   return (
     <ScrollView>
       <View style={styles.container}>
-
         <View style={styles.topbar}>
-          <TouchableOpacity onPress={() => navigation.goBack()} style={styles.link}>
-            <Entypo name="chevron-thin-left" size={30} />
-          </TouchableOpacity>
           <View style={styles.profile}>
             <Image style={styles.profileImage} source={require("../assets/images/profile/Avatar.png")} />
             <TextInput
@@ -77,6 +74,8 @@ export default function ProfileScreen({ navigation }: StackScreenProps<ProfilePa
 
         <View style={styles.separator} lightColor="#eee" darkColor="rgba(255,255,255,0.1)" />
 
+        {/** ---------- debug text ----------- */}
+        <Text style={{marginBottom: 10}}>Network status: {userInfo.email == '' ? 'Not Connected' : 'Connected as ' + userInfo.email}</Text>
         <TouchableOpacity
           onPress={() => signOut()}
           style={styles.buttonContainer}>
@@ -111,7 +110,7 @@ const styles = StyleSheet.create({
   separator: {
     marginVertical: 30,
     height: 1,
-    width: '80%',
+    width: '100%',
     justifyContent: 'center',
     alignSelf: 'center'
   },

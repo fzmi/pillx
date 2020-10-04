@@ -1,4 +1,5 @@
 import React from 'react';
+import { Alert } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
@@ -13,54 +14,112 @@ import ProfileScreen from '../screens/ProfileScreen';
 import AddTabNavigator from '../navigation/AddTabNavigator';
 import { BottomTabParamList, TodayParamList, ProfileParamList, MedicineParamList } from '../types';
 
+import AuthContext from '../screens/public/AuthContext';
+import UserContext from '../screens/UserContext';
 import AddContext from '../screens/add/AddContext';
+
+import AsyncStorage from '@react-native-community/async-storage';
 
 const BottomTab = createBottomTabNavigator<BottomTabParamList>();
 
 export default function BottomTabNavigator() {
   const colorScheme = useColorScheme();
+  const [user, setUser] = React.useState({
+    userInfo: { name: '', email: '', medicine: {} },
+    isLoading: true
+  });
+
+  // Get the user data from the server
+  const fetchUserData = async () => {
+    try {
+      // const userToken = await AsyncStorage.getItem('userToken');
+      const userToken = "ben";
+      let response = await fetch("http://deco3801-rever.uqcloud.net/user/get?email=" + userToken, {
+        method: 'GET',
+        headers: {
+          Accept: "application/json",
+          'Content-Type': 'application/json',
+        }
+      });
+      let responseJson = await response.json();
+      return {
+        data: responseJson,
+      };
+    } catch (error) {
+      Alert.alert("Network Error", "Cannot connect to PillX server.");
+      console.log(error);
+    }
+  }
+
+  // Load the user data when initialising
+  React.useEffect(() => {
+    const getUserInfo = async () => {
+      const userData = await fetchUserData();
+      setUser({
+        ...user,
+        userInfo: {
+          name: userData?.data.fullName,
+          email: userData?.data.email,
+          medicine: {}
+        }
+      })
+    };
+    getUserInfo();
+  }, []);
+
+  const userContext = {
+    userInfo: user.userInfo,
+    setUserInfo: (data: any) => {
+      setUser({
+        ...user,
+        userInfo: data
+      });
+    },
+    isLoading: user.isLoading,
+  };
 
   return (
-    <BottomTab.Navigator
-      initialRouteName="Today"
-      tabBarOptions={{
-        activeTintColor: Colors[colorScheme].tint,
-        labelStyle: { fontSize: 16, fontWeight: '500' },
-        style: { height: 90, paddingVertical: 0 },
-      }}>
-      <BottomTab.Screen
-        name="Today"
-        component={TodayNavigator}
-        options={{
-          // You can explore the built-in icon families and icons on the web at:
-          // https://icons.expo.fyi/
-          tabBarIcon: ({ color, focused }) => <Ionicons name="md-calendar" color={color} size={focused ? 36 : 30} style={{ marginBottom: -3 }} />,
-          tabBarBadge: 2,
-        }}
-      />
-      <BottomTab.Screen
-        name="Medicine"
-        component={MedicineNavigator}
-        options={{
-          tabBarIcon: ({ color, focused }) => <MaterialCommunityIcons name="pill" color={color} size={focused ? 36 : 30} style={{ marginBottom: -3 }} />,
-        }}
-      />
-      <BottomTab.Screen
-        name="Profile"
-        component={ProfileNavigator}
-        options={{
-          tabBarIcon: ({ color, focused }) => <Ionicons name="ios-contact" color={color} size={focused ? 36 : 30} style={{ marginBottom: -3 }} />,
-        }}
-      />
-    </BottomTab.Navigator>
+    <UserContext.Provider value={userContext}>
+      <BottomTab.Navigator
+        initialRouteName="Today"
+        tabBarOptions={{
+          activeTintColor: Colors[colorScheme].tint,
+          labelStyle: { fontSize: 16, fontWeight: '500' },
+          style: { height: 90, paddingVertical: 0 },
+        }}>
+        <BottomTab.Screen
+          name="Today"
+          component={TodayNavigator}
+          options={{
+            // You can explore the built-in icon families and icons on the web at:
+            // https://icons.expo.fyi/
+            tabBarIcon: ({ color, focused }) => <Ionicons name="md-calendar" color={color} size={focused ? 36 : 30} style={{ marginBottom: -3 }} />,
+            tabBarBadge: 2,
+          }}
+        />
+        <BottomTab.Screen
+          name="Medicine"
+          component={MedicineNavigator}
+          options={{
+            tabBarIcon: ({ color, focused }) => <MaterialCommunityIcons name="pill" color={color} size={focused ? 36 : 30} style={{ marginBottom: -3 }} />,
+          }}
+        />
+        <BottomTab.Screen
+          name="Profile"
+          component={ProfileNavigator}
+          options={{
+            tabBarIcon: ({ color, focused }) => <Ionicons name="ios-contact" color={color} size={focused ? 36 : 30} style={{ marginBottom: -3 }} />,
+          }}
+        />
+      </BottomTab.Navigator>
+    </UserContext.Provider>
   );
 }
 
 
-
 // Each tab has its own navigation stack, you can read more about this pattern here:
 // https://reactnavigation.org/docs/tab-based-navigation#a-stack-navigator-for-each-tab
-const TodayStack = createNativeStackNavigator<TodayParamList>();
+const TodayStack = createStackNavigator<TodayParamList>();
 
 function TodayNavigator() {
   return (
@@ -68,7 +127,6 @@ function TodayNavigator() {
       <TodayStack.Screen
         name="TodayScreen"
         component={TodayScreen}
-        options={{ headerTitle: 'October 2020', headerLargeTitle: true }}
       />
     </TodayStack.Navigator>
   );
@@ -83,7 +141,7 @@ function MedicineNavigator() {
     periodOfTreatment: '',
     reminders: {},
     imageUri: '',
-  })
+  });
 
   // Since the screen props need to be serialisable, will use contexts instead
   const addContext = {
@@ -91,7 +149,7 @@ function MedicineNavigator() {
     setAddInfo: (data: any) => {
       setAddInfo(data);
     }
-  }
+  };
 
   return (
     <AddContext.Provider value={addContext}>
@@ -103,7 +161,8 @@ function MedicineNavigator() {
             headerTitle: 'My Medicine',
             headerTitleAlign: "left",
             headerTitleStyle: { fontSize: 30 },
-            headerStyle: { height: 110 }
+            headerStyle: { height: 110 },
+            headerTitleContainerStyle: { bottom: 10 },
           }}
         />
         <MedicineStack.Screen

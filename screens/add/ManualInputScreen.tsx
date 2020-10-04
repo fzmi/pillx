@@ -36,7 +36,7 @@ export default function ManualInputScreen({ navigation }: StackScreenProps<AddTa
               {({ addInfo, setAddInfo }) => (
                 <View style={{ marginVertical: 20, borderRadius: 10, padding: 20 }} lightColor="#fff" darkColor="#333">
                   <View style={{ flexDirection: "row", justifyContent: "space-between" }} lightColor="#fff" darkColor="#333">
-                    <Text style={{ fontSize: 22, fontWeight: '600' }}>Name</Text>
+                    <Text style={{ fontSize: 20, fontWeight: '600' }}>Name</Text>
                     {addInfo.imageUri != '' && (
                       <Image style={{ width: 100, height: 100 }} source={{ uri: addInfo.imageUri }} />
                     )}
@@ -47,7 +47,7 @@ export default function ManualInputScreen({ navigation }: StackScreenProps<AddTa
                   <TouchableOpacity onPress={() => setShowFrequencyPicker(!showFrequencyPicker)}>
                     <View style={{flexDirection: "row", justifyContent: "space-between", alignItems: "center"}} lightColor="#fff" darkColor="#333">
                       <View lightColor="#fff" darkColor="#333">
-                        <Text style={{ fontSize: 22, fontWeight: '600', marginBottom: 3 }}>Frequency</Text>
+                        <Text style={{ fontSize: 20, fontWeight: '600', marginBottom: 3 }}>Frequency</Text>
                         <Text style={{ color: "#444" }}>{frequency.number != 0 && frequency.number + " " + frequency.unit}</Text>
                       </View>
                       <Entypo name="chevron-thin-right" size={24} color={Colors[colorScheme].text} />
@@ -95,7 +95,7 @@ export default function ManualInputScreen({ navigation }: StackScreenProps<AddTa
 
                   <View style={styles.separator} lightColor="#eee" darkColor="rgba(255,255,255,0.1)" />
 
-                  <Text style={{ fontSize: 22, fontWeight: '600' }}>Period of Treatment</Text>
+                  <Text style={{ fontSize: 20, fontWeight: '600' }}>Period of Treatment</Text>
                 </View>
               )}
             </AddContext.Consumer>

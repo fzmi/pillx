@@ -52,13 +52,11 @@ function RootNavigator() {
             userToken: null,
           };
       }
-    },
-    {
-      isLoading: true,
-      isSignout: false,
-      userToken: null,
-    }
-  );
+    }, {
+    isLoading: true,
+    isSignout: false,
+    userToken: null,
+  });
 
   React.useEffect(() => {
     // Fetch the token from storage then navigate to our appropriate place
@@ -87,18 +85,21 @@ function RootNavigator() {
         let userToken = 'dummy-auth-token';
 
         // todo: persist the token using AsyncStorage or handle errors
-
         // successfully get the token and redirect to auth routes
+        AsyncStorage.setItem('userToken', userToken);
         dispatch({ type: 'SIGN_IN', token: userToken });
       },
-      signOut: () => dispatch({ type: 'SIGN_OUT' }),
+      signOut: () => {
+        AsyncStorage.removeItem('userToken');
+        dispatch({ type: 'SIGN_OUT' });
+      },
       signUp: async (data: any) => {
         // todo: send user data to server and get a token
         let userToken = 'dummy-auth-token';
 
         // todo: persist the token using AsyncStorage or handle errors
-
         // successfully get the token and redirect to auth routes
+        AsyncStorage.setItem('userToken', userToken);
         dispatch({ type: 'SIGN_IN', token: userToken });
       },
     }),
@@ -112,7 +113,7 @@ function RootNavigator() {
           // public routes
           <Stack.Screen name="Public" component={PublicStackNavigator} />
         ) : (
-          // protected routes
+            // protected routes
             <Stack.Screen name="Root" component={BottomTabNavigator} />
           )}
         <Stack.Screen name="NotFound" component={NotFoundScreen} options={{ title: 'Oops!' }} />

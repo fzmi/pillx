@@ -109,19 +109,19 @@ export default function ScanInputScreen({ navigation }: StackScreenProps<AddTabP
                         })
 
                         // let body = new FormData();
-                        // body.append('photo', { uri: imagePath, name: 'photo.png', filename: 'imageName.png', type: 'image/png' });
+                        // body.append('photo', { uri: uri, name: 'photo.png', filename: 'imageName.png', type: 'image/png' });
                         // body.append('Content-Type', 'image/png');
 
-                        // fetch("url", {
+                        // fetch("server-url-here", {
                         //   method: 'POST', headers: {
                         //     "Content-Type": "multipart/form-data",
-                        //     "otherHeader": "foo",
                         //   }, body: body
                         // })
-                        //   .then((res) => res.json())
-                        //   .then((res) => { console.log("response" + JSON.stringify(res)); })
-                        //   .catch((e) => console.log(e))
-                        //   .done()
+
+                        // .then((res) => res.json())
+                        // .then((res) => { console.log("response" + JSON.stringify(res)); })
+                        // .catch((e) => console.log(e))
+                        // .done()
 
                         navigation.navigate("ManualInputScreen");
                       }

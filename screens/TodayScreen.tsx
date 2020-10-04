@@ -50,6 +50,12 @@ export default function TodayScreen({ navigation }: StackScreenProps<TodayParamL
   const colorScheme = useColorScheme();
   const monthData = getMonthData();
 
+  React.useLayoutEffect(() => {
+    navigation.setOptions({
+      headerTitle: "October 2020",
+    });
+  }, [navigation]);
+
   const renderItem = (item: any) => {
     return (
       <View style={{ backgroundColor: "transparent" }}>

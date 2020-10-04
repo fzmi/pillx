@@ -1,24 +1,20 @@
 import React from 'react';
-import { Text, View } from '../components/Themed';
 import { StyleSheet, Dimensions, ScrollView, TouchableOpacity } from 'react-native';
+import { Text, View } from '../components/Themed';
 
 import { StackScreenProps } from '@react-navigation/stack';
-import { useFocusEffect } from '@react-navigation/native';
-
 import { MedicineParamList } from '../types';
 import Colors from '../constants/Colors';
 import useColorScheme from '../hooks/useColorScheme';
 import { Entypo } from '@expo/vector-icons';
 import Card from '../components/medicine/Card';
 
-import AddContext from './add/AddContext';
-
-const data = {
-
-}
+import UserContext from './UserContext';
 
 export default function MedicineScreen({ navigation }: StackScreenProps<MedicineParamList, 'MedicineScreen'>) {
   const colorScheme = useColorScheme();
+
+  const { userInfo, isLoading } = React.useContext(UserContext);
 
   React.useLayoutEffect(() => {
     navigation.setOptions({
