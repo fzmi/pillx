@@ -41,7 +41,7 @@ export default function MedicineScreen({ navigation }: StackScreenProps<Medicine
   return (
     <View style={styles.container}>
       <ScrollView horizontal={true} showsHorizontalScrollIndicator={false}>
-        
+
         {/* <Button title="See Data" onPress={() => { navigation.navigate("Data", { medicineId: "med-id" }) }} /> */}
         {/* <Button title="Edit" onPress={() => { navigation.navigate("EditScreen", { medicineId: "med-id" }) }} /> */}
 
@@ -51,21 +51,21 @@ export default function MedicineScreen({ navigation }: StackScreenProps<Medicine
           cardColor='#E8E862'
           progress={0.3}
           date="3 months"
-        ></Card>
+        />
         <Card imageUri={require('../assets/images/pills/pill1.png')}
           cardColor='#6CE8FC'
           name="Ferralet"
           instruction="1 pill, once per day"
           progress={0.7}
           date="5 months"
-        ></Card>
+        />
         <Card imageUri={require('../assets/images/pills/pill2.png')}
           cardColor='#6B72D0'
           name="Pantonix 20MG"
           instruction="1 pill, once per day"
           progress={0.6}
           date="2 weeks"
-        ></Card>
+        />
       </ScrollView>
     </View>
   );

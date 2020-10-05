@@ -1,6 +1,4 @@
-// todo: not checked
-
-import React, { Component } from "react";
+import React from "react";
 import { Text, View } from '../Themed';
 import { Image, Dimensions, StyleSheet, TouchableOpacity } from "react-native";
 import * as Progress from 'react-native-progress';
@@ -36,75 +34,73 @@ const ReminderItem = () => {
         borderRadius: 100,
         justifyContent: 'center',
         paddingHorizontal: 20,
-        paddingVertical:5,
+        paddingVertical: 5,
       }}>
         <Text style={{ fontWeight: 'bold' }}>8 a.m.</Text>
       </View>
-     
+
     </View>
   )
 }
 
 const EditButton = () => {
   return (
-  <View style={CommonStyles.editButtonContainer}>
+    <View style={CommonStyles.editButtonContainer}>
 
-    <View style={CommonStyles.editButton}>
-      <TouchableOpacity>
-        <Text style={CommonStyles.editButtonText}>Edit</Text>
-      </TouchableOpacity>
+      <View style={CommonStyles.editButton}>
+        <TouchableOpacity>
+          <Text style={CommonStyles.editButtonText}>Edit</Text>
+        </TouchableOpacity>
+      </View>
+
     </View>
-
-  </View>
   )
 }
 
-class Card extends Component<CardProps> {
+const Card: React.FC<CardProps> = props => {
   // colorScheme = useColorScheme();
 
-  render() {
-    return (
-        <View style={CommonStyles.card}>
-          <View style={CommonStyles.cardImage} >
-            {/* Put medicine image or placeholder here */}
-            {/* <Image source={this.props.imageUri} /> */}
-          </View>
+  return (
+    <View style={CommonStyles.card}>
+      <View style={CommonStyles.cardImage} >
+        {/* Put medicine image or placeholder here */}
+        {/* <Image source={props.imageUri} /> */}
+      </View>
 
-          <View style={CommonStyles.content} >
-            <View style={CommonStyles.medInfoCardContent}>
-                <Text style={CommonStyles.medInfoCardContentTitle}>{this.props.name}</Text>
-                <Text style={CommonStyles.medInfoCardContentText}>{this.props.date}</Text> 
-                <Progress.Bar
-                    progress={this.props.progress}
-                    color={this.props.cardColor}
-                    unfilledColor={'#B9B9B9'}
-                    borderWidth={0}
-                    height={20}
-                    borderRadius={100}>
-                </Progress.Bar>
-                  <Text style={CommonStyles.medInfoCardContentText}>{this.props.progress * 100}%</Text> 
-                <Text style={CommonStyles.medInfoCardContentText}>{this.props.instruction}</Text>
-
-
-            </View>
-            <EditButton />
-            <Divider />
-            <ReminderItem />
-          </View>
-          
-          <TouchableOpacity style={CommonStyles.methodButtonContainer}>
-            <View style={CommonStyles.methodButton}>
-              <Text style={CommonStyles.methodButtonText}>See methods & effects</Text>
-              <View style={CommonStyles.methodButtonIcon}>
-                <AntDesign name="right" size={24} color="white"/>
-              </View>
-            </View>
-          </TouchableOpacity>
+      <View style={CommonStyles.content} >
+        <View style={CommonStyles.medInfoCardContent}>
+          <Text style={CommonStyles.medInfoCardContentTitle}>{props.name}</Text>
+          <Text style={CommonStyles.medInfoCardContentText}>{props.date}</Text>
+          <Progress.Bar
+            progress={props.progress}
+            color={props.cardColor}
+            unfilledColor={'#B9B9B9'}
+            borderWidth={0}
+            height={20}
+            borderRadius={100}>
+          </Progress.Bar>
+          <Text style={CommonStyles.medInfoCardContentText}>{props.progress * 100}%</Text>
+          <Text style={CommonStyles.medInfoCardContentText}>{props.instruction}</Text>
 
         </View>
-    );
-  }
+        <EditButton />
+        <Divider />
+        <ReminderItem />
+      </View>
+
+      <TouchableOpacity style={CommonStyles.methodButtonContainer}>
+        <View style={CommonStyles.methodButton}>
+          <Text style={CommonStyles.methodButtonText}>See methods & effects</Text>
+          <View style={CommonStyles.methodButtonIcon}>
+            <AntDesign name="right" size={24} color="white" />
+          </View>
+        </View>
+      </TouchableOpacity>
+
+    </View>
+  );
 }
+
 export default Card;
 
 const CommonStyles = StyleSheet.create({
@@ -116,15 +112,15 @@ const CommonStyles = StyleSheet.create({
   },
   cardImage: {
     backgroundColor: 'yellow',
-    flex:2
+    flex: 2
   },
   content: {
     flex: 4,
     marginTop: -40,
-    marginHorizontal: 30, 
+    marginHorizontal: 30,
     borderRadius: 20,
     backgroundColor: 'white',
-    shadowOffset:{  width: 0,  height: 10,  },
+    shadowOffset: { width: 0, height: 10, },
     shadowColor: 'black',
     shadowOpacity: 0.1,
   },
@@ -165,29 +161,29 @@ const CommonStyles = StyleSheet.create({
     borderRadius: 15,
     marginRight: 20,
   },
-  methodButton: { 
-    flexDirection: 'row', 
-    justifyContent: 'center', 
-    alignItems:'center',
+  methodButton: {
+    flexDirection: 'row',
+    justifyContent: 'center',
+    alignItems: 'center',
     marginTop: 30
   },
-  methodButtonText: { 
-    fontSize: 15, 
-    color: '#8D8D8D', 
+  methodButtonText: {
+    fontSize: 15,
+    color: '#8D8D8D',
     fontWeight: 'bold',
-    paddingHorizontal:10
+    paddingHorizontal: 10
   },
   methodButtonIcon: {
-  backgroundColor: '#8D8D8D', 
-  borderRadius: 100, 
-  padding: 6,
-  shadowOffset: { width: 0, height: 10, },
-  shadowColor: 'black',
-  shadowOpacity: 0.1,
- },
- methodButtonContainer: {
-  flex: 1,
- },
+    backgroundColor: '#8D8D8D',
+    borderRadius: 100,
+    padding: 6,
+    shadowOffset: { width: 0, height: 10, },
+    shadowColor: 'black',
+    shadowOpacity: 0.1,
+  },
+  methodButtonContainer: {
+    flex: 1,
+  },
   medInfoView: {
     marginTop: -30,
     height: 200,
@@ -202,7 +198,7 @@ const CommonStyles = StyleSheet.create({
   medInfoCardContent: {
     alignItems: 'center',
     paddingTop: 30,
-    margin:10
+    margin: 10
   },
   medInfoEditContainer: {
     flexDirection: 'row',
@@ -214,15 +210,15 @@ const CommonStyles = StyleSheet.create({
     paddingHorizontal: 8,
     margin: 10
   },
-  medInfoCardContentTitle: { 
-    fontSize: 20, 
-    fontWeight: 'bold', 
+  medInfoCardContentTitle: {
+    fontSize: 20,
+    fontWeight: 'bold',
     padding: 10,
   },
   medInfoCardContentText: {
     fontSize: 15,
     color: "#707070",
-    fontWeight: 'bold', 
+    fontWeight: 'bold',
     paddingVertical: 5
   },
   medInfoProgessbarText: {
