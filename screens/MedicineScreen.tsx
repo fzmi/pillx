@@ -9,7 +9,7 @@ import useColorScheme from '../hooks/useColorScheme';
 import { Entypo } from '@expo/vector-icons';
 import Card from '../components/medicine/Card';
 
-import UserContext from './UserContext';
+import UserContext from '../hooks/UserContext';
 
 export default function MedicineScreen({ navigation }: StackScreenProps<MedicineParamList, 'MedicineScreen'>) {
   const colorScheme = useColorScheme();
@@ -46,21 +46,21 @@ export default function MedicineScreen({ navigation }: StackScreenProps<Medicine
       <Button title="See Data" onPress={() => { navigation.navigate("Data", { medicineId: "med-id" }) }} />
       <Button title="Edit" onPress={() => { navigation.navigate("EditScreen", { medicineId: "med-id" }) }} />
 
-      {/* <Card imageUri={require('../assets/images/pill2.png')}
+      {/* <Card imageUri={require('../assets/images/pills/pill3.png')}
           name="Fish Oil and Omega"
           instruction="2 pill, once per day"
           cardColor='#E8E862'
           progress={0.3}
           date="3 months"
         ></Card>
-        <Card imageUri={require('../assets/images/pill.png')}
+        <Card imageUri={require('../assets/images/pills/pill1.png')}
           cardColor='#6CE8FC'
           name="Ferralet"
           instruction="1 pill, once per day"
           progress={0.7}
           date="5 months"
         ></Card>
-        <Card imageUri={require('../assets/images/pill1.png')}
+        <Card imageUri={require('../assets/images/pills/pill2.png')}
           cardColor='#6B72D0'
           name="Pantonix 20MG"
           instruction="1 pill, once per day"

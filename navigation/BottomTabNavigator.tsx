@@ -16,8 +16,8 @@ import ProfileScreen from '../screens/ProfileScreen';
 import AddTabNavigator from '../navigation/AddTabNavigator';
 import DataTabNavigator from '../navigation/DataTabNavigator';
 import EditScreen from '../screens/edit/EditScreen';
-import UserContext from '../screens/UserContext';
-import AddContext from '../screens/add/AddContext';
+import UserContext from '../hooks/UserContext';
+import AddContext from '../hooks/AddContext';
 
 const BottomTab = createBottomTabNavigator<BottomTabParamList>();
 

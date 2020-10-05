@@ -7,7 +7,7 @@ import { StackScreenProps } from '@react-navigation/stack';
 import { TodayParamList } from '../types';
 import useColorScheme from '../hooks/useColorScheme';
 import Todo from '../components/today/Todo';
-import UserContext from './UserContext';
+import UserContext from '../hooks/UserContext';
 
 export default function TodayScreen({ navigation }: StackScreenProps<TodayParamList, 'TodayScreen'>) {
   const colorScheme = useColorScheme();

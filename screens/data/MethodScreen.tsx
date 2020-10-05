@@ -3,7 +3,7 @@ import { View, Text } from '../../components/Themed';
 
 import { StackScreenProps } from '@react-navigation/stack';
 import { DataTabParamList } from '../../types';
-import UserContext from '../UserContext';
+import UserContext from '../../hooks/UserContext';
 
 export default function MethodScreen({ route, navigation }: StackScreenProps<DataTabParamList, 'MethodScreen'>) {
   // contains user info

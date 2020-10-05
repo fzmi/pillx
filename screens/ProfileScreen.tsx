@@ -4,8 +4,8 @@ import { ScrollView, Text, View } from '../components/Themed';
 import { StackScreenProps } from '@react-navigation/stack';
 
 import { ProfileParamList } from '../types';
-import AuthContext from './public/AuthContext';
-import UserContext from './UserContext';
+import AuthContext from '../hooks/AuthContext';
+import UserContext from '../hooks/UserContext';
 
 export default function ProfileScreen({ navigation }: StackScreenProps<ProfileParamList, 'ProfileScreen'>) {
   const { signOut } = React.useContext(AuthContext);

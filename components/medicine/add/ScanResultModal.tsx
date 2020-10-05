@@ -3,7 +3,7 @@ import { StyleSheet, Modal, TouchableHighlight, Alert, Image } from 'react-nativ
 import { View, Text } from '../../Themed';
 
 import { Entypo } from '@expo/vector-icons';
-import AddContext from '../../../screens/add/AddContext';
+import AddContext from '../../../hooks/AddContext';
 import Colors from '../../../constants/Colors';
 import useColorScheme from '../../../hooks/useColorScheme';
 
@@ -14,7 +14,7 @@ interface Props {
   navigation: any,
 }
 
-const ScanModal: React.FC<Props> = ({ modalVisible, setModalVisible, camera, navigation }) => {
+const ScanResultModal: React.FC<Props> = ({ modalVisible, setModalVisible, camera, navigation }) => {
   const colorScheme = useColorScheme();
 
   return (
@@ -119,4 +119,4 @@ const styles = StyleSheet.create({
   },
 })
 
-export default ScanModal;
+export default ScanResultModal;

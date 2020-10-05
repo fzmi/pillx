@@ -11,8 +11,8 @@ import { Camera } from 'expo-camera';
 import { AddTabParamList } from '../../types';
 import Colors from '../../constants/Colors';
 import useColorScheme from '../../hooks/useColorScheme';
-import ScanModal from '../../components/medicine/add/ScanModal';
-import AddContext from './AddContext';
+import ScanResultModal from '../../components/medicine/add/ScanResultModal';
+import AddContext from '../../hooks/AddContext';
 
 export default function ScanInputScreen({ navigation }: StackScreenProps<AddTabParamList, 'ScanInputScreen'>) {
   const camera = React.useRef<Camera>(null!);
@@ -148,7 +148,7 @@ export default function ScanInputScreen({ navigation }: StackScreenProps<AddTabP
           </Camera>}
       </View>
 
-      <ScanModal modalVisible={modalVisible} setModalVisible={setModalVisible}
+      <ScanResultModal modalVisible={modalVisible} setModalVisible={setModalVisible}
         camera={camera} navigation={navigation} />
     </View>
   );
