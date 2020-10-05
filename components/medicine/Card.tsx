@@ -3,8 +3,8 @@
 import React, { Component } from "react";
 import { Text, View } from '../Themed';
 import { Image, Dimensions, StyleSheet, TouchableOpacity } from "react-native";
-import Progress from 'react-native-progress';
-
+import * as Progress from 'react-native-progress';
+import Colors from '../../constants/Colors';
 import { AntDesign, Entypo, FontAwesome, MaterialCommunityIcons } from '@expo/vector-icons';
 
 interface CardProps {
@@ -28,153 +28,134 @@ const Divider = () => {
   )
 };
 
-const DeleteButton = () => {
-  return (
-    <View
-      style={{
-        flexDirection: 'row',
-        justifyContent: 'center',
-        margin: 30
-      }}>
-
-      <View
-        style={{
-          backgroundColor: '#D76161',
-          borderRadius: 100,
-          paddingHorizontal: 20,
-          paddingVertical: 10,
-          shadowOffset: { width: 0, height: 10, },
-          shadowColor: 'black',
-          shadowOpacity: 0.1,
-          padding: 5,
-        }}>
-        <TouchableOpacity style={{
-          flexDirection: 'row',
-          justifyContent: 'center',
-        }}>
-          <FontAwesome name="trash-o" size={30} color="white" />
-          <View style={{
-            justifyContent: "center",
-          }}>
-            <Text style={{
-              color: 'white',
-              fontWeight: 'bold',
-              paddingHorizontal: 5
-            }}>Delete</Text>
-          </View>
-        </TouchableOpacity>
-      </View>
-    </View>
-  )
-}
-
 const ReminderItem = () => {
   return (
     <View style={CommonStyles.reminderItem}>
       <View style={{
         backgroundColor: '#F4F4F4',
         borderRadius: 100,
-        paddingHorizontal: 20,
         justifyContent: 'center',
-        flex: 1
+        paddingHorizontal: 20,
+        paddingVertical:5,
       }}>
         <Text style={{ fontWeight: 'bold' }}>8 a.m.</Text>
       </View>
-      <View style={{
-        right: 0,
-        flex: 1,
-        alignItems: 'flex-end'
-      }}>
-        <TouchableOpacity>
-          <Entypo name="cross" size={25} color="grey" />
-        </TouchableOpacity>
-      </View>
+     
     </View>
   )
 }
 
+const EditButton = () => {
+  return (
+  <View style={CommonStyles.editButtonContainer}>
+
+    <View style={CommonStyles.editButton}>
+      <TouchableOpacity>
+        <Text style={CommonStyles.editButtonText}>Edit</Text>
+      </TouchableOpacity>
+    </View>
+
+  </View>
+  )
+}
+
 class Card extends Component<CardProps> {
+  // colorScheme = useColorScheme();
+
   render() {
     return (
-      <View style={{ flexDirection: 'column' }}>
         <View style={CommonStyles.card}>
-          <View
-            style={{
-              borderTopColor: this.props.cardColor,
-              borderTopWidth: 80,
-            }}
-          />
+          <View style={CommonStyles.cardImage} >
+            {/* Put medicine image or placeholder here */}
+            {/* <Image source={this.props.imageUri} /> */}
+          </View>
 
-          <View style={CommonStyles.medInfoView}>
+          <View style={CommonStyles.content} >
             <View style={CommonStyles.medInfoCardContent}>
-              {/* <Image source={this.props.imageUri} /> */}
-              <Text style={{ fontSize: 15, fontWeight: 'bold' }}>{this.props.name}</Text>
-              <Text style={{ fontSize: 10, color: '#8D8D8D' }}>{this.props.instruction}</Text>
-              <TouchableOpacity>
-                <View style={CommonStyles.medInfoEditContainer}>
-                  <MaterialCommunityIcons name="pencil" size={24} color="#357CA0" />
-                  <Text style={{ fontStyle: 'italic', color: '#357CA0', padding: 5 }}>Edit</Text>
-                </View>
-              </TouchableOpacity>
-              <View>
-                <View style={{ flexDirection: 'row', marginTop: 5 }}>
-                  <View style={{ flex: 4, justifyContent: 'center', alignContent: 'center', }}>
-                    <Progress.Bar
-                      progress={this.props.progress}
-                      color={this.props.cardColor}
-                      unfilledColor={'#B9B9B9'}
-                      borderWidth={0}
-                      height={20}
-                      borderRadius={100}>
-                    </Progress.Bar>
-                    <View style={{ alignItems: 'center', flexDirection: 'row', paddingHorizontal: 10, marginTop: -18 }}>
-                      <Text style={CommonStyles.medInfoProgessbarText}>{this.props.progress * 100}%</Text>
-                      <Text style={CommonStyles.medInfoProgessbarText}>{this.props.date}</Text>
-                    </View>
-                  </View>
-                </View>
-                <Divider />
-                <View>
-                  <TouchableOpacity>
-                    <View style={{ flexDirection: 'row', bottom: 0, right: 0 }}>
-                      <Text style={{ fontSize: 10, color: '#8D8D8D', paddingVertical: 6 }}>See more effects & effects</Text>
-                      <AntDesign name="right" size={24} color="#8D8D8D" />
-                    </View>
-                  </TouchableOpacity>
-                </View>
+                <Text style={CommonStyles.medInfoCardContentTitle}>{this.props.name}</Text>
+                <Text style={CommonStyles.medInfoCardContentText}>{this.props.date}</Text> 
+                <Progress.Bar
+                    progress={this.props.progress}
+                    color={this.props.cardColor}
+                    unfilledColor={'#B9B9B9'}
+                    borderWidth={0}
+                    height={20}
+                    borderRadius={100}>
+                </Progress.Bar>
+                  <Text style={CommonStyles.medInfoCardContentText}>{this.props.progress * 100}%</Text> 
+                <Text style={CommonStyles.medInfoCardContentText}>{this.props.instruction}</Text>
 
-              </View>
-            </View>
-          </View>
-
-          <View style={CommonStyles.reminderView}>
-            <View style={CommonStyles.reminderContent}>
-              <View style={CommonStyles.reminderTopbar}>
-                <View style={{ flex: 4, justifyContent: 'center', alignContent: 'center' }} >
-                  <Text style={{ fontSize: 15, fontWeight: 'bold' }}>Reminder</Text>
-                </View>
-
-                <View style={{ flex: 1, justifyContent: 'center', alignContent: 'center', paddingRight: 0 }} >
-                  <TouchableOpacity>
-                    <Entypo name="circle-with-plus" size={30} color="grey" />
-                  </TouchableOpacity>
-                </View>
-              </View>
-              <ReminderItem />
-              <Divider />
 
             </View>
+            <EditButton />
+            <Divider />
+            <ReminderItem />
           </View>
-          <DeleteButton />
+          
+          <TouchableOpacity style={CommonStyles.methodButtonContainer}>
+            <View style={CommonStyles.methodButton}>
+              <Text style={CommonStyles.methodButtonText}>See methods & effects</Text>
+              <View style={CommonStyles.methodButtonIcon}>
+                <AntDesign name="right" size={24} color="white"/>
+              </View>
+            </View>
+          </TouchableOpacity>
 
         </View>
-      </View>
     );
   }
 }
 export default Card;
 
 const CommonStyles = StyleSheet.create({
+  card: {
+    height: Dimensions.get('window').height * 0.65,
+    width: Dimensions.get('window').width * 0.7,
+    margin: 20,
+    marginVertical: Dimensions.get('window').height * 0.05,
+  },
+  cardImage: {
+    backgroundColor: 'yellow',
+    flex:2
+  },
+  content: {
+    flex: 4,
+    marginTop: -40,
+    marginHorizontal: 30, 
+    borderRadius: 20,
+    backgroundColor: 'white',
+    shadowOffset:{  width: 0,  height: 10,  },
+    shadowColor: 'black',
+    shadowOpacity: 0.1,
+  },
+  editButtonContainer: {
+    position: 'absolute',
+    flexDirection: 'row',
+    justifyContent: 'center',
+    left: 0,
+    right: 0,
+    bottom: 0,
+    borderRadius: 20,
+  },
+  editButton: {
+    backgroundColor: '#2e78b7',
+    borderRadius: 100,
+    width: 80,
+    height: 80,
+    shadowOffset: { width: 0, height: 10, },
+    shadowColor: 'black',
+    shadowOpacity: 0.1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    bottom: -20
+  },
+  editButtonText: {
+    color: 'white',
+    fontWeight: 'bold',
+    paddingHorizontal: 5,
+    fontSize: 25,
+    fontStyle: 'italic'
+  },
   header: {
     height: 100,
   },
@@ -184,15 +165,29 @@ const CommonStyles = StyleSheet.create({
     borderRadius: 15,
     marginRight: 20,
   },
-
-  // Card
-  card: {
-    height: Dimensions.get('window').height * 0.65,
-    width: Dimensions.get('window').width * 0.7,
-    margin: 20,
-    marginVertical: Dimensions.get('window').height * 0.1,
-    backgroundColor: 'white'
+  methodButton: { 
+    flexDirection: 'row', 
+    justifyContent: 'center', 
+    alignItems:'center',
+    marginTop: 30
   },
+  methodButtonText: { 
+    fontSize: 15, 
+    color: '#8D8D8D', 
+    fontWeight: 'bold',
+    paddingHorizontal:10
+  },
+  methodButtonIcon: {
+  backgroundColor: '#8D8D8D', 
+  borderRadius: 100, 
+  padding: 6,
+  shadowOffset: { width: 0, height: 10, },
+  shadowColor: 'black',
+  shadowOpacity: 0.1,
+ },
+ methodButtonContainer: {
+  flex: 1,
+ },
   medInfoView: {
     marginTop: -30,
     height: 200,
@@ -205,8 +200,9 @@ const CommonStyles = StyleSheet.create({
     marginVertical: 20,
   },
   medInfoCardContent: {
-    marginTop: -40,
-    alignItems: 'center'
+    alignItems: 'center',
+    paddingTop: 30,
+    margin:10
   },
   medInfoEditContainer: {
     flexDirection: 'row',
@@ -217,6 +213,17 @@ const CommonStyles = StyleSheet.create({
     justifyContent: 'center',
     paddingHorizontal: 8,
     margin: 10
+  },
+  medInfoCardContentTitle: { 
+    fontSize: 20, 
+    fontWeight: 'bold', 
+    padding: 10,
+  },
+  medInfoCardContentText: {
+    fontSize: 15,
+    color: "#707070",
+    fontWeight: 'bold', 
+    paddingVertical: 5
   },
   medInfoProgessbarText: {
     flex: 1,
@@ -243,5 +250,6 @@ const CommonStyles = StyleSheet.create({
   },
   reminderItem: {
     flexDirection: 'row',
+    justifyContent: 'center',
   },
 });

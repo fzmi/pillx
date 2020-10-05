@@ -39,14 +39,13 @@ export default function MedicineScreen({ navigation }: StackScreenProps<Medicine
   }, [navigation]);
 
   return (
-    <ScrollView horizontal={true} showsHorizontalScrollIndicator={false}>
+    <View style={styles.container}>
+      <ScrollView horizontal={true} showsHorizontalScrollIndicator={false}>
+        
+        {/* <Button title="See Data" onPress={() => { navigation.navigate("Data", { medicineId: "med-id" }) }} /> */}
+        {/* <Button title="Edit" onPress={() => { navigation.navigate("EditScreen", { medicineId: "med-id" }) }} /> */}
 
-      {/** ---------- fix code below ----------- */}
-
-      <Button title="See Data" onPress={() => { navigation.navigate("Data", { medicineId: "med-id" }) }} />
-      <Button title="Edit" onPress={() => { navigation.navigate("EditScreen", { medicineId: "med-id" }) }} />
-
-      {/* <Card imageUri={require('../assets/images/pills/pill3.png')}
+        <Card imageUri={require('../assets/images/pills/pill3.png')}
           name="Fish Oil and Omega"
           instruction="2 pill, once per day"
           cardColor='#E8E862'
@@ -66,11 +65,9 @@ export default function MedicineScreen({ navigation }: StackScreenProps<Medicine
           instruction="1 pill, once per day"
           progress={0.6}
           date="2 weeks"
-        ></Card> */}
-
-      {/** ---------- fix code above ----------- */}
-
-    </ScrollView>
+        ></Card>
+      </ScrollView>
+    </View>
   );
 }
 
