@@ -1,10 +1,9 @@
 import React from 'react';
 import { StyleSheet, Image, TextInput, TouchableOpacity } from 'react-native';
 import { ScrollView, Text, View } from '../components/Themed';
-
 import { StackScreenProps } from '@react-navigation/stack';
-import { ProfileParamList } from '../types';
 
+import { ProfileParamList } from '../types';
 import AuthContext from './public/AuthContext';
 import UserContext from './UserContext';
 

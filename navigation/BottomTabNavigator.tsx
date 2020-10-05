@@ -1,11 +1,13 @@
 import React from 'react';
-import { Alert } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { createStackNavigator } from '@react-navigation/stack';
 import { createNativeStackNavigator } from 'react-native-screens/native-stack';
+import AsyncStorage from '@react-native-community/async-storage';
+import { showMessage } from "react-native-flash-message";
 
+import { BottomTabParamList, TodayParamList, ProfileParamList, MedicineParamList } from '../types';
 import Colors from '../constants/Colors';
 import useColorScheme from '../hooks/useColorScheme';
 import TodayScreen from '../screens/TodayScreen';
@@ -14,14 +16,8 @@ import ProfileScreen from '../screens/ProfileScreen';
 import AddTabNavigator from '../navigation/AddTabNavigator';
 import DataTabNavigator from '../navigation/DataTabNavigator';
 import EditScreen from '../screens/edit/EditScreen';
-import { BottomTabParamList, TodayParamList, ProfileParamList, MedicineParamList } from '../types';
-
-import AuthContext from '../screens/public/AuthContext';
 import UserContext from '../screens/UserContext';
 import AddContext from '../screens/add/AddContext';
-import { showMessage, hideMessage } from "react-native-flash-message";
-
-import AsyncStorage from '@react-native-community/async-storage';
 
 const BottomTab = createBottomTabNavigator<BottomTabParamList>();
 
@@ -112,7 +108,9 @@ export default function BottomTabNavigator() {
           options={{
             // You can explore the built-in icon families and icons on the web at:
             // https://icons.expo.fyi/
-            tabBarIcon: ({ color, focused }) => <Ionicons name="md-calendar" color={color} size={focused ? 36 : 30} style={{ marginBottom: -3 }} />,
+            tabBarIcon: ({ color, focused }) =>
+              <Ionicons name="md-calendar" color={color}
+                size={focused ? 36 : 30} style={{ marginBottom: -3 }} />,
             tabBarBadge: user.userInfo.medicine.length == 0 ? undefined : user.userInfo.medicine.length,
           }}
         />
@@ -120,14 +118,18 @@ export default function BottomTabNavigator() {
           name="Medicine"
           component={MedicineNavigator}
           options={{
-            tabBarIcon: ({ color, focused }) => <MaterialCommunityIcons name="pill" color={color} size={focused ? 36 : 30} style={{ marginBottom: -3 }} />,
+            tabBarIcon: ({ color, focused }) =>
+              <MaterialCommunityIcons name="pill" color={color}
+                size={focused ? 36 : 30} style={{ marginBottom: -3 }} />,
           }}
         />
         <BottomTab.Screen
           name="Profile"
           component={ProfileNavigator}
           options={{
-            tabBarIcon: ({ color, focused }) => <Ionicons name="ios-contact" color={color} size={focused ? 36 : 30} style={{ marginBottom: -3 }} />,
+            tabBarIcon: ({ color, focused }) =>
+              <Ionicons name="ios-contact" color={color}
+                size={focused ? 36 : 30} style={{ marginBottom: -3 }} />,
           }}
         />
       </BottomTab.Navigator>

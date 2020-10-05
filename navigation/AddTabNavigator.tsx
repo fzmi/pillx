@@ -1,13 +1,12 @@
 import React from 'react';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import { createStackNavigator } from '@react-navigation/stack';
+import { StackScreenProps } from '@react-navigation/stack';
 
+import { AddTabParamList, MedicineParamList } from '../types';
 import Colors from '../constants/Colors';
 import useColorScheme from '../hooks/useColorScheme';
-import { AddTabParamList, MedicineParamList } from '../types';
 import ManualInputScreen from '../screens/add/ManualInputScreen';
 import ScanInputScreen from '../screens/add/ScanInputScreen';
-import { StackScreenProps } from '@react-navigation/stack';
 
 const AddTab = createBottomTabNavigator<AddTabParamList>();
 

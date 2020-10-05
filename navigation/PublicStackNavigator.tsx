@@ -1,10 +1,10 @@
 import React from 'react';
 import { createStackNavigator } from '@react-navigation/stack';
 
+import { PublicStackParamList } from '../types';
 import SignInScreen from '../screens/public/SignInScreen';
 import RegisterScreen from '../screens/public/RegisterScreen';
 import RecoverScreen from '../screens/public/RecoverScreen';
-import { PublicStackParamList } from '../types';
 
 const PublicStack = createStackNavigator<PublicStackParamList>();
 

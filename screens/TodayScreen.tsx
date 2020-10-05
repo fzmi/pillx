@@ -1,9 +1,9 @@
 import React from 'react';
 import { StyleSheet, TouchableOpacity, Alert, Image, TouchableHighlight, Button } from 'react-native';
 import { ScrollView, Text, View } from '../components/Themed';
-
 import { Calendar, Agenda, CalendarList } from 'react-native-calendars';
 import { StackScreenProps } from '@react-navigation/stack';
+
 import { TodayParamList } from '../types';
 import useColorScheme from '../hooks/useColorScheme';
 import Todo from '../components/today/Todo';
