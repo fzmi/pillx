@@ -3,7 +3,7 @@ import { Image } from 'react-native';
 import * as Font from 'expo-font';
 import { Asset } from 'expo-asset';
 import { Ionicons } from '@expo/vector-icons';
-// import SplashScreen from 'expo-splash-screen';
+import * as SplashScreen from 'expo-splash-screen';
 
 export default function useCachedResources() {
   const [isLoadingComplete, setLoadingComplete] = React.useState(false);
@@ -22,7 +22,7 @@ export default function useCachedResources() {
   React.useEffect(() => {
     async function loadResourcesAndDataAsync() {
       try {
-        // SplashScreen.preventAutoHideAsync();
+        SplashScreen.preventAutoHideAsync();
 
         // Preload images
         await cacheImages([
@@ -48,7 +48,7 @@ export default function useCachedResources() {
         console.warn(e);
       } finally {
         setLoadingComplete(true);
-        // SplashScreen.hideAsync();
+        SplashScreen.hideAsync();
       }
     }
 
