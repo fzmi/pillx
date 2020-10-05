@@ -12,6 +12,7 @@ import Colors from '../../constants/Colors';
 import useColorScheme from '../../hooks/useColorScheme';
 import StepIndicator from '../../components/medicine/add/StepIndicator';
 import AddContext from '../../hooks/AddContext';
+import { Input } from 'react-native-elements';
 
 interface Props {
   styles: any;
@@ -20,11 +21,13 @@ interface Props {
 
 const ManualStep1View: React.FC<Props> = ({ styles, setStep }) => {
   const colorScheme = useColorScheme();
+  const [showFrequencyPicker, setShowFrequencyPicker] = React.useState(false);
   const [frequency, setFrequency] = React.useState<any>({
     number: 1,
     unit: 'day',
   });
-  const [showFrequencyPicker, setShowFrequencyPicker] = React.useState(false);
+  const [showNameInput, setShowNameInput] = React.useState(false);
+  const [name, setName] = React.useState('Medicine');
 
   return (
     <ScrollView style={{ backgroundColor: Colors[colorScheme].medicineStep1 }}>
@@ -36,11 +39,22 @@ const ManualStep1View: React.FC<Props> = ({ styles, setStep }) => {
 
             <View style={{ marginVertical: 20, borderRadius: 10, padding: 20 }}
               lightColor="#fff" darkColor="#333">
-              <View style={{ flexDirection: "row", justifyContent: "space-between" }}
-                lightColor="#fff" darkColor="#333">
-                <Text style={{ fontSize: 20, fontWeight: '600' }}>Name</Text>
-                <Entypo name="chevron-thin-right" size={24} color={Colors[colorScheme].text} />
-              </View>
+
+              <Text style={{ fontSize: 24, fontWeight: '600' }}>Set Tracking Plan</Text>
+              <Text style={{ fontSize: 15, marginVertical: 3 }}>Add the name, frequency and treatment duration of this medicine.</Text>
+              <View style={styles.separator} lightColor="#eee" darkColor="rgba(255,255,255,0.1)" />
+
+              <TouchableOpacity onPress={() => setShowNameInput(!showNameInput)}>
+                <View style={{ flexDirection: "row", justifyContent: "space-between" }}
+                  lightColor="#fff" darkColor="#333">
+                  <Text style={{ fontSize: 20, fontWeight: '600' }}>Name</Text>
+                  <Entypo name="chevron-thin-right" size={24} color={Colors[colorScheme].text} />
+                </View>
+
+                {showNameInput && (
+                  <Input></Input>
+                )}
+              </TouchableOpacity>
 
               <View style={styles.separator} lightColor="#eee" darkColor="rgba(255,255,255,0.1)" />
 

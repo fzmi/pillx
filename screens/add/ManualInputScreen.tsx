@@ -2,6 +2,7 @@ import React from 'react';
 import { StyleSheet } from 'react-native';
 import { View } from '../../components/Themed';
 import { StackScreenProps } from '@react-navigation/stack';
+import { useFocusEffect, StackActions } from '@react-navigation/native';
 
 import { AddTabParamList } from '../../types';
 import ManualStep1View from './ManualStep1View';
@@ -10,6 +11,17 @@ import ManualStep3View from './ManualStep3View';
 
 export default function ManualInputScreen({ navigation }: StackScreenProps<AddTabParamList, 'ManualInputScreen'>) {
   const [step, setStep] = React.useState(1);
+
+  // go back to main medicine screen if navigate to other tabs
+  // useFocusEffect(
+  //   React.useCallback(() => {
+  //     return () => {
+  //       if (!navigation.isFocused()) {
+  //         navigation.dispatch(StackActions.popToTop());
+  //       }
+  //     };
+  //   }, [])
+  // );
 
   return (
     <View style={{ flex: 1 }}>
@@ -51,7 +63,7 @@ const styles = StyleSheet.create({
     marginLeft: 10,
   },
   separator: {
-    marginVertical: 10,
+    marginVertical: 15,
     height: 1,
     width: '100%',
     justifyContent: 'center',

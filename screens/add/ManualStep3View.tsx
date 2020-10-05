@@ -2,7 +2,7 @@ import React from 'react';
 import { StyleSheet, TouchableOpacity, Image } from 'react-native';
 import { ScrollView, Text, View } from '../../components/Themed';
 import { StackScreenProps } from '@react-navigation/stack';
-import { AntDesign, Entypo } from '@expo/vector-icons';
+import { AntDesign, Entypo, Ionicons } from '@expo/vector-icons';
 import { StackActions } from '@react-navigation/native';
 import { Picker } from '@react-native-community/picker';
 import { showMessage } from "react-native-flash-message";
@@ -31,10 +31,26 @@ const ManualStep3View: React.FC<Props> = ({ styles, setStep, navigation }) => {
             <StepIndicator step={3} totalSteps={3} />
 
             <View style={{ marginVertical: 20, borderRadius: 10, padding: 20 }}>
-              <Text style={{ fontSize: 20, fontWeight: '600' }}>Set Thumbnail</Text>
-              {addInfo.imageUri != '' && (
-                <Image style={{ width: 100, height: 100 }} source={{ uri: addInfo.imageUri }} />
-              )}
+              <Text style={{ fontSize: 24, fontWeight: '600' }}>Set Thumbnail</Text>
+              <Text style={{ fontSize: 15, marginVertical: 3 }}>Select the header image for your medicine.</Text>
+              <View style={{ flexDirection: "row", flexWrap: "wrap" }}>
+                {addInfo.imageUri != '' && (
+                  <TouchableOpacity style={{ borderColor: "#aaa", borderWidth: 1, marginTop: 10, marginRight: 10 }}>
+                    <Image style={{ width: 100, height: 100 }} source={{ uri: addInfo.imageUri }} />
+                    <Ionicons style={{ position: "absolute", bottom: 3, right: 3 }} name="ios-checkmark-circle" size={30} color="#228c22" />
+                  </TouchableOpacity>
+                )}
+                <TouchableOpacity style={{ borderColor: "#aaa", borderWidth: 1, marginTop: 10, marginRight: 10 }}>
+                  <Image style={{ width: 100, height: 100 }} source={require("../../assets/images/pills/pill3.png")} />
+                </TouchableOpacity>
+                <TouchableOpacity style={{ borderColor: "#aaa", borderWidth: 1, marginTop: 10, marginRight: 10 }}>
+                  <Image style={{ width: 100, height: 100 }} source={require("../../assets/images/pills/pill2.png")} />
+                </TouchableOpacity>
+                <TouchableOpacity style={{ borderColor: "#aaa", borderWidth: 1, marginTop: 10, marginRight: 10 }}>
+                  <Image style={{ width: 100, height: 100 }} source={require("../../assets/images/pills/pill1.png")} />
+                </TouchableOpacity>
+
+              </View>
             </View>
 
             <TouchableOpacity onPress={() => {

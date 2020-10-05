@@ -29,7 +29,15 @@ const ManualStep2View: React.FC<Props> = ({ styles, setStep }) => {
             <StepIndicator step={2} totalSteps={3} />
 
             <View style={{ marginVertical: 20, borderRadius: 10, padding: 20 }}>
-              <Text style={{ fontSize: 20, fontWeight: '600' }}>Set Reminders</Text>
+              <Text style={{ fontSize: 24, fontWeight: '600' }}>Set Reminders</Text>
+              <Text style={{ fontSize: 15, marginVertical: 3 }}>Add a reminder time when it is the day to take this medicine.</Text>
+              <View style={styles.separator} lightColor="#eee" darkColor="rgba(255,255,255,0.1)" />
+              <View style={{ flexDirection: "row", justifyContent: "space-between", alignItems: "center" }}>
+                <Text style={{ fontSize: 20, fontWeight: '600' }}>12:00pm</Text>
+                <AntDesign name="close" size={24} color={Colors[colorScheme].text} />
+              </View>
+
+              <View style={styles.separator} lightColor="#eee" darkColor="rgba(255,255,255,0.1)" />
             </View>
 
             <TouchableOpacity onPress={() => { setStep(3); }} style={styles.buttonContainer}>

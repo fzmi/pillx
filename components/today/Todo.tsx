@@ -2,7 +2,7 @@ import React from 'react';
 import { Alert, StyleSheet, TouchableOpacity, Image } from 'react-native';
 import { View, Text } from '../Themed';
 
-import { Entypo } from '@expo/vector-icons';
+import { Entypo, Ionicons } from '@expo/vector-icons';
 import Colors from '../../constants/Colors';
 import useColorScheme from '../../hooks/useColorScheme';
 
@@ -11,32 +11,34 @@ interface Props {
 }
 
 const Todo: React.FC<Props> = props => {
-
   const colorScheme = useColorScheme();
 
   return (
     <View style={{ backgroundColor: "transparent" }}>
-      <TouchableOpacity
+      <View
         style={[styles.item, { height: props.item.height }]}
-        onPress={() => Alert.alert(props.item.name)}
       >
         <View style={styles.content}>
           <View style={{ backgroundColor: "transparent" }}>
-            <Text style={{ fontSize: 22, fontWeight: "bold", marginBottom: 4 }}>{props.item.name}</Text>
-            <Text style={{ fontSize: 16, marginBottom: 10, color: "#444" }}>{props.item.description}</Text>
-            <Text style={{ fontSize: 16, color: "#333" }}><Entypo name="clock" size={16} color={"#333"} />&nbsp;&nbsp;{props.item.time}</Text>
+            <Text style={{ fontSize: 24, fontWeight: "bold", marginBottom: 4 }}>{props.item.name}</Text>
+            <Text style={{ fontSize: 18, marginBottom: 10, color: "#444" }}><Entypo name="clock" size={16} color={"#333"} />&nbsp;&nbsp;{props.item.description}</Text>
+            {/* <Text style={{ fontSize: 16, color: "#333" }}>{props.item.time}</Text> */}
           </View>
           <Image style={styles.pillImage} source={props.item.image}></Image>
         </View>
         <View style={{ display: "flex", flexDirection: "row" }}>
-          <TouchableOpacity style={{ backgroundColor: "#888", padding: 10, borderRadius: 5, flex: 1, margin: 5, display: "flex", alignItems: "center" }}>
-            <Text style={{ fontSize: 20, color: "#fff" }}>Instructions</Text>
+
+          <TouchableOpacity style={{ backgroundColor: Colors[colorScheme].buttonBlue, padding: 10, borderRadius: 5, flex: 3, margin: 5, display: "flex", flexDirection: "row", justifyContent: "center", alignItems: "center" }}
+            onPress={() => {}}
+          >
+            <Ionicons name="ios-checkmark-circle" size={30} color="white" />
+            <Text style={{ fontSize: 20, color: "#fff", marginLeft: 10 }}>Taken</Text>
           </TouchableOpacity>
-          <TouchableOpacity style={{ backgroundColor: "#20bcf0", padding: 10, borderRadius: 5, flex: 1, margin: 5, display: "flex", alignItems: "center" }}>
-            <Text style={{ fontSize: 20, color: "#fff" }}>Taken</Text>
+          <TouchableOpacity style={{ borderColor: "#333", borderWidth: 1, borderRadius: 5, flex: 1, margin: 5, display: "flex", alignItems: "center", justifyContent: "center" }}>
+            <Ionicons name="ios-help-circle" size={30} color="#333" />
           </TouchableOpacity>
         </View>
-      </TouchableOpacity>
+      </View>
     </View>
   )
 }
@@ -64,8 +66,8 @@ const styles = StyleSheet.create({
     backgroundColor: "transparent",
   },
   pillImage: {
-    width: 100,
-    height: 80,
+    maxWidth: 80,
+    maxHeight: 60,
     borderRadius: 5,
     marginRight: 5,
   },

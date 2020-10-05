@@ -66,13 +66,15 @@ export default function BottomTabNavigator() {
           email: userData?.data.email,
           // todo: will use server data
           medicine: [{
+            austR: "1",
             name: "Pantonix 20mg",
-            description: "1 pill, once per day",
+            description: "7:00am, 1 pill",
             time: "7:00am",
             image: require("../assets/images/pills/pill3.png"),
           }, {
+            austR: "2",
             name: "Ferralet 90",
-            description: "1 pill, once per day",
+            description: "7:30am, 1 pill",
             time: "7:30am",
             image: require("../assets/images/pills/pill2.png"),
           }]
