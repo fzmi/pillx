@@ -34,4 +34,4 @@ expo start
 
 ## Contributing
 
-See [React Navtive documentation](https://reactnative.dev/docs/getting-started) and [Ionic documentation](https://ionicframework.com/docs/react/quickstart).
+See [React Navtive documentation](https://reactnative.dev/docs/getting-started) and [Expo documentation](https://docs.expo.io/workflow/expo-cli/)
