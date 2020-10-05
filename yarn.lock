@@ -6866,8 +6866,8 @@ react-native-iphone-x-helper@^1.2.1:
 
 react-native-progress@^4.1.2:
   version "4.1.2"
-  resolved "https://registry.yarnpkg.com/react-native-progress/-/react-native-progress-4.1.2.tgz#ffb2264ddfeba409c730e36a9791bb7bbe07a00d"
-  integrity sha512-sFHs6k6npWDOyvQoL2NeyOyHb+q1s8iOAOeyzoObN77zkxOAsgJt9FcSJLRq70Mw7qSGNJMFDqCgvYR1huYRwQ==
+  resolved "https://registry.npm.taobao.org/react-native-progress/download/react-native-progress-4.1.2.tgz#ffb2264ddfeba409c730e36a9791bb7bbe07a00d"
+  integrity sha1-/7ImTd/rpAnHMONql5G7e74HoA0=
   dependencies:
     "@react-native-community/art" "^1.1.2"
     prop-types "^15.7.2"
