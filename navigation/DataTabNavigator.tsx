@@ -1,17 +1,17 @@
 import React from 'react';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+import { StackScreenProps } from '@react-navigation/stack';
 
+import { DataTabParamList, MedicineParamList } from '../types';
 import Colors from '../constants/Colors';
 import useColorScheme from '../hooks/useColorScheme';
-import { DataTabParamList, MedicineParamList } from '../types';
-import { StackScreenProps } from '@react-navigation/stack';
 import EffectScreen from '../screens/data/EffectScreen';
 import MethodScreen from '../screens/data/MethodScreen';
 
 const DataTab = createBottomTabNavigator<DataTabParamList>();
 
 // Root stack -> Button Tab -> Medicine -> Data
-export default function DataTabNavigator({ route, navigation }: StackScreenProps<MedicineParamList, 'Data'>) {
+export default function DataTabNavigator({ route }: StackScreenProps<MedicineParamList, 'Data'>) {
   const colorScheme = useColorScheme();
   const { medicineId } = route.params;
 

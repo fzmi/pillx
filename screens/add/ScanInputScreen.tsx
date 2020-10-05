@@ -1,19 +1,18 @@
 import React from 'react';
 import { StyleSheet, TouchableHighlight, Platform } from 'react-native';
 import { Text, View } from '../../components/Themed';
-
 import { StackScreenProps, useHeaderHeight } from '@react-navigation/stack';
 import { useFocusEffect } from '@react-navigation/native';
 import { Entypo, Feather, MaterialCommunityIcons } from '@expo/vector-icons';
-import { Camera } from 'expo-camera';
-import BarCodeScanner from 'expo-barcode-scanner';
 import { showMessage, hideMessage } from "react-native-flash-message";
+import { Camera } from 'expo-camera';
+// import BarCodeScanner from 'expo-barcode-scanner';
 
 import { AddTabParamList } from '../../types';
 import Colors from '../../constants/Colors';
 import useColorScheme from '../../hooks/useColorScheme';
-import AddContext from './AddContext';
 import ScanModal from '../../components/medicine/add/ScanModal';
+import AddContext from './AddContext';
 
 export default function ScanInputScreen({ navigation }: StackScreenProps<AddTabParamList, 'ScanInputScreen'>) {
   const camera = React.useRef<Camera>(null!);
@@ -72,7 +71,10 @@ export default function ScanInputScreen({ navigation }: StackScreenProps<AddTabP
       const body = new FormData();
       // uri workaround, looks like a react native bug: https://github.com/facebook/react-native/issues/29364
       // also needs to override the typescript formdata (see global.d.ts)
-      body.append('photo', { uri: Platform.OS == 'ios' ? uri.replace("file://", "/private") : uri, name: 'image.jpg', type: 'image/jpeg' });
+      body.append('photo', {
+        uri: Platform.OS == 'ios' ? uri.replace("file://", "/private") : uri,
+        name: 'image.jpg', type: 'image/jpeg'
+      });
       body.append('Content-Type', 'image/jpeg');
       let response = await fetch("url", {
         method: 'POST',
@@ -146,7 +148,8 @@ export default function ScanInputScreen({ navigation }: StackScreenProps<AddTabP
           </Camera>}
       </View>
 
-      <ScanModal modalVisible={modalVisible} setModalVisible={setModalVisible} camera={camera} navigation={navigation} />
+      <ScanModal modalVisible={modalVisible} setModalVisible={setModalVisible}
+        camera={camera} navigation={navigation} />
     </View>
   );
 }

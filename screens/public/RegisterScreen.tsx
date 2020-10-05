@@ -1,5 +1,5 @@
 import React from 'react';
-import { Button, Image, StyleSheet, TextInput, TouchableOpacity } from 'react-native';
+import { Image, StyleSheet, TextInput, TouchableOpacity } from 'react-native';
 import { Text, View, ScrollView } from '../../components/Themed';
 import { CheckBox } from 'react-native-elements';
 

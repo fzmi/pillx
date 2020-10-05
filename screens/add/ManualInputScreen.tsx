@@ -1,17 +1,17 @@
 import React from 'react';
-import { StyleSheet, TouchableOpacity, Alert, Image, TouchableHighlight } from 'react-native';
+import { StyleSheet, TouchableOpacity, Image } from 'react-native';
 import { ScrollView, Text, View } from '../../components/Themed';
-
 import { StackScreenProps } from '@react-navigation/stack';
 import { AntDesign, Entypo } from '@expo/vector-icons';
+import { StackActions } from '@react-navigation/native';
+import { Picker } from '@react-native-community/picker';
+import { showMessage } from "react-native-flash-message";
+
 import { AddTabParamList } from '../../types';
 import Colors from '../../constants/Colors';
 import useColorScheme from '../../hooks/useColorScheme';
 import StepIndicator from '../../components/medicine/add/StepIndicator';
 import AddContext from './AddContext';
-import { StackActions } from '@react-navigation/native';
-import { Picker } from '@react-native-community/picker';
-import { showMessage, hideMessage } from "react-native-flash-message";
 
 export default function ManualInputScreen({ navigation }: StackScreenProps<AddTabParamList, 'ManualInputScreen'>) {
   const colorScheme = useColorScheme();
@@ -34,8 +34,10 @@ export default function ManualInputScreen({ navigation }: StackScreenProps<AddTa
 
             <AddContext.Consumer>
               {({ addInfo, setAddInfo }) => (
-                <View style={{ marginVertical: 20, borderRadius: 10, padding: 20 }} lightColor="#fff" darkColor="#333">
-                  <View style={{ flexDirection: "row", justifyContent: "space-between" }} lightColor="#fff" darkColor="#333">
+                <View style={{ marginVertical: 20, borderRadius: 10, padding: 20 }}
+                  lightColor="#fff" darkColor="#333">
+                  <View style={{ flexDirection: "row", justifyContent: "space-between" }}
+                    lightColor="#fff" darkColor="#333">
                     <Text style={{ fontSize: 20, fontWeight: '600' }}>Name</Text>
                     <Entypo name="chevron-thin-right" size={24} color={Colors[colorScheme].text} />
                   </View>
@@ -43,10 +45,13 @@ export default function ManualInputScreen({ navigation }: StackScreenProps<AddTa
                   <View style={styles.separator} lightColor="#eee" darkColor="rgba(255,255,255,0.1)" />
 
                   <TouchableOpacity onPress={() => setShowFrequencyPicker(!showFrequencyPicker)}>
-                    <View style={{ flexDirection: "row", justifyContent: "space-between", alignItems: "center" }} lightColor="#fff" darkColor="#333">
+                    <View style={{ flexDirection: "row", justifyContent: "space-between", alignItems: "center" }}
+                      lightColor="#fff" darkColor="#333">
                       <View lightColor="#fff" darkColor="#333">
                         <Text style={{ fontSize: 20, fontWeight: '600', marginBottom: 3 }}>Frequency</Text>
-                        <Text style={{ color: "#444" }}>{frequency.number != 0 && frequency.number + " " + frequency.unit}</Text>
+                        <Text style={{ color: "#444" }}>
+                          {frequency.number != 0 && frequency.number + " " + frequency.unit}
+                        </Text>
                       </View>
                       <Entypo name="chevron-thin-right" size={24} color={Colors[colorScheme].text} />
                     </View>
