@@ -26,7 +26,7 @@ export default function useCachedResources() {
 
         // Preload images
         await cacheImages([
-          require('../assets/images/logo.png'),
+          require('../assets/images/icons/logo.png'),
           require('../assets/images/profile/Avatar.png'),
           require('../assets/images/profile/Allergen.png'),
           require('../assets/images/profile/DOB.png'),

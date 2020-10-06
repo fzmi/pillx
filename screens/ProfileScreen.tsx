@@ -38,7 +38,7 @@ export default function ProfileScreen({ navigation }: StackScreenProps<ProfilePa
         <TouchableOpacity onPress={() => { }} style={styles.link}>
           <View style={styles.item}>
             <View style={styles.iconContainer}>
-              <Image style={styles.itemIcon} source={require("../assets/images//profile/DOB.png")} />
+              <Image style={styles.itemIcon} source={require("../assets/images/profile/DOB.png")} />
             </View>
             <View style={styles.itemText}>
               <Text style={styles.itemName}>Date of Birth</Text>

@@ -5,6 +5,7 @@ import { View, Text } from '../Themed';
 import { Entypo, Ionicons } from '@expo/vector-icons';
 import Colors from '../../constants/Colors';
 import useColorScheme from '../../hooks/useColorScheme';
+import * as Haptics from 'expo-haptics';
 
 interface Props {
   item: any;
@@ -29,7 +30,9 @@ const Todo: React.FC<Props> = props => {
         <View style={{ display: "flex", flexDirection: "row" }}>
 
           <TouchableOpacity style={{ backgroundColor: Colors[colorScheme].buttonBlue, padding: 10, borderRadius: 5, flex: 3, margin: 5, display: "flex", flexDirection: "row", justifyContent: "center", alignItems: "center" }}
-            onPress={() => {}}
+            onPress={() => {
+              Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
+            }}
           >
             <Ionicons name="ios-checkmark-circle" size={30} color="white" />
             <Text style={{ fontSize: 20, color: "#fff", marginLeft: 10 }}>Taken</Text>

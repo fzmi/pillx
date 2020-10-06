@@ -19,7 +19,7 @@ export default function SignInScreen({ navigation }: StackScreenProps<PublicStac
       contentContainerStyle={{ flexGrow: 0.6, justifyContent: 'center' }}>
       <View style={styles.container}>
         <View style={{ width: 140, height: 140 }}>
-          <Image style={styles.logo} source={require("../../assets/images/logo.png")} />
+          <Image style={styles.logo} source={require("../../assets/images/icons/logo.png")} />
         </View>
         <Text style={styles.title}>Sign In</Text>
         <View style={styles.inputArea}>

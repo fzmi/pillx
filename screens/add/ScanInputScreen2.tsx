@@ -21,7 +21,7 @@ export default function ScanInputScreen() {
   const handleBarCodeScanned = ({ type, data }: any) => {
     setScanned(true);
     setData(data);
-    // alert(`Bar code with type ${type} and data ${data} has been scanned!`);
+    alert(`Bar code with type ${type} and data ${data} has been scanned!`);
   };
 
   if (hasPermission === null) {

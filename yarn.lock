@@ -3656,6 +3656,11 @@ expo-font@~8.3.0:
     fbjs "1.0.0"
     fontfaceobserver "^2.1.0"
 
+expo-haptics@~8.3.0:
+  version "8.3.0"
+  resolved "https://registry.yarnpkg.com/expo-haptics/-/expo-haptics-8.3.0.tgz#9556b39cda70af7870a4991527110becb037be43"
+  integrity sha512-LzNPSIvly9GBPoBNj1pbVX3RepA1NIU9mfs04mX0bKFlnIiw3Iinjywv1FiwpOZaQpWaA1LofPQlv06fxZlEgA==
+
 expo-keep-awake@~8.3.0:
   version "8.3.0"
   resolved "https://registry.yarnpkg.com/expo-keep-awake/-/expo-keep-awake-8.3.0.tgz#11bb8073dfe453259926855c81d9f35db03a79b9"

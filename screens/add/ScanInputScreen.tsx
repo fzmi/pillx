@@ -1,11 +1,12 @@
 import React from 'react';
-import { StyleSheet, TouchableHighlight, Platform } from 'react-native';
+import { StyleSheet, TouchableHighlight, Platform, Alert } from 'react-native';
 import { Text, View } from '../../components/Themed';
 import { StackScreenProps, useHeaderHeight } from '@react-navigation/stack';
 import { useFocusEffect } from '@react-navigation/native';
 import { Entypo, Feather, MaterialCommunityIcons } from '@expo/vector-icons';
 import { showMessage, hideMessage } from "react-native-flash-message";
 import { Camera } from 'expo-camera';
+import * as Haptics from 'expo-haptics';
 // import BarCodeScanner from 'expo-barcode-scanner';
 
 import { AddTabParamList } from '../../types';
@@ -71,12 +72,12 @@ export default function ScanInputScreen({ navigation }: StackScreenProps<AddTabP
       const body = new FormData();
       // uri workaround, looks like a react native bug: https://github.com/facebook/react-native/issues/29364
       // also needs to override the typescript formdata (see global.d.ts)
-      body.append('photo', {
+      body.append('file', {
         uri: Platform.OS == 'ios' ? uri.replace("file://", "/private") : uri,
         name: 'image.jpg', type: 'image/jpeg'
       });
       body.append('Content-Type', 'image/jpeg');
-      let response = await fetch("url", {
+      let response = await fetch("http://deco3801-rever.uqcloud.net/scanning", {
         method: 'POST',
         headers: {
           Accept: "application/json",
@@ -84,7 +85,9 @@ export default function ScanInputScreen({ navigation }: StackScreenProps<AddTabP
         },
         body: body
       });
+      console.log(response);
       let responseJson = await response.json();
+      console.log(responseJson);
       return {
         data: responseJson,
       }
@@ -112,6 +115,7 @@ export default function ScanInputScreen({ navigation }: StackScreenProps<AddTabP
                 onPress={() => {
                   setFlash(flash === Camera.Constants.FlashMode.off ?
                     Camera.Constants.FlashMode.torch : Camera.Constants.FlashMode.off);
+                  Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
                 }}>
                 <MaterialCommunityIcons style={styles.cameraButtonIcon} name="flashlight" size={25}
                   color={flash === Camera.Constants.FlashMode.off ? 'white' : '#222'} />
@@ -123,11 +127,13 @@ export default function ScanInputScreen({ navigation }: StackScreenProps<AddTabP
                     style={[styles.cameraMainButton, { backgroundColor: Colors[colorScheme].buttonBlue }]}
                     onPress={async () => {
                       if (camera.current) {
+                        Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
                         let photo = await camera.current.takePictureAsync();
                         let uri = photo.uri;
                         // todo: add the image to the addInfo state
                         const response = uploadImage(uri);
 
+                        // console.log(response);
                         setAddInfo({ ...addInfo, imageUri: uri });
                         camera.current.pausePreview();
                         setModalVisible(true);
@@ -140,7 +146,10 @@ export default function ScanInputScreen({ navigation }: StackScreenProps<AddTabP
 
               <TouchableHighlight
                 style={[styles.cameraSecondaryButton, { backgroundColor: '#222', marginLeft: 20 }]}
-                onPress={() => { setZoom(zoom == 0 ? 0.2 : 0); }}>
+                onPress={() => {
+                  setZoom(zoom == 0 ? 0.2 : 0);
+                  Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
+                }}>
                 <Feather style={styles.cameraButtonIcon}
                   name={zoom == 0 ? "zoom-in" : "zoom-out"} size={25} color="white" />
               </TouchableHighlight>

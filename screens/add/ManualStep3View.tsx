@@ -13,6 +13,7 @@ import useColorScheme from '../../hooks/useColorScheme';
 import StepIndicator from '../../components/medicine/add/StepIndicator';
 import AddContext from '../../hooks/AddContext';
 import { StackNavigationProp } from '@react-navigation/stack';
+import * as Haptics from 'expo-haptics';
 
 interface Props {
   styles: any;
@@ -63,6 +64,7 @@ const ManualStep3View: React.FC<Props> = ({ styles, setStep, navigation }) => {
                 icon: "success",
                 duration: 3000,
               });
+              Haptics.notificationAsync(Haptics.NotificationFeedbackType.Success);
               navigation.dispatch(StackActions.popToTop());
             }} style={styles.buttonContainer}>
               <Text style={styles.buttonText}>Add Medicine</Text>
