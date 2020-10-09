@@ -1,8 +1,8 @@
 import React from "react";
 import { Text, View } from '../Themed';
-import { Image, Dimensions, StyleSheet, TouchableOpacity } from "react-native";
+import { Dimensions, StyleSheet, TouchableOpacity } from "react-native";
 import * as Progress from 'react-native-progress';
-import Colors from '../../constants/Colors';
+import { useNavigation } from '@react-navigation/native';
 import { AntDesign, Entypo, FontAwesome, MaterialCommunityIcons } from '@expo/vector-icons';
 
 interface CardProps {
@@ -59,6 +59,7 @@ const EditButton = () => {
 
 const Card: React.FC<CardProps> = props => {
   // colorScheme = useColorScheme();
+  const navigation = useNavigation();
 
   return (
     <View style={CommonStyles.card}>
@@ -88,7 +89,8 @@ const Card: React.FC<CardProps> = props => {
         <ReminderItem />
       </View>
 
-      <TouchableOpacity style={CommonStyles.methodButtonContainer}>
+      <TouchableOpacity style={CommonStyles.methodButtonContainer} 
+      onPress={() => { navigation.navigate("Data", { medicineId: "med-id" }) }}>
         <View style={CommonStyles.methodButton}>
           <Text style={CommonStyles.methodButtonText}>See methods & effects</Text>
           <View style={CommonStyles.methodButtonIcon}>
