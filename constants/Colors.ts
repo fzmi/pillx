@@ -17,6 +17,9 @@ export default {
     medicineStep2: colorPurple2,
     medicineStep3: colorBlue,
     secondaryBackground: '#eee',
+    settingIcon: '#333',
+    profileBackgroundOuter: "#eee",
+    profileBackgroundInner: "#fff",
   },
   dark: {
     text: '#fff',
@@ -29,5 +32,8 @@ export default {
     medicineStep2: '#000',
     medicineStep3: '#000',
     secondaryBackground: '#111',
+    settingIcon: '#fff',
+    profileBackgroundOuter: "#000",
+    profileBackgroundInner: "#111",
   },
 };
