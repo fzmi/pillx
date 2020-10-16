@@ -3,8 +3,8 @@ import { StyleSheet, TouchableOpacity, Alert, Image, TouchableHighlight, Button 
 import { ScrollView, Text, View } from '../components/Themed';
 import { Calendar, Agenda, CalendarList } from 'react-native-calendars';
 import { StackScreenProps } from '@react-navigation/stack';
-
 import { TodayParamList } from '../types';
+import Colors from '../constants/Colors';
 import useColorScheme from '../hooks/useColorScheme';
 import Todo from '../components/today/Todo';
 import UserContext from '../hooks/UserContext';
@@ -26,6 +26,14 @@ export default function TodayScreen({ navigation }: StackScreenProps<TodayParamL
   return (
     <View style={{ flex: 1 }}>
       <Agenda
+        theme={{
+          color: Colors[colorScheme].tint,
+          dotColor: Colors[colorScheme].tint,
+          selectedDotColor: Colors[colorScheme].tint,
+          selectedDayBackgroundColor: Colors[colorScheme].tint,
+          selectedColor: Colors[colorScheme].tint,
+          todayColor: Colors[colorScheme].tint,
+        }}
         items={monthData}
         renderItem={(item: any, firstItemInDay: any) => { return <Todo item={item} /> }}
         renderEmptyDate={() => {
@@ -42,8 +50,8 @@ export default function TodayScreen({ navigation }: StackScreenProps<TodayParamL
           />);
         }}
         markedDates={{
-          '2020-10-03': { marked: true },
-          '2020-09-12': { marked: true },
+          '2020-10-03': { marked: true , selectedColor: '#724ea3'},
+          '2020-09-12': { marked: true , },
         }}
         renderDay={(day: any, item: any) => { return (<View style={{ marginRight: 20 }} />); }}
       />

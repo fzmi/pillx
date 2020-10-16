@@ -2,14 +2,18 @@ import React from 'react';
 import { StyleSheet, Image, TextInput, TouchableOpacity } from 'react-native';
 import { ScrollView, Text, View } from '../components/Themed';
 import { StackScreenProps } from '@react-navigation/stack';
-
+import Colors from '../constants/Colors';
+import useColorScheme from '../hooks/useColorScheme';
 import { ProfileParamList } from '../types';
 import AuthContext from '../hooks/AuthContext';
 import UserContext from '../hooks/UserContext';
 
+
 export default function ProfileScreen({ navigation }: StackScreenProps<ProfileParamList, 'ProfileScreen'>) {
   const { signOut } = React.useContext(AuthContext);
   const { userInfo, isLoading } = React.useContext(UserContext);
+  const colorScheme = useColorScheme();
+
 
   return (
     <ScrollView>
@@ -97,11 +101,12 @@ export default function ProfileScreen({ navigation }: StackScreenProps<ProfilePa
 
 const styles = StyleSheet.create({
   buttonContainer: {
-    backgroundColor: '#2e78b7',
+    backgroundColor: '#724ea3',
     paddingVertical: 15,
     paddingHorizontal: 20,
     borderRadius: 8,
     marginBottom: 20,
+    
   },
   buttonText: {
     textAlign: 'center',

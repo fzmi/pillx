@@ -36,6 +36,11 @@ export default function useCachedResources() {
           require('../assets/images/pills/pill1.png'),
           require('../assets/images/pills/pill2.png'),
           require('../assets/images/pills/pill3.png'),
+          require('../assets/images/medicine/effect/effect1.png'),
+          require('../assets/images/medicine/effect/effect2.png'),
+          require('../assets/images/medicine/effect/effect3.png'),
+          require('../assets/images/medicine/method/external.png'),
+          require('../assets/images/medicine/method/oral.png'),
         ]);
         
         // Load fonts

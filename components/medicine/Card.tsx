@@ -1,9 +1,11 @@
 import React from "react";
 import { Text, View } from '../Themed';
-import { Image, Dimensions, StyleSheet, TouchableOpacity } from "react-native";
+import { Dimensions, StyleSheet, TouchableOpacity } from "react-native";
 import * as Progress from 'react-native-progress';
-import Colors from '../../constants/Colors';
+import { useNavigation } from '@react-navigation/native';
 import { AntDesign, Entypo, FontAwesome, MaterialCommunityIcons } from '@expo/vector-icons';
+import useColorScheme from '../../hooks/useColorScheme';
+
 
 interface CardProps {
   imageUri: string;
@@ -59,6 +61,7 @@ const EditButton = () => {
 
 const Card: React.FC<CardProps> = props => {
   // colorScheme = useColorScheme();
+  const navigation = useNavigation();
 
   return (
     <View style={CommonStyles.card}>
@@ -73,7 +76,7 @@ const Card: React.FC<CardProps> = props => {
           <Text style={CommonStyles.medInfoCardContentText}>{props.date}</Text>
           <Progress.Bar
             progress={props.progress}
-            color={props.cardColor}
+            color={'#724ea3'}
             unfilledColor={'#B9B9B9'}
             borderWidth={0}
             height={20}
@@ -88,7 +91,8 @@ const Card: React.FC<CardProps> = props => {
         <ReminderItem />
       </View>
 
-      <TouchableOpacity style={CommonStyles.methodButtonContainer}>
+      <TouchableOpacity style={CommonStyles.methodButtonContainer} 
+      onPress={() => { navigation.navigate("Data", { medicineId: "med-id" }) }}>
         <View style={CommonStyles.methodButton}>
           <Text style={CommonStyles.methodButtonText}>See methods & effects</Text>
           <View style={CommonStyles.methodButtonIcon}>
@@ -134,7 +138,7 @@ const CommonStyles = StyleSheet.create({
     borderRadius: 20,
   },
   editButton: {
-    backgroundColor: '#2e78b7',
+    backgroundColor: '#724ea3',
     borderRadius: 100,
     width: 80,
     height: 80,
