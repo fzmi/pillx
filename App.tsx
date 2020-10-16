@@ -19,10 +19,10 @@ export default function App() {
   } else {
     return (
       <SafeAreaProvider>
-        <Navigation colorScheme={colorScheme} />
-        <StatusBar />
-        <FlashMessage position="top" />
-        <Notification />
+          <Navigation colorScheme={colorScheme} />
+          <StatusBar />
+          <FlashMessage position="top" />
+          <Notification />
       </SafeAreaProvider>
     );
   }

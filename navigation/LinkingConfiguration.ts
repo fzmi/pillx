@@ -33,6 +33,7 @@ export default {
           Profile: {
             screens: {
               ProfileScreen: 'Profile',
+              SettingsScreen: 'Settings'
             },
           },
         },

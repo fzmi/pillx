@@ -18,6 +18,7 @@ import DataTabNavigator from '../navigation/DataTabNavigator';
 import EditScreen from '../screens/edit/EditScreen';
 import UserContext from '../hooks/UserContext';
 import AddContext from '../hooks/AddContext';
+import SettingsScreen from '../screens/SettingsScreen';
 
 const BottomTab = createBottomTabNavigator<BottomTabParamList>();
 
@@ -227,6 +228,11 @@ function ProfileNavigator() {
         name="ProfileScreen"
         component={ProfileScreen}
         options={{ headerTitle: 'Profile', headerLargeTitle: true }}
+      />
+      <ProfileStack.Screen
+        name="SettingsScreen"
+        component={SettingsScreen}
+        options={{ headerTitle: 'Settings'}}
       />
     </ProfileStack.Navigator>
   );

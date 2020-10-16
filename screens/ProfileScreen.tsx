@@ -1,11 +1,12 @@
 import React from 'react';
-import { StyleSheet, Image, TextInput, TouchableOpacity } from 'react-native';
+import { StyleSheet, Image, TouchableOpacity } from 'react-native';
 import { ScrollView, Text, View } from '../components/Themed';
+
 import { StackScreenProps } from '@react-navigation/stack';
+import { ProfileParamList } from '../types';
 import { Ionicons, Entypo } from '@expo/vector-icons';
 import Colors from '../constants/Colors';
 import useColorScheme from '../hooks/useColorScheme';
-import { ProfileParamList } from '../types';
 import AuthContext from '../hooks/AuthContext';
 import UserContext from '../hooks/UserContext';
 import Layout from '../constants/Layout';
@@ -14,16 +15,18 @@ export default function ProfileScreen({ navigation }: StackScreenProps<ProfilePa
   const { signOut } = React.useContext(AuthContext);
   const { userInfo, isLoading } = React.useContext(UserContext);
   const colorScheme = useColorScheme();
+  const connected = userInfo.email !== undefined;
 
   return (
     <ScrollView style={{ backgroundColor: Colors[colorScheme].profileBackgroundOuter }}>
-
+      {/* Profile */}
       <View style={[styles.profileGroup, { backgroundColor: Colors[colorScheme].profileBackgroundInner }]}>
         <Image style={styles.profileImage} source={require("../assets/images/profile/Avatar.png")} />
-        <Text style={styles.profileHeaderText}>PillX User</Text>
-        <Text style={styles.profileText}>{userInfo.email == undefined ? 'Email not available' : userInfo.email}</Text>
+        <Text style={styles.profileHeaderText}>{connected && userInfo.name ? userInfo.name : 'PillX User'}</Text>
+        <Text style={styles.profileText}>{connected ? userInfo.email : 'Email not available'}</Text>
       </View>
 
+      {/* Details */}
       <View style={[styles.buttonGroup, { backgroundColor: Colors[colorScheme].profileBackgroundInner }]}>
         <TouchableOpacity onPress={() => { }} style={styles.buttonItem}>
           <View style={[styles.buttonItemLeft, { backgroundColor: Colors[colorScheme].profileBackgroundInner }]}>
@@ -64,8 +67,9 @@ export default function ProfileScreen({ navigation }: StackScreenProps<ProfilePa
         </TouchableOpacity>
       </View>
 
+      {/* Settings */}
       <View style={[styles.buttonGroup, { backgroundColor: Colors[colorScheme].profileBackgroundInner }]}>
-        <TouchableOpacity onPress={() => { }} style={styles.buttonItem}>
+        <TouchableOpacity onPress={() => { navigation.navigate("SettingsScreen"); }} style={styles.buttonItem}>
           <View style={[styles.buttonItemLeft, { backgroundColor: Colors[colorScheme].profileBackgroundInner }]}>
             <Ionicons name="ios-settings" style={styles.buttonIcon} size={30} color={Colors[colorScheme].settingIcon} />
             <Text style={styles.buttonTextLeft}>Settings</Text>
@@ -75,19 +79,21 @@ export default function ProfileScreen({ navigation }: StackScreenProps<ProfilePa
 
         <View style={styles.buttonSeparator} lightColor="#eee" darkColor="rgba(255,255,255,0.1)" />
 
-        <View style={[styles.buttonItem, { borderRadius: 15 }]}>
+        <View style={[styles.buttonItem, { borderRadius: 15, backgroundColor: Colors[colorScheme].profileBackgroundInner }]}>
           <View style={[styles.buttonItemLeft, { backgroundColor: Colors[colorScheme].profileBackgroundInner }]}>
             <Ionicons name="ios-globe" style={styles.buttonIcon} size={30} color={Colors[colorScheme].settingIcon} />
             <Text style={styles.buttonTextLeft}>Server</Text>
           </View>
-          <Text style={styles.buttonTextRight}>{userInfo.email == undefined ? 'Not Connected' : 'Connected'}</Text>
+          <View style={[styles.buttonItemRight, { backgroundColor: Colors[colorScheme].profileBackgroundInner }]}>
+            <View style={[styles.connectionIndicator, { backgroundColor: connected ? "green" : "#fc3d39" }]}></View>
+            <Text style={styles.buttonTextRight}>{connected ? 'Connected' : 'Not Connected'}</Text>
+          </View>
         </View>
       </View>
 
       <TouchableOpacity onPress={() => signOut()} style={[styles.filledButton, { backgroundColor: Colors[colorScheme].profileBackgroundInner }]}>
         <Text style={styles.filledButtonText}>Sign out this account</Text>
       </TouchableOpacity>
-
     </ScrollView>
   );
 }
@@ -133,6 +139,10 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     alignItems: "center",
   },
+  buttonItemRight: {
+    flexDirection: "row",
+    alignItems: "center",
+  },
   buttonImage: {
     height: 30,
     width: 30,
@@ -149,7 +159,8 @@ const styles = StyleSheet.create({
   },
   buttonTextRight: {
     fontSize: 16,
-    paddingLeft: 15,
+    paddingLeft: 8,
+    paddingRight: 0,
     fontWeight: '500',
   },
   buttonSeparator: {
@@ -157,6 +168,11 @@ const styles = StyleSheet.create({
     paddingLeft: Layout.window.width - 100,
     justifyContent: 'center',
     alignSelf: "flex-end",
+  },
+  connectionIndicator: {
+    height: 8,
+    width: 8,
+    borderRadius: 8,
   },
   filledButton: {
     borderRadius: 15,

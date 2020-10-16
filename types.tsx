@@ -39,6 +39,7 @@ export type MedicineParamList = {
 // Root stack -> Button Tab -> Profile
 export type ProfileParamList = {
   ProfileScreen: undefined;
+  SettingsScreen: undefined;
 };
 
 // Root stack -> Button Tab -> Medicine -> Add
