@@ -9,10 +9,10 @@ export default {
   light: {
     text: '#000',
     background: '#fff',
-    tint: tintColorLight,
+    tint: colorPurple,
     tabIconDefault: '#ccc',
-    tabIconSelected: tintColorLight,
-    buttonBlue: tintColorLight,
+    tabIconSelected: colorPurple,
+    buttonBlue: colorPurple,
     medicineStep1: colorPurple,
     medicineStep2: colorPurple2,
     medicineStep3: colorBlue,

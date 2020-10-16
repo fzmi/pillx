@@ -4,6 +4,8 @@ import { Dimensions, StyleSheet, TouchableOpacity } from "react-native";
 import * as Progress from 'react-native-progress';
 import { useNavigation } from '@react-navigation/native';
 import { AntDesign, Entypo, FontAwesome, MaterialCommunityIcons } from '@expo/vector-icons';
+import useColorScheme from '../../hooks/useColorScheme';
+
 
 interface CardProps {
   imageUri: string;
@@ -74,7 +76,7 @@ const Card: React.FC<CardProps> = props => {
           <Text style={CommonStyles.medInfoCardContentText}>{props.date}</Text>
           <Progress.Bar
             progress={props.progress}
-            color={props.cardColor}
+            color={'#724ea3'}
             unfilledColor={'#B9B9B9'}
             borderWidth={0}
             height={20}
@@ -136,7 +138,7 @@ const CommonStyles = StyleSheet.create({
     borderRadius: 20,
   },
   editButton: {
-    backgroundColor: '#2e78b7',
+    backgroundColor: '#724ea3',
     borderRadius: 100,
     width: 80,
     height: 80,
