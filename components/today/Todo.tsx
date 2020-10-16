@@ -21,7 +21,13 @@ const Todo: React.FC<Props> = props => {
       >
         <View style={styles.content}>
           <View style={{ backgroundColor: "transparent" }}>
-            <Text style={{ fontSize: 24, fontWeight: "bold", marginBottom: 4 }}>{props.item.name}</Text>
+            <View style={{ flexDirection: "row"}}>
+              <Text style={{ fontSize: 24, fontWeight: "bold", marginBottom: 4 }}>{props.item.name}</Text>
+              <TouchableOpacity style={{ flex: 1, marginLeft: 3, display: "flex", alignItems: "center", justifyContent: "center" }}>
+                <Ionicons name="ios-information-circle" size={25} color="#333" />
+              </TouchableOpacity>
+            </View>
+
             <Text style={{ fontSize: 18, marginBottom: 10, color: "#444" }}><Entypo name="clock" size={16} color={"#333"} />&nbsp;&nbsp;{props.item.description}</Text>
             {/* <Text style={{ fontSize: 16, color: "#333" }}>{props.item.time}</Text> */}
           </View>
@@ -37,9 +43,8 @@ const Todo: React.FC<Props> = props => {
             <Ionicons name="ios-checkmark-circle" size={30} color="white" />
             <Text style={{ fontSize: 20, color: "#fff", marginLeft: 10 }}>Taken</Text>
           </TouchableOpacity>
-          <TouchableOpacity style={{ borderColor: "#333", borderWidth: 1, borderRadius: 5, flex: 1, margin: 5, display: "flex", alignItems: "center", justifyContent: "center" }}>
-            <Ionicons name="ios-help-circle" size={30} color="#333" />
-          </TouchableOpacity>
+          {/* <TouchableOpacity style={{ borderColor: "#333", borderWidth: 1, borderRadius: 5, flex: 1, margin: 5, display: "flex", alignItems: "center", justifyContent: "center" }}> */}
+
         </View>
       </View>
     </View>

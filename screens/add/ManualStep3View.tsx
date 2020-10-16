@@ -14,6 +14,9 @@ import StepIndicator from '../../components/medicine/add/StepIndicator';
 import AddContext from '../../hooks/AddContext';
 import { StackNavigationProp } from '@react-navigation/stack';
 import * as Haptics from 'expo-haptics';
+import AsyncStorage from '@react-native-community/async-storage';
+
+import UserContext from '../../hooks/UserContext';
 
 interface Props {
   styles: any;
@@ -23,6 +26,8 @@ interface Props {
 
 const ManualStep3View: React.FC<Props> = ({ styles, setStep, navigation }) => {
   const colorScheme = useColorScheme();
+
+  const { userInfo, isLoading } = React.useContext(UserContext);
 
   return (
     <ScrollView style={{ backgroundColor: Colors[colorScheme].medicineStep3 }}>
@@ -50,20 +55,47 @@ const ManualStep3View: React.FC<Props> = ({ styles, setStep, navigation }) => {
                 <TouchableOpacity style={{ borderColor: "#aaa", borderWidth: 1, marginTop: 10, marginRight: 10 }}>
                   <Image style={{ width: 100, height: 100 }} source={require("../../assets/images/pills/pill1.png")} />
                 </TouchableOpacity>
-
               </View>
             </View>
 
-            <TouchableOpacity onPress={() => {
+            <TouchableOpacity onPress={async () => {
               //todo: add new medicine
 
-              showMessage({
-                message: "Added Medicine",
-                description: "Successfully added a new medicine.",
-                type: "success",
-                icon: "success",
-                duration: 3000,
-              });
+              const email = userInfo.email;
+              const identifier = "97801";
+              const startDate = "";
+              const endDate = "";
+              const time = "";
+              const weekdays = "";
+
+              console.log(addInfo.medicineName);
+
+              try {
+                // let response = await fetch(`http://deco3801-rever.uqcloud.net/user/medicine/add/weekdays?
+                // email=${email}&identifier=${identifier}&startDate=${startDate}&endDate=${endDate}&time=${time}&weekdays=${weekdays}`, {
+                let response = await fetch(`http://deco3801-rever.uqcloud.net/user/medicine/add?email=${email}&identifier=${identifier}`, {
+                  method: 'POST',
+                });
+                console.log(response);
+                // let responseJson = await response.json();
+                // console.log(responseJson);
+                showMessage({
+                  message: "Added Medicine",
+                  description: "Successfully added a new medicine.",
+                  type: "success",
+                  icon: "success",
+                  duration: 3000,
+                });
+              } catch (error) {
+                showMessage({
+                  message: "Server Error",
+                  description: "Cannot connect to PillX server.",
+                  type: "danger",
+                  icon: "danger",
+                  duration: 2500,
+                });
+                console.log(error);
+              }
               Haptics.notificationAsync(Haptics.NotificationFeedbackType.Success);
               navigation.dispatch(StackActions.popToTop());
             }} style={styles.buttonContainer}>
@@ -78,7 +110,7 @@ const ManualStep3View: React.FC<Props> = ({ styles, setStep, navigation }) => {
           </View>
         )}
       </AddContext.Consumer>
-    </ScrollView>
+    </ScrollView >
   )
 }
 

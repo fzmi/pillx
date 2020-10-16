@@ -40,7 +40,9 @@ const ManualStep2View: React.FC<Props> = ({ styles, setStep }) => {
               <View style={styles.separator} lightColor="#eee" darkColor="rgba(255,255,255,0.1)" />
             </View>
 
-            <TouchableOpacity onPress={() => { setStep(3); }} style={styles.buttonContainer}>
+            <TouchableOpacity onPress={() => {
+              setStep(3);
+            }} style={styles.buttonContainer}>
               <Text style={styles.buttonText}>Next Step</Text>
               <Entypo name="chevron-thin-right" size={24} color="#000" />
             </TouchableOpacity>

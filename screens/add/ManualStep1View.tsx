@@ -29,6 +29,8 @@ const ManualStep1View: React.FC<Props> = ({ styles, setStep }) => {
   const [showNameInput, setShowNameInput] = React.useState(false);
   const [name, setName] = React.useState('Medicine');
 
+  const { addInfo, setAddInfo } = React.useContext(AddContext);
+
   return (
     <ScrollView style={{ backgroundColor: Colors[colorScheme].medicineStep1 }}>
       <AddContext.Consumer>
@@ -116,7 +118,14 @@ const ManualStep1View: React.FC<Props> = ({ styles, setStep }) => {
             </View>
 
 
-            <TouchableOpacity onPress={() => { setStep(2); }} style={styles.buttonContainer}>
+            <TouchableOpacity onPress={() => {
+              setAddInfo({
+                medicineName: "Panadol",
+                freqency: "1 day",
+                periodOfTreatment: "1 month",
+              });
+              setStep(2);
+            }} style={styles.buttonContainer}>
               <Text style={styles.buttonText}>Next Step</Text>
               <Entypo name="chevron-thin-right" size={24} color="#000" />
             </TouchableOpacity>
