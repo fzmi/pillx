@@ -1,10 +1,10 @@
 import React from 'react';
-import { View, Text } from '../../components/Themed';
+import { View, Text } from '../../../components/Themed';
 import { TouchableOpacity, StyleSheet, Image } from 'react-native';
-import useColorScheme from '../../hooks/useColorScheme';
+import useColorScheme from '../../../hooks/useColorScheme';
 import { StackScreenProps } from '@react-navigation/stack';
-import { DataTabParamList } from '../../types';
-import UserContext from '../../hooks/UserContext';
+import { DataTabParamList } from '../../../types';
+import UserContext from '../../../hooks/UserContext';
 
 
 interface Props {
@@ -27,7 +27,7 @@ export default function EffectScreen({ route, navigation }: StackScreenProps<Dat
   return (
   <View style={styles.container}>      
     <View style={styles.content}>
-      <Image style={styles.pillImage} source={require("../../assets/images/pills/pill1.png")}></Image>
+      <Image style={styles.pillImage} source={require("../../../assets/images/pills/pill1.png")}></Image>
       
     </View>
     
@@ -40,7 +40,7 @@ export default function EffectScreen({ route, navigation }: StackScreenProps<Dat
       
     <View style={styles.content}>
       
-      <Image style={styles.contentImage} source={require("../../assets/images/medicine/effect/effect1.png")}></Image>
+      <Image style={styles.contentImage} source={require("../../../assets/images/medicine/effect/effect1.png")}></Image>
     </View>
     
   </View>

@@ -1,9 +1,9 @@
 import React from 'react';
-import { View, Text } from '../../components/Themed';
+import { View, Text } from '../../../components/Themed';
 import { TouchableOpacity, StyleSheet, Image } from 'react-native';
 import { StackScreenProps } from '@react-navigation/stack';
-import { DataTabParamList } from '../../types';
-import UserContext from '../../hooks/UserContext';
+import { DataTabParamList } from '../../../types';
+import UserContext from '../../../hooks/UserContext';
 
 export default function MethodScreen({ route, navigation }: StackScreenProps<DataTabParamList, 'MethodScreen'>) {
   // contains user info
@@ -15,7 +15,7 @@ export default function MethodScreen({ route, navigation }: StackScreenProps<Dat
   return (
     <View style={styles.container}>      
     <View style={styles.content}>
-      <Image style={styles.pillImage} source={require("../../assets/images/pills/pill1.png")}></Image>
+      <Image style={styles.pillImage} source={require("../../../assets/images/pills/pill1.png")}></Image>
       
     </View>
     
@@ -28,7 +28,7 @@ export default function MethodScreen({ route, navigation }: StackScreenProps<Dat
       
     <View style={styles.content}>
       
-      <Image style={styles.contentImage} source={require("../../assets/images/medicine/method/external.png")}></Image>
+      <Image style={styles.contentImage} source={require("../../../assets/images/medicine/method/external.png")}></Image>
     </View>
     
   </View>

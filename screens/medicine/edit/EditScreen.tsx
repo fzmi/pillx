@@ -1,9 +1,9 @@
 import React from 'react';
-import { View, Text } from '../../components/Themed';
+import { View, Text } from '../../../components/Themed';
 
 import { StackScreenProps } from '@react-navigation/stack';
-import { MedicineParamList } from '../../types';
-import UserContext from '../../hooks/UserContext';
+import { MedicineParamList } from '../../../types';
+import UserContext from '../../../hooks/UserContext';
 
 export default function EditScreen({ route, navigation }: StackScreenProps<MedicineParamList, 'EditScreen'>) {
   // contains user info

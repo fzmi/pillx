@@ -47,13 +47,13 @@ const ManualStep3View: React.FC<Props> = ({ styles, setStep, navigation }) => {
                   </TouchableOpacity>
                 )}
                 <TouchableOpacity style={{ borderColor: "#aaa", borderWidth: 1, marginTop: 10, marginRight: 10 }}>
-                  <Image style={{ width: 100, height: 100 }} source={require("../../assets/images/pills/pill3.png")} />
+                  <Image style={{ width: 100, height: 100 }} source={require("../../../assets/images/pills/pill3.png")} />
                 </TouchableOpacity>
                 <TouchableOpacity style={{ borderColor: "#aaa", borderWidth: 1, marginTop: 10, marginRight: 10 }}>
-                  <Image style={{ width: 100, height: 100 }} source={require("../../assets/images/pills/pill2.png")} />
+                  <Image style={{ width: 100, height: 100 }} source={require("../../../assets/images/pills/pill2.png")} />
                 </TouchableOpacity>
                 <TouchableOpacity style={{ borderColor: "#aaa", borderWidth: 1, marginTop: 10, marginRight: 10 }}>
-                  <Image style={{ width: 100, height: 100 }} source={require("../../assets/images/pills/pill1.png")} />
+                  <Image style={{ width: 100, height: 100 }} source={require("../../../assets/images/pills/pill1.png")} />
                 </TouchableOpacity>
               </View>
             </View>
