@@ -29,6 +29,7 @@
     "expo-haptics": "~8.3.0",
     "expo-image-manipulator": "~8.3.0",
     "expo-linking": "^1.0.1",
+    "expo-module-scripts": "^1.2.0",
     "expo-notifications": "~0.7.2",
     "expo-permissions": "~9.3.0",
     "expo-splash-screen": "~0.6.1",

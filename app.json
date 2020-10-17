@@ -22,7 +22,8 @@
       "useNextNotificationsApi": true
     },
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": true,
+      "bundleIdentifier": "com.fzmi.pillx"
     },
     "web": {
       "favicon": "./assets/images/icons/favicon.png"
