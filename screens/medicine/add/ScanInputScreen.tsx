@@ -1,6 +1,6 @@
 import React from 'react';
 import { StyleSheet, TouchableHighlight, Platform, Alert } from 'react-native';
-import { Text, View } from '../../components/Themed';
+import { Text, View } from '../../../components/Themed';
 import { StackScreenProps, useHeaderHeight } from '@react-navigation/stack';
 import { useFocusEffect } from '@react-navigation/native';
 import { Entypo, Feather, MaterialCommunityIcons } from '@expo/vector-icons';
@@ -9,11 +9,11 @@ import { Camera } from 'expo-camera';
 import * as Haptics from 'expo-haptics';
 // import BarCodeScanner from 'expo-barcode-scanner';
 
-import { AddTabParamList } from '../../types';
-import Colors from '../../constants/Colors';
-import useColorScheme from '../../hooks/useColorScheme';
-import ScanResultModal from '../../components/medicine/add/ScanResultModal';
-import AddContext from '../../hooks/AddContext';
+import { AddTabParamList } from '../../../types';
+import Colors from '../../../constants/Colors';
+import useColorScheme from '../../../hooks/useColorScheme';
+import ScanResultModal from '../../../components/medicine/add/ScanResultModal';
+import AddContext from '../../../hooks/AddContext';
 
 export default function ScanInputScreen({ navigation }: StackScreenProps<AddTabParamList, 'ScanInputScreen'>) {
   const camera = React.useRef<Camera>(null!);

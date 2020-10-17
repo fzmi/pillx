@@ -1,13 +1,13 @@
 import React, { useState } from 'react';
 import { StyleSheet, Image, TouchableOpacity, Switch } from 'react-native';
-import { ScrollView, Text, View } from '../components/Themed';
+import { ScrollView, Text, View } from '../../components/Themed';
 
 import { StackScreenProps } from '@react-navigation/stack';
-import { ProfileParamList } from '../types';
+import { ProfileParamList } from '../../types';
 import { Ionicons, Entypo } from '@expo/vector-icons';
-import Colors from '../constants/Colors';
-import useColorScheme from '../hooks/useColorScheme';
-import Layout from '../constants/Layout';
+import Colors from '../../constants/Colors';
+import useColorScheme from '../../hooks/useColorScheme';
+import Layout from '../../constants/Layout';
 
 export default function SettingsScreen({ navigation }: StackScreenProps<ProfileParamList, 'ProfileScreen'>) {
   const colorScheme = useColorScheme();

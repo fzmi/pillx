@@ -15,10 +15,10 @@ import MedicineScreen from '../screens/MedicineScreen';
 import ProfileScreen from '../screens/ProfileScreen';
 import AddTabNavigator from '../navigation/AddTabNavigator';
 import DataTabNavigator from '../navigation/DataTabNavigator';
-import EditScreen from '../screens/edit/EditScreen';
+import EditScreen from '../screens/medicine/edit/EditScreen';
 import UserContext from '../hooks/UserContext';
 import AddContext from '../hooks/AddContext';
-import SettingsScreen from '../screens/SettingsScreen';
+import SettingsScreen from '../screens/profile/SettingsScreen';
 
 const BottomTab = createBottomTabNavigator<BottomTabParamList>();
 

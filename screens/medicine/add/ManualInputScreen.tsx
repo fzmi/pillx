@@ -1,10 +1,10 @@
 import React from 'react';
 import { StyleSheet } from 'react-native';
-import { View } from '../../components/Themed';
+import { View } from '../../../components/Themed';
 import { StackScreenProps } from '@react-navigation/stack';
 import { useFocusEffect, StackActions } from '@react-navigation/native';
 
-import { AddTabParamList } from '../../types';
+import { AddTabParamList } from '../../../types';
 import ManualStep1View from './ManualStep1View';
 import ManualStep2View from './ManualStep2View';
 import ManualStep3View from './ManualStep3View';

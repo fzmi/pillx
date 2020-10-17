@@ -71,7 +71,7 @@ export default function ProfileScreen({ navigation }: StackScreenProps<ProfilePa
       <View style={[styles.buttonGroup, { backgroundColor: Colors[colorScheme].profileBackgroundInner }]}>
         <TouchableOpacity onPress={() => { navigation.navigate("SettingsScreen"); }} style={styles.buttonItem}>
           <View style={[styles.buttonItemLeft, { backgroundColor: Colors[colorScheme].profileBackgroundInner }]}>
-            <Ionicons name="ios-settings" style={styles.buttonIcon} size={30} color={Colors[colorScheme].settingIcon} />
+            <Ionicons name="md-settings" style={styles.buttonIcon} size={30} color={Colors[colorScheme].settingIcon} />
             <Text style={styles.buttonTextLeft}>Settings</Text>
           </View>
           <Entypo name="chevron-thin-right" size={24} color={Colors[colorScheme].text} />
@@ -81,7 +81,7 @@ export default function ProfileScreen({ navigation }: StackScreenProps<ProfilePa
 
         <View style={[styles.buttonItem, { borderRadius: 15, backgroundColor: Colors[colorScheme].profileBackgroundInner }]}>
           <View style={[styles.buttonItemLeft, { backgroundColor: Colors[colorScheme].profileBackgroundInner }]}>
-            <Ionicons name="ios-globe" style={styles.buttonIcon} size={30} color={Colors[colorScheme].settingIcon} />
+            <Ionicons name="md-globe" style={styles.buttonIcon} size={30} color={Colors[colorScheme].settingIcon} />
             <Text style={styles.buttonTextLeft}>Server</Text>
           </View>
           <View style={[styles.buttonItemRight, { backgroundColor: Colors[colorScheme].profileBackgroundInner }]}>

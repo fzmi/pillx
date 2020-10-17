@@ -68,7 +68,7 @@ async function schedulePushNotification() {
   await Notifications.scheduleNotificationAsync({
     content: {
       title: "Medicine Reminder 💊",
-      body: "It is time to take Panadol.",
+      body: "Time to take Pantonix 20mg.",
       data: { data: 'goes here' },
     },
     trigger: { seconds: 60 },

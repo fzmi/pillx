@@ -5,8 +5,8 @@ import { StackScreenProps } from '@react-navigation/stack';
 import { DataTabParamList, MedicineParamList } from '../types';
 import Colors from '../constants/Colors';
 import useColorScheme from '../hooks/useColorScheme';
-import EffectScreen from '../screens/data/EffectScreen';
-import MethodScreen from '../screens/data/MethodScreen';
+import EffectScreen from '../screens/medicine/data/EffectScreen';
+import MethodScreen from '../screens/medicine/data/MethodScreen';
 
 const DataTab = createBottomTabNavigator<DataTabParamList>();
 

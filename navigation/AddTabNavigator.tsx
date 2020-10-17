@@ -5,8 +5,8 @@ import { StackScreenProps } from '@react-navigation/stack';
 import { AddTabParamList, MedicineParamList } from '../types';
 import Colors from '../constants/Colors';
 import useColorScheme from '../hooks/useColorScheme';
-import ManualInputScreen from '../screens/add/ManualInputScreen';
-import ScanInputScreen from '../screens/add/ScanInputScreen';
+import ManualInputScreen from '../screens/medicine/add/ManualInputScreen';
+import ScanInputScreen from '../screens/medicine/add/ScanInputScreen';
 
 const AddTab = createBottomTabNavigator<AddTabParamList>();
 

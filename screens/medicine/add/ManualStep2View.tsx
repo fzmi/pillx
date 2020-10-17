@@ -1,17 +1,17 @@
 import React from 'react';
 import { StyleSheet, TouchableOpacity, Image } from 'react-native';
-import { ScrollView, Text, View } from '../../components/Themed';
+import { ScrollView, Text, View } from '../../../components/Themed';
 import { StackScreenProps } from '@react-navigation/stack';
 import { AntDesign, Entypo } from '@expo/vector-icons';
 import { StackActions } from '@react-navigation/native';
 import { Picker } from '@react-native-community/picker';
 import { showMessage } from "react-native-flash-message";
 
-import { AddTabParamList } from '../../types';
-import Colors from '../../constants/Colors';
-import useColorScheme from '../../hooks/useColorScheme';
-import StepIndicator from '../../components/medicine/add/StepIndicator';
-import AddContext from '../../hooks/AddContext';
+import { AddTabParamList } from '../../../types';
+import Colors from '../../../constants/Colors';
+import useColorScheme from '../../../hooks/useColorScheme';
+import StepIndicator from '../../../components/medicine/add/StepIndicator';
+import AddContext from '../../../hooks/AddContext';
 
 interface Props {
   styles: any;
