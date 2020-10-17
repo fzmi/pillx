@@ -21,7 +21,7 @@ const Todo: React.FC<Props> = props => {
       >
         <View style={styles.content}>
           <View style={{ backgroundColor: "transparent" }}>
-            <View style={{ flexDirection: "row"}}>
+            <View style={{ flexDirection: "row", backgroundColor: "transparent"}}>
               <Text style={{ fontSize: 24, fontWeight: "bold", marginBottom: 4 }}>{props.item.name}</Text>
               <TouchableOpacity style={{ flex: 1, marginLeft: 3, display: "flex", alignItems: "center", justifyContent: "center" }}>
                 <Ionicons name="ios-information-circle" size={25} color="#333" />
@@ -33,7 +33,7 @@ const Todo: React.FC<Props> = props => {
           </View>
           <Image style={styles.pillImage} source={props.item.image}></Image>
         </View>
-        <View style={{ display: "flex", flexDirection: "row" }}>
+        <View style={{ display: "flex", flexDirection: "row", backgroundColor: "transparent" }}>
 
           <TouchableOpacity style={{ backgroundColor: Colors[colorScheme].buttonBlue, padding: 10, borderRadius: 5, flex: 3, margin: 5, display: "flex", flexDirection: "row", justifyContent: "center", alignItems: "center" }}
             onPress={() => {
@@ -42,6 +42,39 @@ const Todo: React.FC<Props> = props => {
           >
             <Ionicons name="ios-checkmark-circle" size={30} color="white" />
             <Text style={{ fontSize: 20, color: "#fff", marginLeft: 10 }}>Taken</Text>
+          </TouchableOpacity>
+          {/* <TouchableOpacity style={{ borderColor: "#333", borderWidth: 1, borderRadius: 5, flex: 1, margin: 5, display: "flex", alignItems: "center", justifyContent: "center" }}> */}
+
+        </View>
+      </View>
+
+      {/* Taken the medicine */}
+      <View
+        style={[styles.item, { height: props.item.height }, {backgroundColor: "#ABABAB"}]}
+      >
+        <View style={styles.content}>
+          <View style={{ backgroundColor: "transparent" }}>
+            <View style={{ flexDirection: "row", backgroundColor: "transparent"}}>
+              <Text style={{ fontSize: 24, fontWeight: "bold", marginBottom: 4 }}>{props.item.name}</Text>
+              <TouchableOpacity style={{ flex: 1, marginLeft: 3, display: "flex", alignItems: "center", justifyContent: "center" }}>
+                <Ionicons name="ios-information-circle" size={25} color="#333" />
+              </TouchableOpacity>
+            </View>
+
+            <Text style={{ fontSize: 18, marginBottom: 10, color: "#444" }}><Entypo name="clock" size={16} color={"#333"} />&nbsp;&nbsp;{props.item.description}</Text>
+            {/* <Text style={{ fontSize: 16, color: "#333" }}>{props.item.time}</Text> */}
+          </View>
+          <Image style={styles.pillImage} source={props.item.image}></Image>
+        </View>
+        <View style={{ display: "flex", flexDirection: "row", backgroundColor: "transparent" }}>
+
+          <TouchableOpacity style={{ backgroundColor: Colors[colorScheme].buttonBlue, padding: 10, borderRadius: 5, flex: 3, margin: 5, display: "flex", flexDirection: "row", justifyContent: "center", alignItems: "center" }}
+            onPress={() => {
+              Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
+            }}
+          >
+            <Ionicons name="ios-checkmark-circle" size={30} color="white" />
+            <Text style={{ fontSize: 20, color: "#fff", marginLeft: 10 }}>Already taken</Text>
           </TouchableOpacity>
           {/* <TouchableOpacity style={{ borderColor: "#333", borderWidth: 1, borderRadius: 5, flex: 1, margin: 5, display: "flex", alignItems: "center", justifyContent: "center" }}> */}
 
