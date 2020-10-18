@@ -5,7 +5,10 @@ const AddContext = React.createContext({
   addInfo: {
     medicineResults: [] as any,
     medicineName: '',
-    frequency: {},
+    frequency: {
+      type: "day",
+      value: 1,
+    },
     periodOfTreatment: {
       type: 'week',
       value: 1,

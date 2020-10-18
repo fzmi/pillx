@@ -33,9 +33,7 @@ export default function MedicineScreen({ navigation }: StackScreenProps<Medicine
           <ScrollView horizontal={true} showsHorizontalScrollIndicator={false}>
             {userInfo.trackings.map((tracking: Tracking, index: number) => (
               <Card key={index}
-                imageUri={require('../assets/images/pills/pill3.png')}
-                name={tracking.name}
-                instruction={tracking.instruction}
+                tracking={tracking}
                 cardColor='#E8E862'
                 progress={0.3}
                 date="3 months"

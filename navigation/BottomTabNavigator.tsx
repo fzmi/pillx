@@ -151,7 +151,10 @@ function MedicineNavigator() {
   const [addInfo, setAddInfo] = React.useState({
     medicineResults: [],
     medicineName: "Medicine",
-    frequency: {type: "day", value: 1},
+    frequency: {
+      type: "day",
+      value: 1
+    },
     periodOfTreatment: {type: "week", value: 1},
     reminders: [new Date(0, 0, 0, 12, 0)],
     imageUri: '',

@@ -1,14 +1,13 @@
-import React from 'react';
-import { Animated, StyleSheet, Modal, TouchableHighlight, Alert, Image } from 'react-native';
+import React, { useState } from 'react';
+import { StyleSheet, Modal, TouchableHighlight } from 'react-native';
 import { View, Text } from '../../Themed';
 
-import { Entypo, Ionicons } from '@expo/vector-icons';
+import { Entypo } from '@expo/vector-icons';
 import AddContext from '../../../hooks/AddContext';
 import Colors from '../../../constants/Colors';
 import useColorScheme from '../../../hooks/useColorScheme';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 import { Picker } from '@react-native-community/picker';
-import { createStackNavigator } from '@react-navigation/stack';
 
 interface Props {
   showFrequencyModal: any,
@@ -17,38 +16,14 @@ interface Props {
   setFrequency: any,
 }
 
-// const Pickers = () => {
-//   return (
-//     <View style={{ flexDirection: "row" }}>
-//       <Picker
-//         selectedValue={frequency.number}
-//         style={{ width: 100 }}
-//         onValueChange={(itemValue, itemIndex) => setFrequency({ ...frequency, number: itemValue })}
-//         itemStyle={{ color: Colors[colorScheme].text }}
-//       >
-//         {/* May use map in the future */}
-//         <Picker.Item label="1" value={1} />
-//         <Picker.Item label="2" value={2} />
-//         <Picker.Item label="3" value={3} />
-//         <Picker.Item label="4" value={4} />
-//         <Picker.Item label="5" value={5} />
-//       </Picker>
-
-//       <Picker
-//         selectedValue={frequency.unit}
-//         style={{ width: 100 }}
-//         onValueChange={(itemValue, itemIndex) => setFrequency({ ...frequency, unit: itemValue })}
-//         itemStyle={{ color: Colors[colorScheme].text }}
-//       >
-//         <Picker.Item label="Days" value="day" />
-//         <Picker.Item label="Weeks" value="week" />
-//         <Picker.Item label="Months" value="month" />
-//       </Picker>
-//     </View>);
-// }
-
-const FrequencyModal: React.FC<Props> = ({ showFrequencyModal, setShowFrequencyModal }) => {
+const FrequencyModal: React.FC<Props> = ({ showFrequencyModal, setShowFrequencyModal, setFrequency }) => {
   const colorScheme = useColorScheme();
+
+  const [showFrequency, setShowFrequency] = useState<boolean>(true);
+  const [showEvery, setShowEvery] = useState<boolean>(false);
+  const [everyValue, setEveryValue] = useState<number>(1);
+  const [everyType, setEveryType] = useState<string>("day");
+  const [showDayOfWeek, setShowDayOfWeek] = useState<boolean>(false);
 
   return (
     <Modal animationType="fade" transparent={true} visible={showFrequencyModal}>
@@ -59,46 +34,96 @@ const FrequencyModal: React.FC<Props> = ({ showFrequencyModal, setShowFrequencyM
             {({ addInfo, setAddInfo }) => (
               <View style={{ alignItems: 'center' }}>
 
-                <TouchableOpacity style={{ flexDirection: "row", justifyContent: "space-between", paddingVertical: 10 }}
-                  onPress={() => {
-                    setAddInfo({ ...addInfo, medicineName: "My Medicine" });
-                    setShowFrequencyModal(!showFrequencyModal);
-                  }}>
-                  <View style={{ width: "100%", flexDirection: "row", justifyContent: "space-between", alignItems: "center" }}>
-                    <Text style={{ fontSize: 20, marginRight: 10 }}>Every Day</Text>
-                    <Entypo name="chevron-thin-right" size={24} color={Colors[colorScheme].text} />
+                {showFrequency && (
+                  <View>
+                    <TouchableOpacity style={{ flexDirection: "row", justifyContent: "space-between", paddingVertical: 10 }}
+                      onPress={() => {
+                        setShowFrequencyModal(!showFrequencyModal);
+                      }}>
+                      <View style={{ width: "100%", flexDirection: "row", justifyContent: "space-between", alignItems: "center" }}>
+                        <Text style={{ fontSize: 20, marginRight: 10 }}>Every Day</Text>
+                        <Entypo name="chevron-thin-right" size={24} color={Colors[colorScheme].text} />
+                      </View>
+                    </TouchableOpacity>
+
+                    <View style={{ flexDirection: "row" }}>
+                      <View style={styles.separator} lightColor="#eee" darkColor="rgba(255,255,255,0.1)" />
+                    </View>
+
+                    <TouchableOpacity style={{ paddingVertical: 10 }}
+                      onPress={() => {
+                        setShowEvery(true);
+                        setShowFrequency(false);
+                      }}>
+                      <View style={{ flexDirection: "row", alignItems: "center", justifyContent: "space-between", backgroundColor: "transparent" }}>
+                        <Text style={{ fontSize: 20, marginRight: 10 }}>Every ... days</Text>
+                        <Entypo name="chevron-thin-right" size={24} color={Colors[colorScheme].text} />
+                      </View>
+                    </TouchableOpacity>
+
+                    <View style={{ flexDirection: "row" }}>
+                      <View style={styles.separator} lightColor="#eee" darkColor="rgba(255,255,255,0.1)" />
+                    </View>
+
+                    <TouchableOpacity style={{ flexDirection: "row", justifyContent: "space-between", paddingVertical: 10 }}
+                      onPress={() => {
+                        setAddInfo({ ...addInfo, medicineName: "My Medicine" });
+                        setShowFrequencyModal(!showFrequencyModal);
+                      }}>
+                      <View style={{ width: "100%", flexDirection: "row", justifyContent: "space-between", alignItems: "center" }}>
+                        <Text style={{ fontSize: 20, marginRight: 10 }}>Days of Week...</Text>
+                        <Entypo name="chevron-thin-right" size={24} color={Colors[colorScheme].text} />
+                      </View>
+                    </TouchableOpacity>
                   </View>
-                </TouchableOpacity>
+                )}
 
-                <View style={{ flexDirection: "row" }}>
-                  <View style={styles.separator} lightColor="#eee" darkColor="rgba(255,255,255,0.1)" />
-                </View>
+                {showEvery && (
+                  <View>
+                    <TouchableOpacity
+                      style={{ flexDirection: "row", justifyContent: "center", alignItems: "center", backgroundColor: Colors[colorScheme].secondaryBackground, paddingVertical: 10, borderRadius: 10 }}
+                      onPress={() => {
+                        setShowEvery(false);
+                        setShowFrequency(true);
+                      }}>
+                      <Entypo name="chevron-thin-left" size={24} color={Colors[colorScheme].text} />
+                      <Text style={{ fontSize: 18 }}>Back</Text>
+                    </TouchableOpacity>
+                    <View style={{ flexDirection: "row", justifyContent: "center", alignItems: "center" }}>
+                      <Text style={{ fontSize: 20 }}>Every</Text>
+                      <Picker
+                        selectedValue={everyValue}
+                        style={{ width: 80, marginLeft: 12 }}
+                        onValueChange={(itemValue: any, itemIndex) => setEveryValue(itemValue)}
+                        itemStyle={{ color: Colors[colorScheme].text }}
+                      >
+                        {[...Array(6)].map((e, i) => (
+                          <Picker.Item key={i} label={`${i + 1}`} value={i + 1} />
+                        ))}
+                      </Picker>
+                      <Picker
+                        selectedValue={everyType}
+                        style={{ width: 100 }}
+                        onValueChange={(itemValue: any, itemIndex) => setEveryType(itemValue)}
+                        itemStyle={{ color: Colors[colorScheme].text }}
+                      >
+                        <Picker.Item label={`day${everyValue == 1 ? '' : 's'}`} value="day" />
+                        <Picker.Item label={`week${everyValue == 1 ? '' : 's'}`} value="week" />
+                        <Picker.Item label={`month${everyValue == 1 ? '' : 's'}`} value="month" />
+                      </Picker>
+                    </View>
 
-                <TouchableOpacity style={{ flexDirection: "row", justifyContent: "space-between", paddingVertical: 10 }}
-                  onPress={() => {
-                    setAddInfo({ ...addInfo, medicineName: "My Medicine" });
-                    setShowFrequencyModal(!showFrequencyModal);
-                  }}>
-                  <View style={{ width: "100%", flexDirection: "row", justifyContent: "space-between", alignItems: "center" }}>
-                    <Text style={{ fontSize: 20, marginRight: 10 }}>Every ... days</Text>
-                    <Entypo name="chevron-thin-right" size={24} color={Colors[colorScheme].text} />
+                    <TouchableOpacity
+                      style={{ flexDirection: "row", marginTop: 5, justifyContent: "center", alignItems: "center", backgroundColor: Colors[colorScheme].buttonBlue, paddingVertical: 12, borderRadius: 10 }}
+                      onPress={() => {
+                        setFrequency({type: everyType, value: everyValue});
+                        setShowFrequencyModal(!showFrequencyModal);
+                      }}>
+                      <Text style={{ fontSize: 18, color: "white", fontWeight: "600" }}>Done</Text>
+                    </TouchableOpacity>
                   </View>
-                </TouchableOpacity>
+                )}
 
-                <View style={{ flexDirection: "row" }}>
-                  <View style={styles.separator} lightColor="#eee" darkColor="rgba(255,255,255,0.1)" />
-                </View>
-
-                <TouchableOpacity style={{ flexDirection: "row", justifyContent: "space-between", paddingVertical: 10 }}
-                  onPress={() => {
-                    setAddInfo({ ...addInfo, medicineName: "My Medicine" });
-                    setShowFrequencyModal(!showFrequencyModal);
-                  }}>
-                  <View style={{ width: "100%", flexDirection: "row", justifyContent: "space-between", alignItems: "center" }}>
-                    <Text style={{ fontSize: 20, marginRight: 10 }}>Days of Week...</Text>
-                    <Entypo name="chevron-thin-right" size={24} color={Colors[colorScheme].text} />
-                  </View>
-                </TouchableOpacity>
               </View>
             )}
           </AddContext.Consumer>
@@ -112,7 +137,7 @@ const FrequencyModal: React.FC<Props> = ({ showFrequencyModal, setShowFrequencyM
           </TouchableHighlight>
         </View>
       </View>
-    </Modal>
+    </Modal >
   )
 }
 

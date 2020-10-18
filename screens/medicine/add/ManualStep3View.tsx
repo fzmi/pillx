@@ -90,6 +90,7 @@ const ManualStep3View: React.FC<Props> = ({ styles, setStep, navigation }) => {
               // instruction
               name: addInfo.medicineName,
               image: thumbnail === 0 ? addInfo.imageUri : imageUri[thumbnail - 1],
+              frequency: addInfo.frequency as any,
               reminders: addInfo.reminders,
               startDate: new Date(),
               endDate: endDate,

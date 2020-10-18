@@ -5,13 +5,12 @@ import * as Progress from 'react-native-progress';
 import { useNavigation } from '@react-navigation/native';
 import { AntDesign, Entypo, FontAwesome, MaterialCommunityIcons } from '@expo/vector-icons';
 import useColorScheme from '../../hooks/useColorScheme';
+import { Tracking } from "../../types";
 
 interface CardProps {
-  imageUri: string;
+  tracking: Tracking;
   cardColor: string;
-  name: string;
   label?: string;
-  instruction?: string;
   date: string;
   progress: number;
 }
@@ -71,7 +70,7 @@ const Card: React.FC<CardProps> = props => {
 
       <View style={CommonStyles.content} >
         <View style={CommonStyles.medInfoCardContent}>
-          <Text style={CommonStyles.medInfoCardContentTitle}>{props.name}</Text>
+          <Text style={CommonStyles.medInfoCardContentTitle}>{props.tracking.name}</Text>
           <Text style={CommonStyles.medInfoCardContentText}>{props.date}</Text>
           <Progress.Bar
             progress={props.progress}
@@ -82,7 +81,7 @@ const Card: React.FC<CardProps> = props => {
             borderRadius={100}>
           </Progress.Bar>
           <Text style={CommonStyles.medInfoCardContentText}>{props.progress * 100}%</Text>
-          <Text style={CommonStyles.medInfoCardContentText}>{props.instruction}</Text>
+          <Text style={CommonStyles.medInfoCardContentText}>{props.tracking.instruction}</Text>
 
         </View>
         <EditButton />

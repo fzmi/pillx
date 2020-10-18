@@ -4,6 +4,10 @@ export type Tracking = {
   name: string,
   instruction?: string,
   image: string | number,
+  frequency: {
+    type: "day" | "week" | "month" | "dayOfWeek",
+    value: number | Array<number>
+  },
   reminders: Array<Date>,
   startDate: Date,
   endDate?: Date,
