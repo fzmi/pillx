@@ -35,12 +35,9 @@ const PeriodModal: React.FC<Props> = ({ showPeriodModal, setShowPeriodModal, per
                     onValueChange={(itemValue, itemIndex) => setPeriod({ ...period, value: itemValue })}
                     itemStyle={{ color: Colors[colorScheme].text }}
                   >
-                    {/* May use map in the future */}
-                    <Picker.Item label="1" value={1} />
-                    <Picker.Item label="2" value={2} />
-                    <Picker.Item label="3" value={3} />
-                    <Picker.Item label="4" value={4} />
-                    <Picker.Item label="5" value={5} />
+                    {[...Array(6)].map((e, i) => (
+                      <Picker.Item key={i} label={`${i + 1}`} value={i + 1} />
+                    ))}
                   </Picker>
 
                   <Picker
@@ -56,12 +53,12 @@ const PeriodModal: React.FC<Props> = ({ showPeriodModal, setShowPeriodModal, per
                 </View>
 
                 <TouchableHighlight style={{
-                  marginTop: 15, backgroundColor: Colors[colorScheme].secondaryBackground,
+                  marginTop: 15, backgroundColor: Colors[colorScheme].buttonBlue,
                   paddingVertical: 10, paddingHorizontal: 30, borderRadius: 10
                 }} onPress={() => {
                   setShowPeriodModal(!showPeriodModal);
                 }}>
-                  <Text style={{ fontSize: 18 }}>Cancel</Text>
+                  <Text style={{ fontSize: 18, color: "white" }}>Done</Text>
                 </TouchableHighlight>
               </View>
             )}

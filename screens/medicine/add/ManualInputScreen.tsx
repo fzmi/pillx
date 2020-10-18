@@ -77,7 +77,7 @@ const styles = StyleSheet.create({
   },
   fieldLeftTitle: {
     fontSize: 22,
-    fontWeight: '600',
+    fontWeight: '700',
   },
   fieldRight: {
     flexDirection: "row",

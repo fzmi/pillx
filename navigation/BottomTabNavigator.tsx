@@ -25,7 +25,7 @@ const BottomTab = createBottomTabNavigator<BottomTabParamList>();
 export default function BottomTabNavigator() {
   const colorScheme = useColorScheme();
   const [user, setUser] = React.useState({
-    userInfo: { name: '', email: '', medicine: [] },
+    userInfo: { name: '', email: '', trackings: [] as any},
     isLoading: true
   } as any);
 
@@ -66,19 +66,7 @@ export default function BottomTabNavigator() {
           name: userData?.data.fullName,
           email: userData?.data.email,
           // todo: will use server data
-          medicine: [{
-            austR: "1",
-            name: "Pantonix 20mg",
-            description: "7:00am, 1 pill",
-            time: "7:00am",
-            image: require("../assets/images/pills/pill3.png"),
-          }, {
-            austR: "2",
-            name: "Ferralet 90",
-            description: "7:30am, 1 pill",
-            time: "7:30am",
-            image: require("../assets/images/pills/pill2.png"),
-          }]
+          trackings: [],
         }
       })
     };
@@ -92,6 +80,7 @@ export default function BottomTabNavigator() {
         ...user,
         userInfo: data
       });
+      // todo: async store
     },
     isLoading: user.isLoading,
   };
@@ -114,7 +103,7 @@ export default function BottomTabNavigator() {
             tabBarIcon: ({ color, focused }) =>
               <Ionicons name="md-calendar" color={color}
                 size={focused ? 36 : 30} style={{ marginBottom: -3 }} />,
-            tabBarBadge: user.userInfo.medicine.length == 0 ? undefined : user.userInfo.medicine.length,
+            tabBarBadge: user.userInfo.trackings.length == 0 ? undefined : user.userInfo.trackings.length,
           }}
         />
         <BottomTab.Screen

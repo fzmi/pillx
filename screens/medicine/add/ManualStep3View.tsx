@@ -7,7 +7,7 @@ import { StackActions } from '@react-navigation/native';
 import { Picker } from '@react-native-community/picker';
 import { showMessage } from "react-native-flash-message";
 
-import { AddTabParamList } from '../../../types';
+import { AddTabParamList, Tracking } from '../../../types';
 import Colors from '../../../constants/Colors';
 import useColorScheme from '../../../hooks/useColorScheme';
 import StepIndicator from '../../../components/medicine/add/StepIndicator';
@@ -28,7 +28,7 @@ interface Props {
 const ManualStep3View: React.FC<Props> = ({ styles, setStep, navigation }) => {
   const colorScheme = useColorScheme();
   const { addInfo, setAddInfo } = useContext(AddContext);
-  const { userInfo, isLoading } = useContext(UserContext);
+  const { userInfo, setUserInfo, isLoading } = useContext(UserContext);
 
   const [thumbnail, setThumbnail] = useState<number>(addInfo.imageUri === '' ? 1 : 0);
   const imageUri: Array<any> = [
@@ -45,7 +45,7 @@ const ManualStep3View: React.FC<Props> = ({ styles, setStep, navigation }) => {
         <View style={{ backgroundColor: Colors[colorScheme].medicineStep3, paddingHorizontal: 18 }}>
           <View style={{ marginVertical: 8, borderRadius: 10, padding: 20 }}>
             <Text style={{ fontSize: 24, fontWeight: '600' }}>Set Thumbnail</Text>
-            <Text style={{ fontSize: 15, marginVertical: 3 }}>Select the header image for your medicine.</Text>
+            <Text style={{ fontSize: 15, marginVertical: 3 }}>Select a header image for your medicine.</Text>
 
             <View style={{ flexDirection: "row", flexWrap: "wrap" }}>
               {addInfo.imageUri != '' && (
@@ -74,14 +74,32 @@ const ManualStep3View: React.FC<Props> = ({ styles, setStep, navigation }) => {
           </View>
 
           <TouchableOpacity onPress={async () => {
-            //todo: add new medicine
+            let startDate: Date = new Date();
+            let endDate: Date = new Date();
+            if (addInfo.periodOfTreatment.type === 'day') {
+              endDate.setDate(endDate.getDate() + addInfo.periodOfTreatment.value);
+            } else if (addInfo.periodOfTreatment.type === 'week') {
+              endDate.setDate(endDate.getDate() + addInfo.periodOfTreatment.value * 7);
+            } else {
+              endDate.setMonth(endDate.getMonth() + addInfo.periodOfTreatment.value);
+            }
+            const tracking: Tracking = {
+              // id: "AUST R 12345",
+              // instruction
+              name: addInfo.medicineName,
+              image: addInfo.imageUri,
+              reminders: addInfo.reminders,
+              startDate: new Date(),
+              endDate: endDate,
+            }
+            setUserInfo({
+              ...userInfo,
+              trackings: [...userInfo.trackings, tracking],
+            })
 
+            //todo: add new medicine
             const email = userInfo.email;
             const identifier = "97801";
-            const startDate = "";
-            const endDate = "";
-            const time = "";
-            const weekdays = "";
 
             console.log(addInfo.medicineName);
 
@@ -111,6 +129,7 @@ const ManualStep3View: React.FC<Props> = ({ styles, setStep, navigation }) => {
               });
               console.log(error);
             }
+
             Haptics.notificationAsync(Haptics.NotificationFeedbackType.Success);
             navigation.dispatch(StackActions.popToTop());
           }} style={styles.buttonContainer}>

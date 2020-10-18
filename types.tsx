@@ -1,3 +1,20 @@
+// Tracking contains user-specific information on medicine
+export type Tracking = {
+  id?: string,
+  name: string,
+  instruction?: string,
+  image: string | number,
+  reminders: Array<Date>,
+  startDate: Date,
+  endDate?: Date,
+}
+
+// Medicine contains detailed information of medicine
+export type Medicine = {
+  id?: string,
+  name: string,
+}
+
 // Root stack
 export type RootStackParamList = {
   Root: undefined;

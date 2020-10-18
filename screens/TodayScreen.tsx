@@ -15,7 +15,7 @@ export default function TodayScreen({ navigation }: StackScreenProps<TodayParamL
 
   const date = new Date().toISOString().slice(0, 10);
   let monthData: any = {};
-  monthData[date] = userInfo.medicine;
+  monthData[date] = userInfo.trackings;
 
   React.useLayoutEffect(() => {
     navigation.setOptions({

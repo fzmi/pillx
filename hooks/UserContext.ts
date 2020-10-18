@@ -1,11 +1,12 @@
 import React from 'react';
+import { Tracking } from '../types';
 
 // don't store tokens here
 const UserContext = React.createContext({
   userInfo: {
     name: '',
     email: '',
-    medicine: [],
+    trackings: Array<Tracking>(),
   },
   setUserInfo: (data: any) => {},
   isLoading: true,

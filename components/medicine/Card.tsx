@@ -6,7 +6,6 @@ import { useNavigation } from '@react-navigation/native';
 import { AntDesign, Entypo, FontAwesome, MaterialCommunityIcons } from '@expo/vector-icons';
 import useColorScheme from '../../hooks/useColorScheme';
 
-
 interface CardProps {
   imageUri: string;
   cardColor: string;
@@ -46,15 +45,15 @@ const ReminderItem = () => {
 }
 
 const EditButton = () => {
+  const navigation = useNavigation();
+
   return (
     <View style={CommonStyles.editButtonContainer}>
-
       <View style={CommonStyles.editButton}>
-        <TouchableOpacity>
+        <TouchableOpacity onPress={() => { navigation.navigate("EditScreen", { medicineId: "med-id" }) }}>
           <Text style={CommonStyles.editButtonText}>Edit</Text>
         </TouchableOpacity>
       </View>
-
     </View>
   )
 }
@@ -91,8 +90,8 @@ const Card: React.FC<CardProps> = props => {
         <ReminderItem />
       </View>
 
-      <TouchableOpacity style={CommonStyles.methodButtonContainer} 
-      onPress={() => { navigation.navigate("Data", { medicineId: "med-id" }) }}>
+      <TouchableOpacity style={CommonStyles.methodButtonContainer}
+        onPress={() => { navigation.navigate("Data", { medicineId: "med-id" }) }}>
         <View style={CommonStyles.methodButton}>
           <Text style={CommonStyles.methodButtonText}>See methods &amp; effects</Text>
           <View style={CommonStyles.methodButtonIcon}>
@@ -109,14 +108,16 @@ export default Card;
 
 const CommonStyles = StyleSheet.create({
   card: {
-    height: Dimensions.get('window').height * 0.65,
+    flex: 1,
     width: Dimensions.get('window').width * 0.7,
-    margin: 20,
-    marginVertical: Dimensions.get('window').height * 0.05,
+    marginLeft: 20,
+    borderRadius: 20,
   },
   cardImage: {
     backgroundColor: 'yellow',
-    flex: 2
+    flex: 2,
+    borderTopLeftRadius: 20,
+    borderTopRightRadius: 20,
   },
   content: {
     flex: 4,
