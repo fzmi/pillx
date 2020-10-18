@@ -39,6 +39,7 @@ const styles = StyleSheet.create({
     borderRadius: 8,
     flexDirection: 'row',
     justifyContent: 'center',
+    marginTop: 10,
   },
   buttonText: {
     textAlign: 'center',
@@ -53,7 +54,7 @@ const styles = StyleSheet.create({
     borderRadius: 8,
     flexDirection: 'row',
     justifyContent: 'center',
-    marginTop: 10,
+    marginTop: 5,
   },
   backButtonText: {
     textAlign: 'center',
@@ -63,10 +64,37 @@ const styles = StyleSheet.create({
     marginLeft: 10,
   },
   separator: {
-    marginVertical: 15,
+    marginVertical: 14,
     height: 1,
     width: '100%',
     justifyContent: 'center',
     alignSelf: 'center'
   },
+  field: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "center",
+  },
+  fieldLeftTitle: {
+    fontSize: 22,
+    fontWeight: '600',
+  },
+  fieldRight: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "center",
+  },
+  fieldRightText: {
+    fontSize: 18,
+    fontWeight: '400',
+    marginHorizontal: 10,
+  },
+  fieldTextInput: {
+    marginTop: 6,
+    paddingVertical: 6,
+    backgroundColor: "#eee",
+    borderRadius: 10,
+    marginHorizontal: -6,
+    paddingHorizontal: 6,
+  }
 });

@@ -2,10 +2,11 @@ import React from 'react';
 import { StyleSheet, Modal, TouchableHighlight, Alert, Image } from 'react-native';
 import { View, Text } from '../../Themed';
 
-import { Entypo } from '@expo/vector-icons';
+import { Entypo, Ionicons } from '@expo/vector-icons';
 import AddContext from '../../../hooks/AddContext';
 import Colors from '../../../constants/Colors';
 import useColorScheme from '../../../hooks/useColorScheme';
+import { TouchableOpacity } from 'react-native-gesture-handler';
 
 interface Props {
   modalVisible: any,
@@ -18,13 +19,7 @@ const ScanResultModal: React.FC<Props> = ({ modalVisible, setModalVisible, camer
   const colorScheme = useColorScheme();
 
   return (
-    <Modal
-      animationType="fade"
-      transparent={true}
-      visible={modalVisible}
-      onRequestClose={() => {
-        Alert.alert('Modal has been closed.');
-      }}>
+    <Modal animationType="fade" transparent={true} visible={modalVisible}>
       <View style={styles.centeredView}>
         <View style={styles.modalView}>
           <Text style={styles.modalText}>Select Medicine</Text>
@@ -32,31 +27,48 @@ const ScanResultModal: React.FC<Props> = ({ modalVisible, setModalVisible, camer
             {({ addInfo, setAddInfo }) => (
               <View style={{ alignItems: 'center' }}>
                 {addInfo.imageUri != '' && (
-                  <Image style={{ width: 100, height: 100 }} source={{ uri: addInfo.imageUri }} />
+                  <Image style={{ width: 100, height: 100, marginVertical: 15 }} source={{ uri: addInfo.imageUri }} />
                 )}
-                <View style={styles.separator} lightColor="#eee" darkColor="rgba(255,255,255,0.1)" />
 
-                <View style={{ flexDirection: "row", justifyContent: "space-between" }} lightColor="#fff" darkColor="#333">
-                  <Text style={{ fontSize: 20, marginRight: 10 }}>Add medicine manually</Text>
-                  <Entypo name="chevron-thin-right" size={24} color={Colors[colorScheme].text} />
-                </View>
+                {addInfo.medicineResults.map((result: any, index: number) => (
+                  <View key={index}>
+                    <TouchableOpacity style={{ flexDirection: "row", paddingVertical: 10 }}
+                      onPress={() => {
+                        setAddInfo({ ...addInfo, medicineName: result.name });
+                        setModalVisible(!modalVisible);
+                        navigation.navigate("ManualInputScreen");
+                      }}>
+                      <View style={{ width: "100%", flexDirection: "row", justifyContent: "space-between", alignItems: "center" }}>
+                        <View>
+                          <Text style={{ fontSize: 20, marginRight: 10, fontWeight: "700" }}>{result.name}</Text>
+                          <Text>{result.id}</Text>
+                        </View>
+                        <Entypo name="chevron-thin-right" size={24} color={Colors[colorScheme].text} />
+                      </View>
+                    </TouchableOpacity>
+                    <View style={{ flexDirection: "row" }}>
+                      <View style={styles.separator} lightColor="#eee" darkColor="rgba(255,255,255,0.1)" />
+                    </View>
+                  </View>
+                ))}
 
-                <View style={styles.separator} lightColor="#eee" darkColor="rgba(255,255,255,0.1)" />
+                <TouchableOpacity style={{ flexDirection: "row", justifyContent: "space-between", paddingVertical: 10 }}
+                  onPress={() => {
+                    setAddInfo({ ...addInfo, medicineName: "My Medicine" });
+                    setModalVisible(!modalVisible);
+                    navigation.navigate("ManualInputScreen");
+                  }}>
+                  <View style={{ width: "100%", flexDirection: "row", justifyContent: "space-between", alignItems: "center" }}>
+                    <Text style={{ fontSize: 20, marginRight: 10 }}>Add medicine manually</Text>
+                    <Entypo name="chevron-thin-right" size={24} color={Colors[colorScheme].text} />
+                  </View>
+                </TouchableOpacity>
               </View>
             )}
           </AddContext.Consumer>
 
           <TouchableHighlight
-            style={{ ...styles.openButton, backgroundColor: '#2196F3', marginTop: 20 }}
-            onPress={() => {
-              setModalVisible(!modalVisible);
-              navigation.navigate("ManualInputScreen");
-            }}>
-            <Text style={styles.textStyle}>Continue</Text>
-          </TouchableHighlight>
-
-          <TouchableHighlight
-            style={{ marginTop: 20 }}
+            style={{ marginTop: 15, backgroundColor: Colors[colorScheme].secondaryBackground, paddingVertical: 10, paddingHorizontal: 30, borderRadius: 10 }}
             onPress={() => {
               setModalVisible(!modalVisible);
               camera.current.resumePreview();
@@ -78,7 +90,6 @@ const styles = StyleSheet.create({
   },
   modalView: {
     margin: 20,
-    backgroundColor: 'white',
     borderRadius: 20,
     padding: 30,
     alignItems: 'center',
@@ -105,13 +116,12 @@ const styles = StyleSheet.create({
     fontSize: 20,
   },
   modalText: {
-    marginBottom: 15,
     textAlign: 'center',
     fontSize: 24,
     fontWeight: '600',
   },
   separator: {
-    marginVertical: 10,
+    marginVertical: 2,
     height: 1,
     width: '100%',
     justifyContent: 'center',

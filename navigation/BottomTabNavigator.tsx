@@ -49,7 +49,7 @@ export default function BottomTabNavigator() {
         message: "Network Error",
         description: "Cannot connect to PillX server.",
         type: "danger",
-        icon: "danger",
+        icon: "info",
         duration: 2500,
       });
       console.log(error);
@@ -160,10 +160,11 @@ const MedicineStack = createStackNavigator<MedicineParamList>();
 
 function MedicineNavigator() {
   const [addInfo, setAddInfo] = React.useState({
-    medicineName: '',
-    frequency: '',
-    periodOfTreatment: '',
-    reminders: {},
+    medicineResults: [],
+    medicineName: "Medicine",
+    frequency: {type: "day", value: 1},
+    periodOfTreatment: {type: "week", value: 1},
+    reminders: [new Date(0, 0, 0, 12, 0)],
     imageUri: '',
   });
 
@@ -213,7 +214,6 @@ function MedicineNavigator() {
             headerBackTitle: 'Medicine',
           }}
         />
-
       </MedicineStack.Navigator>
     </AddContext.Provider>
   );

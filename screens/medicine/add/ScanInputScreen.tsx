@@ -40,7 +40,7 @@ export default function ScanInputScreen({ navigation }: StackScreenProps<AddTabP
       setcameraOn(true);
       showMessage({
         message: "Scan Instruction",
-        description: "Loacte the AUST R/L number on the package and take a picture.",
+        description: "Locate the AUST R/L number on the package and take a picture.",
         type: "default",
         icon: "info",
         autoHide: false,
@@ -85,9 +85,9 @@ export default function ScanInputScreen({ navigation }: StackScreenProps<AddTabP
         },
         body: body
       });
-      console.log(response);
+      // console.log(response);
       let responseJson = await response.json();
-      console.log(responseJson);
+      // console.log(responseJson);
       return {
         data: responseJson,
       }
@@ -133,8 +133,15 @@ export default function ScanInputScreen({ navigation }: StackScreenProps<AddTabP
                         // todo: add the image to the addInfo state
                         const response = uploadImage(uri);
 
-                        // console.log(response);
-                        setAddInfo({ ...addInfo, imageUri: uri });
+                        const medicineResults = [
+                          {id: "AUST R 12345", name: "Pantonix 20mg"},
+                          {id: "AUST R 12346", name: "Pantonix 40mg"},
+                        ];
+                        setAddInfo({
+                          ...addInfo,
+                          medicineResults: medicineResults,
+                          imageUri: uri,
+                        });
                         camera.current.pausePreview();
                         setModalVisible(true);
                       }
@@ -146,10 +153,7 @@ export default function ScanInputScreen({ navigation }: StackScreenProps<AddTabP
 
               <TouchableHighlight
                 style={[styles.cameraSecondaryButton, { backgroundColor: '#222', marginLeft: 20 }]}
-                onPress={() => {
-                  setZoom(zoom == 0 ? 0.2 : 0);
-                  Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
-                }}>
+                onPress={() => { setZoom(zoom == 0 ? 0.2 : 0); Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light); }}>
                 <Feather style={styles.cameraButtonIcon}
                   name={zoom == 0 ? "zoom-in" : "zoom-out"} size={25} color="white" />
               </TouchableHighlight>

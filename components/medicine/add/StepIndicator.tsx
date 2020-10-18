@@ -25,6 +25,8 @@ const styles = StyleSheet.create({
     backgroundColor: 'transparent',
     flexDirection: 'row',
     alignItems: 'center',
+    paddingLeft: 20,
+    marginTop: 8,
   },
   text: {
     color: 'white',
@@ -38,7 +40,6 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignSelf: 'center',
     backgroundColor: 'white',
-    marginLeft: 20,
   },
   smallText: {
     color: 'white',

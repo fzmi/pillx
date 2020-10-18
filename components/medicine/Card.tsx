@@ -94,7 +94,7 @@ const Card: React.FC<CardProps> = props => {
       <TouchableOpacity style={CommonStyles.methodButtonContainer} 
       onPress={() => { navigation.navigate("Data", { medicineId: "med-id" }) }}>
         <View style={CommonStyles.methodButton}>
-          <Text style={CommonStyles.methodButtonText}>See methods & effects</Text>
+          <Text style={CommonStyles.methodButtonText}>See methods &amp; effects</Text>
           <View style={CommonStyles.methodButtonIcon}>
             <AntDesign name="right" size={24} color="white" />
           </View>
