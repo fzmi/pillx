@@ -19,6 +19,8 @@ import AsyncStorage from '@react-native-community/async-storage';
 import UserContext from '../../../hooks/UserContext';
 import { TouchableWithoutFeedback } from 'react-native-gesture-handler';
 
+import { schedulePushNotification } from '../../../components/Notification';
+
 interface Props {
   styles: any;
   setStep: React.Dispatch<React.SetStateAction<number>>;
@@ -87,7 +89,7 @@ const ManualStep3View: React.FC<Props> = ({ styles, setStep, navigation }) => {
               // id: "AUST R 12345",
               // instruction
               name: addInfo.medicineName,
-              image: addInfo.imageUri,
+              image: thumbnail === 0 ? addInfo.imageUri : imageUri[thumbnail - 1],
               reminders: addInfo.reminders,
               startDate: new Date(),
               endDate: endDate,
@@ -101,15 +103,13 @@ const ManualStep3View: React.FC<Props> = ({ styles, setStep, navigation }) => {
             const email = userInfo.email;
             const identifier = "97801";
 
-            console.log(addInfo.medicineName);
-
             try {
               // let response = await fetch(`http://deco3801-rever.uqcloud.net/user/medicine/add/weekdays?
               // email=${email}&identifier=${identifier}&startDate=${startDate}&endDate=${endDate}&time=${time}&weekdays=${weekdays}`, {
               let response = await fetch(`http://deco3801-rever.uqcloud.net/user/medicine/add?email=${email}&identifier=${identifier}`, {
                 method: 'POST',
               });
-              console.log(response);
+              // console.log(response);
               // let responseJson = await response.json();
               // console.log(responseJson);
               showMessage({
@@ -129,6 +129,8 @@ const ManualStep3View: React.FC<Props> = ({ styles, setStep, navigation }) => {
               });
               console.log(error);
             }
+
+            await schedulePushNotification();
 
             Haptics.notificationAsync(Haptics.NotificationFeedbackType.Success);
             navigation.dispatch(StackActions.popToTop());

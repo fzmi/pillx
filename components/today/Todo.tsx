@@ -21,7 +21,7 @@ const Todo: React.FC<Props> = props => {
       >
         <View style={styles.content}>
           <View style={{ backgroundColor: "transparent" }}>
-            <View style={{ flexDirection: "row", backgroundColor: "transparent"}}>
+            <View style={{ flexDirection: "row", backgroundColor: "transparent" }}>
               <Text style={{ fontSize: 24, fontWeight: "bold", marginBottom: 4 }}>{props.item.name}</Text>
               <TouchableOpacity style={{ flex: 1, marginLeft: 3, display: "flex", alignItems: "center", justifyContent: "center" }}>
                 <Ionicons name="ios-information-circle" size={25} color="#333" />
@@ -29,9 +29,9 @@ const Todo: React.FC<Props> = props => {
             </View>
 
             <Text style={{ fontSize: 18, marginBottom: 10, color: "#444" }}><Entypo name="clock" size={16} color={"#333"} />&nbsp;&nbsp;{props.item.description}</Text>
-            {/* <Text style={{ fontSize: 16, color: "#333" }}>{props.item.time}</Text> */}
+            {/* <Text style={{ fontSize: 16, color: "#333" }}>{props.item.image}</Text> */}
           </View>
-          <Image style={styles.pillImage} source={props.item.image}></Image>
+          <Image style={styles.pillImage} source={isNaN(props.item.image) ? { uri: props.item.image } : props.item.image} />
         </View>
         <View style={{ display: "flex", flexDirection: "row", backgroundColor: "transparent" }}>
 
@@ -50,11 +50,11 @@ const Todo: React.FC<Props> = props => {
 
       {/* Taken the medicine */}
       <View
-        style={[styles.item, { height: props.item.height }, {backgroundColor: "#ABABAB"}]}
+        style={[styles.item, { height: props.item.height }, { backgroundColor: "#ABABAB" }]}
       >
         <View style={styles.content}>
           <View style={{ backgroundColor: "transparent" }}>
-            <View style={{ flexDirection: "row", backgroundColor: "transparent"}}>
+            <View style={{ flexDirection: "row", backgroundColor: "transparent" }}>
               <Text style={{ fontSize: 24, fontWeight: "bold", marginBottom: 4 }}>{props.item.name}</Text>
               <TouchableOpacity style={{ flex: 1, marginLeft: 3, display: "flex", alignItems: "center", justifyContent: "center" }}>
                 <Ionicons name="ios-information-circle" size={25} color="#333" />
@@ -64,7 +64,7 @@ const Todo: React.FC<Props> = props => {
             <Text style={{ fontSize: 18, marginBottom: 10, color: "#444" }}><Entypo name="clock" size={16} color={"#333"} />&nbsp;&nbsp;{props.item.description}</Text>
             {/* <Text style={{ fontSize: 16, color: "#333" }}>{props.item.time}</Text> */}
           </View>
-          <Image style={styles.pillImage} source={props.item.image}></Image>
+          <Image style={styles.pillImage} source={isNaN(props.item.image) ? { uri: props.item.image } : props.item.image} />
         </View>
         <View style={{ display: "flex", flexDirection: "row", backgroundColor: "transparent" }}>
 

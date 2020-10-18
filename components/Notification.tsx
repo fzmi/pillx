@@ -31,9 +31,6 @@ export default function Notification() {
       console.log(response);
     });
 
-    //
-    schedulePushNotification();
-
     return () => {
       Notifications.removeNotificationSubscription(notificationListener.current);
       Notifications.removeNotificationSubscription(responseListener.current);
@@ -64,14 +61,14 @@ export default function Notification() {
   );
 }
 
-async function schedulePushNotification() {
+export async function schedulePushNotification() {
   await Notifications.scheduleNotificationAsync({
     content: {
       title: "Medicine Reminder 💊",
       body: "Time to take Pantonix 20mg.",
       data: { data: 'goes here' },
     },
-    trigger: { seconds: 60 },
+    trigger: { seconds: 5 },
   });
 }
 
