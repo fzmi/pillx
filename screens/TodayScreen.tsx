@@ -8,6 +8,7 @@ import Colors from '../constants/Colors';
 import useColorScheme from '../hooks/useColorScheme';
 import Todo from '../components/today/Todo';
 import UserContext from '../hooks/UserContext';
+import { Ionicons } from '@expo/vector-icons';
 
 export default function TodayScreen({ navigation }: StackScreenProps<TodayParamList, 'TodayScreen'>) {
   const colorScheme = useColorScheme();
@@ -23,6 +24,15 @@ export default function TodayScreen({ navigation }: StackScreenProps<TodayParamL
     });
   }, [navigation]);
 
+  const emptyDate = () => {
+    return (
+      <View style={{ backgroundColor: "transparent", flex: 1, justifyContent: "center", alignItems: "center", paddingTop: 100, marginRight: 20 }}>
+        <Ionicons name="ios-checkmark-circle-outline" size={50} color={Colors[colorScheme].secondaryText} />
+        <Text style={{ fontSize: 24, fontWeight: "600", marginTop: 15, color: Colors[colorScheme].secondaryText }}>No medicine for today!</Text>
+      </View>
+    );
+  }
+
   return (
     <View style={{ flex: 1 }}>
       <Agenda
@@ -36,22 +46,10 @@ export default function TodayScreen({ navigation }: StackScreenProps<TodayParamL
         }}
         items={monthData}
         renderItem={(item: any, firstItemInDay: any) => { return <Todo item={item} /> }}
-        renderEmptyDate={() => {
-          return (<View
-            style={{
-              borderBottomColor: '#eee',
-              borderBottomWidth: 2,
-              backgroundColor: "transparent",
-              marginRight: 10,
-              flex: 0.5,
-              alignItems: 'center',
-              justifyContent: 'center',
-            }}
-          />);
-        }}
+        renderEmptyDate={emptyDate}
         markedDates={{
-          '2020-10-03': { marked: true , selectedColor: '#724ea3'},
-          '2020-09-12': { marked: true , },
+          '2020-10-03': { marked: true, selectedColor: '#724ea3' },
+          '2020-09-12': { marked: true, },
         }}
         renderDay={(day: any, item: any) => { return (<View style={{ marginRight: 20 }} />); }}
       />

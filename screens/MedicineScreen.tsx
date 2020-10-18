@@ -34,7 +34,7 @@ export default function MedicineScreen({ navigation }: StackScreenProps<Medicine
             {userInfo.trackings.map((tracking: Tracking, index: number) => (
               <Card key={index}
                 tracking={tracking}
-                cardColor='#E8E862'
+                cardColor='#ccc'
                 progress={0.3}
                 date="3 months"
               />

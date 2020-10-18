@@ -8,6 +8,7 @@ const colorBlue = '#6679e4';
 export default {
   light: {
     text: '#000',
+    secondaryText: "#777",
     background: '#fff',
     tint: colorPurple,
     tabIconDefault: '#ccc',
@@ -23,6 +24,7 @@ export default {
   },
   dark: {
     text: '#fff',
+    secondaryText: "#888",
     background: '#000',
     tint: tintColorDark,
     tabIconDefault: '#ccc',

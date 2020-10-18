@@ -63,7 +63,7 @@ const Card: React.FC<CardProps> = props => {
 
   return (
     <View style={CommonStyles.card}>
-      <View style={CommonStyles.cardImage} >
+      <View style={[CommonStyles.cardImage, { backgroundColor: props.cardColor }]} >
         {/* Put medicine image or placeholder here */}
         {/* <Image source={props.imageUri} /> */}
       </View>
@@ -113,7 +113,6 @@ const CommonStyles = StyleSheet.create({
     borderRadius: 20,
   },
   cardImage: {
-    backgroundColor: 'yellow',
     flex: 2,
     borderTopLeftRadius: 20,
     borderTopRightRadius: 20,
@@ -215,7 +214,7 @@ const CommonStyles = StyleSheet.create({
     margin: 10
   },
   medInfoCardContentTitle: {
-    fontSize: 20,
+    fontSize: 25,
     fontWeight: 'bold',
     padding: 10,
   },
