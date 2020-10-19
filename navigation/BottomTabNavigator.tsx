@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import { Platform } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
@@ -147,7 +148,8 @@ export default function BottomTabNavigator() {
     <UserContext.Provider value={userContext}>
       <BottomTab.Navigator initialRouteName="Today" tabBarOptions={{
         activeTintColor: Colors[colorScheme].tint,
-        labelStyle: { fontSize: 16, fontWeight: '500' }, style: { height: 90, paddingVertical: 0 }
+        labelStyle: { fontSize: 16, fontWeight: '500' },
+        style: { height: Platform.OS == 'ios' ? 90 : 60, paddingVertical: 0 }
       }}>
         <BottomTab.Screen name="Today" component={TodayNavigator} options={{
           // https://icons.expo.fyi/

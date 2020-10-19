@@ -1,11 +1,10 @@
 import React, { useState } from 'react';
-import { StyleSheet, Modal, TouchableHighlight, FlatList } from 'react-native';
+import { StyleSheet, Modal, TouchableOpacity, TouchableHighlight, FlatList } from 'react-native';
 import { View, Text } from '../../Themed';
 
 import { Entypo } from '@expo/vector-icons';
 import Colors from '../../../constants/Colors';
 import useColorScheme from '../../../hooks/useColorScheme';
-import { TouchableOpacity } from 'react-native-gesture-handler';
 import { Picker } from '@react-native-community/picker';
 
 interface Props {

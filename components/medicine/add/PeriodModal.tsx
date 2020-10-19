@@ -84,7 +84,7 @@ const styles = StyleSheet.create({
     flexDirection: "row",
   },
   picker: {
-    width: 100,
+    width: 120,
   },
   doneButton: {
     marginTop: 15,

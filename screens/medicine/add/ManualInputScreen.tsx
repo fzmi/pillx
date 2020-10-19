@@ -62,6 +62,7 @@ const styles = StyleSheet.create({
     fontSize: 20,
     fontWeight: '600',
     marginLeft: 10,
+    marginBottom: 20,
   },
   separator: {
     height: 1,
