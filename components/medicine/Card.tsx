@@ -70,7 +70,8 @@ const Card: React.FC<CardProps> = props => {
 
       <View style={CommonStyles.content} >
         <View style={CommonStyles.medInfoCardContent}>
-          <Text style={CommonStyles.medInfoCardContentTitle}>{props.tracking.name}</Text>
+        <Text style={CommonStyles.medInfoCardContentTitle}>{props.tracking.trackingName}</Text>
+          <Text style={CommonStyles.medInfoCardContentText}>{props.tracking.medicineName}</Text>
           <Text style={CommonStyles.medInfoCardContentText}>{props.date}</Text>
           <Progress.Bar
             progress={props.progress}

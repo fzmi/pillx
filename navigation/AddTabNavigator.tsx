@@ -18,6 +18,7 @@ export default function AddTabNavigator({ navigation }: StackScreenProps<Medicin
   const [addInfo, setAddInfo] = React.useState({
     medicineResults: [],
     medicineName: "Medicine",
+    medicineId: "97801",
     frequency: { type: "day", value: 1 } as Tracking["frequency"],
     periodOfTreatment: { type: "week", value: 1 },
     reminders: [new Date(0, 0, 0, 12, 0)],

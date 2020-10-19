@@ -50,7 +50,7 @@ const Todo: React.FC<Props> = props => {
         <View style={styles.content}>
           <View style={{ backgroundColor: "transparent" }}>
             <View style={{ flexDirection: "row", backgroundColor: "transparent" }}>
-              <Text style={{ fontSize: 24, fontWeight: "bold", marginBottom: 4 }}>{props.item.name}</Text>
+              <Text style={{ fontSize: 24, fontWeight: "bold", marginBottom: 4 }}>{props.item.trackingName}</Text>
               <TouchableOpacity style={{ flex: 1, marginLeft: 3, display: "flex", alignItems: "center", justifyContent: "center" }}>
                 <Ionicons name="ios-information-circle" size={25} color="#333" />
               </TouchableOpacity>

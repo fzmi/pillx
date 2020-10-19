@@ -5,6 +5,8 @@ import { Tracking } from '../types';
 const AddContext = React.createContext({
   addInfo: {
     medicineResults: [] as any,
+    trackingName: '',
+    medicineId: '',
     medicineName: '',
     frequency: { type: "day", value: 1, } as Tracking["frequency"],
     periodOfTreatment: { type: 'week', value: 1, },

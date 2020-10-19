@@ -85,8 +85,9 @@ export default function BottomTabNavigator() {
       const trackings: Array<Tracking> = (responseJson as Array<any>).map(medicine => {
         if (!medicine.dosageSetting) {
           return {
-            id: "",
-            name: "null",
+            trackingName: "",
+            medicineId: "",
+            medicineName: "null",
             instruction: "",
             image: "",
             frequency: {
@@ -109,8 +110,10 @@ export default function BottomTabNavigator() {
             (value ? index + 1 : -1)).filter(value => value !== -1);
         }
         return {
-          id: medicine.identifier === null ? "" : medicine.identifier,
-          name: medicine.name,
+          // todo
+          trackingName: "Medicine",
+          medicineId: medicine.identifier === null ? "" : medicine.identifier,
+          medicineName: medicine.name,
           instruction: "",
           image: "",
           frequency: {

@@ -86,7 +86,7 @@ const ManualStep1View: React.FC<Props> = ({ styles, setStep }) => {
           <TouchableOpacity style={styles.buttonContainer} onPress={() => {
             setAddInfo({
               ...addInfo,
-              medicineName: name,
+              trackingName: name,
               frequency: frequency,
               periodOfTreatment: period,
             });

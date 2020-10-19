@@ -49,7 +49,6 @@ function RootNavigator() {
       } catch (e) {
         // Restoring token failed
       }
-
       // After restoring token, we may need to validate it in production apps
 
       // This will switch to the App screen or Auth screen and this loading
@@ -62,32 +61,42 @@ function RootNavigator() {
     signIn: async (data: any) => {
       let userToken: string;
       if (data.email) {
-        try {
-          // todo: send email, password to the server to verify and get a token
-          const response = await fetch(`http://deco3801-rever.uqcloud.net/user/get?email=${data.email}`, {
-            method: 'POST',
-            headers: {
-              Accept: "application/json",
-              'Content-Type': 'application/json',
-            }
-          });
-          userToken = data.email;
-        } catch (error) {
-          showMessage({
-            message: "Network Error",
-            description: "Cannot connect to PillX server.",
-            type: "danger",
-            icon: "danger",
-            duration: 2500,
-          });
-          return;
-        }
+        // todo: send email, password to the server to verify and get a token
+
+        await fetch(`http://deco3801-rever.uqcloud.net/user/get?email=${data.email}`, {
+          method: "POST",
+        })
+          .then(response => response.json())
+          .then(() => {
+            userToken = data.email;
+            // successfully get the token and redirect to auth routes
+            AsyncStorage.setItem('userToken', userToken);
+            dispatch({ type: 'SIGN_IN', token: userToken });
+          })
+          .catch(error => {
+            showMessage({
+              message: error.message.includes("Unexpected EOF") ? "Failed to sign in" : "Network Error",
+              description: error.message.includes("Unexpected EOF") ? "Username does not exist. Please create a new account." :
+                "Cannot connect to PillX server.",
+              type: "danger",
+              icon: "danger",
+              duration: 2500,
+            });
+            console.log(error);
+          })
       } else {
+        // offline mode
+        // showMessage({
+        //   message: "Offline Mode",
+        //   description: "You are using the app in offline mode.",
+        //   type: "info",
+        //   icon: "info",
+        //   duration: 2500,
+        // });
         userToken = "test@test.com";
+        AsyncStorage.setItem('userToken', userToken);
+        dispatch({ type: 'SIGN_IN', token: userToken });
       }
-      // successfully get the token and redirect to auth routes
-      AsyncStorage.setItem('userToken', userToken);
-      dispatch({ type: 'SIGN_IN', token: userToken });
     },
     signOut: () => {
       AsyncStorage.removeItem('userToken');
@@ -95,18 +104,16 @@ function RootNavigator() {
     },
     signUp: async (data: any) => {
       // send user data to server and get a token
-      await fetch(`http://deco3801-rever.uqcloud.net/user/add?\
-        email=${data.email}&fullName=${data.name}&password=${data.password}`, {
+      await fetch(`http://deco3801-rever.uqcloud.net/user/add?` +
+        `email=${data.email}&fullName=${data.name}&password=${data.password}`, {
         method: 'POST',
-        headers: {
-          Accept: "application/json",
-          'Content-Type': 'application/json',
-        }
       })
         .then(response => response.text())
         .then(result => {
           if ((result as string).includes("Invalid email address")) {
             throw "Invalid email";
+          } else if ((result as string).includes("502 Bad Gateway")) {
+            throw "Network Error";
           }
           // successfully get the token and redirect to auth routes
           let userToken = data.email;
@@ -116,7 +123,7 @@ function RootNavigator() {
         .catch(error => {
           showMessage({
             message: error === "Invalid email" ? "Failed to create account" : "Network Error",
-            description: "Invalid email" ? "Please enter a valid email." : "Cannot connect to PillX server.",
+            description: error === "Invalid email" ? "Please enter a valid email." : "Cannot connect to PillX server.",
             type: "danger",
             icon: "danger",
             duration: 2500,

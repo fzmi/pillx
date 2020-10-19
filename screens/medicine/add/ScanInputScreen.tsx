@@ -85,9 +85,7 @@ export default function ScanInputScreen({ navigation }: StackScreenProps<AddTabP
         },
         body: body
       });
-      // console.log(response);
       let responseJson = await response.json();
-      // console.log(responseJson);
       return {
         data: responseJson,
       }
@@ -134,8 +132,8 @@ export default function ScanInputScreen({ navigation }: StackScreenProps<AddTabP
                         const response = uploadImage(uri);
 
                         const medicineResults = [
-                          {id: "AUST R 12345", name: "Pantonix 20mg"},
-                          {id: "AUST R 12346", name: "Pantonix 40mg"},
+                          {id: "97801", name: "Pantonix 20mg"},
+                          {id: "17614", name: "Pantonix 40mg"},
                         ];
                         setAddInfo({
                           ...addInfo,

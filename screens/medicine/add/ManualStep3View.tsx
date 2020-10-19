@@ -27,13 +27,103 @@ const ManualStep3View: React.FC<Props> = ({ styles, setStep, navigation }) => {
   const colorScheme = useColorScheme();
   const { addInfo, setAddInfo } = useContext(AddContext);
   const { userInfo, setUserInfo, isLoading } = useContext(UserContext);
-
   const [thumbnail, setThumbnail] = useState<number>(addInfo.imageUri === '' ? 1 : 0);
   const imageUri: Array<any> = [
     require("../../../assets/images/pills/pill3.png"),
     require("../../../assets/images/pills/pill2.png"),
     require("../../../assets/images/pills/pill1.png")
   ]
+
+  const addMedicine = async () => {
+    let startDate: Date = new Date();
+    let endDate: Date = new Date();
+    if (addInfo.periodOfTreatment.type === 'day') {
+      endDate.setDate(endDate.getDate() + addInfo.periodOfTreatment.value);
+    } else if (addInfo.periodOfTreatment.type === 'week') {
+      endDate.setDate(endDate.getDate() + addInfo.periodOfTreatment.value * 7);
+    } else {
+      endDate.setMonth(endDate.getMonth() + addInfo.periodOfTreatment.value);
+    }
+    const medicineId = addInfo.medicineId;
+
+    // save update locally
+    const tracking: Tracking = {
+      trackingName: addInfo.trackingName,
+      medicineId: medicineId,
+      medicineName: addInfo.medicineName,
+      image: thumbnail === 0 ? addInfo.imageUri : imageUri[thumbnail - 1],
+      frequency: addInfo.frequency as any,
+      reminders: addInfo.reminders,
+      startDate: new Date(),
+      endDate: endDate,
+    }
+    setUserInfo({
+      ...userInfo,
+      trackings: [...userInfo.trackings, tracking],
+    })
+
+    // log update to server
+    const email = userInfo.email;
+    await fetch(`http://deco3801-rever.uqcloud.net/user/medicine/add?email=${email}&identifier=${medicineId}`, {
+      method: "POST",
+    })
+      .then(response => response.text())
+      .then(result => {
+        if ((result as string).includes("Failure")) {
+          throw "Invalid medicine";
+        }
+        if (addInfo.periodOfTreatment.type === 'dayOfWeek') {
+          // day of week
+          // todo: missing reminders of that day
+          const weekdays = [false, false, false, false, false, false, false].map((value: boolean, index: number) =>
+            (addInfo.frequency.value as Array<number>).includes(index + 1) ? !value : value);
+          return fetch(`http://deco3801-rever.uqcloud.net/user/medicine/dosage/add/weekdays?email=${email}` +
+            `&identifier=${medicineId}&startDate=${startDate.toISOString().split('T')[0]}` +
+            `&endDate=${endDate.toISOString().split('T')[0]}&time=${startDate.toISOString().split('T')[1]}` +
+            `&weekdays=${weekdays}`, {
+            method: "POST",
+          })
+        } else {
+          // interval
+          // todo: missing reminders of that day
+          const intervalType = addInfo.frequency.type.toUpperCase() + "S";
+          const url = `http://deco3801-rever.uqcloud.net/user/medicine/dosage/add/interval?email=${email}` +
+            `&identifier=${medicineId}&startDate=${startDate.toISOString().split('T')[0]}` +
+            `&endDate=${endDate.toISOString().split('T')[0]}&time=${startDate.toISOString().split('T')[1]}` +
+            `&intervalType=${intervalType}&interval=${addInfo.frequency.value}`;
+          return fetch(url, {
+            method: "POST",
+          });
+        }
+      })
+      .then(response => response.text())
+      .then(result => {
+        if ((result as string).includes("Failure")) {
+          throw "Invalid dosage";
+        }
+      })
+      .catch(error => {
+        showMessage({
+          message: "Server Error",
+          description: "Cannot connect to PillX server.",
+          type: "danger",
+          icon: "danger",
+          duration: 2500,
+        });
+        console.log(error);
+      })
+    showMessage({
+      message: "Added Medicine",
+      description: "Successfully added a new medicine.",
+      type: "success",
+      icon: "success",
+      duration: 3000,
+    });
+
+    await schedulePushNotification();
+    Haptics.notificationAsync(Haptics.NotificationFeedbackType.Success);
+    navigation.dispatch(StackActions.popToTop());
+  }
 
   return (
     <ScrollView style={{ backgroundColor: Colors[colorScheme].medicineStep3 }}>
@@ -71,66 +161,7 @@ const ManualStep3View: React.FC<Props> = ({ styles, setStep, navigation }) => {
             </View>
           </View>
 
-          <TouchableOpacity onPress={async () => {
-            let startDate: Date = new Date();
-            let endDate: Date = new Date();
-            if (addInfo.periodOfTreatment.type === 'day') {
-              endDate.setDate(endDate.getDate() + addInfo.periodOfTreatment.value);
-            } else if (addInfo.periodOfTreatment.type === 'week') {
-              endDate.setDate(endDate.getDate() + addInfo.periodOfTreatment.value * 7);
-            } else {
-              endDate.setMonth(endDate.getMonth() + addInfo.periodOfTreatment.value);
-            }
-            const tracking: Tracking = {
-              // id: "AUST R 12345",
-              // instruction
-              name: addInfo.medicineName,
-              image: thumbnail === 0 ? addInfo.imageUri : imageUri[thumbnail - 1],
-              frequency: addInfo.frequency as any,
-              reminders: addInfo.reminders,
-              startDate: new Date(),
-              endDate: endDate,
-            }
-            setUserInfo({
-              ...userInfo,
-              trackings: [...userInfo.trackings, tracking],
-            })
-
-            // todo: add new medicine
-            const email = userInfo.email;
-            const identifier = "97801";
-
-            try {
-              // let response = await fetch(`http://deco3801-rever.uqcloud.net/user/medicine/add/weekdays?
-              // email=${email}&identifier=${identifier}&startDate=${startDate}&endDate=${endDate}&time=${time}&weekdays=${weekdays}`, {
-              let response = await fetch(`http://deco3801-rever.uqcloud.net/user/medicine/add?email=${email}&identifier=${identifier}`, {
-                method: 'POST',
-              });
-              // console.log(response);
-              // let responseJson = await response.json();
-              // console.log(responseJson);
-              showMessage({
-                message: "Added Medicine",
-                description: "Successfully added a new medicine.",
-                type: "success",
-                icon: "success",
-                duration: 3000,
-              });
-            } catch (error) {
-              showMessage({
-                message: "Server Error",
-                description: "Cannot connect to PillX server.",
-                type: "danger",
-                icon: "danger",
-                duration: 2500,
-              });
-              console.log(error);
-            }
-
-            await schedulePushNotification();
-            Haptics.notificationAsync(Haptics.NotificationFeedbackType.Success);
-            navigation.dispatch(StackActions.popToTop());
-          }} style={styles.buttonContainer}>
+          <TouchableOpacity onPress={addMedicine} style={styles.buttonContainer}>
             <Text style={styles.buttonText}>Add Medicine</Text>
             <AntDesign name="plus" size={24} color="#000" />
           </TouchableOpacity>

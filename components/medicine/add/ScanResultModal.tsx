@@ -34,7 +34,7 @@ const ScanResultModal: React.FC<Props> = ({ modalVisible, setModalVisible, camer
                   <View key={index}>
                     <TouchableOpacity style={{ flexDirection: "row", paddingVertical: 10 }}
                       onPress={() => {
-                        setAddInfo({ ...addInfo, medicineName: result.name });
+                        setAddInfo({ ...addInfo, medicineName: result.name, medicineId: result.id });
                         setModalVisible(!modalVisible);
                         navigation.navigate("ManualInputScreen");
                       }}>

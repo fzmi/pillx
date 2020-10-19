@@ -1,7 +1,8 @@
 // Tracking contains user-specific information on medicine
 export type Tracking = {
-  id?: string,
-  name: string,
+  trackingName: string,
+  medicineId?: string,
+  medicineName?: string,
   instruction?: string,
   image: string | number,
   frequency: {
