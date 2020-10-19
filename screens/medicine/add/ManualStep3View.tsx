@@ -1,25 +1,21 @@
 import React, { useContext, useState } from 'react';
-import { StyleSheet, TouchableOpacity, Image } from 'react-native';
+import { TouchableOpacity, Image } from 'react-native';
 import { ScrollView, Text, View } from '../../../components/Themed';
-import { StackScreenProps } from '@react-navigation/stack';
-import { AntDesign, Entypo, Ionicons } from '@expo/vector-icons';
-import { StackActions } from '@react-navigation/native';
-import { Picker } from '@react-native-community/picker';
-import { showMessage } from "react-native-flash-message";
 
 import { AddTabParamList, Tracking } from '../../../types';
+import { AntDesign, Entypo } from '@expo/vector-icons';
+import { StackActions } from '@react-navigation/native';
+import { StackNavigationProp } from '@react-navigation/stack';
+import { showMessage } from "react-native-flash-message";
+import { TouchableWithoutFeedback } from 'react-native-gesture-handler';
+import { schedulePushNotification } from '../../../components/Notification';
 import Colors from '../../../constants/Colors';
 import useColorScheme from '../../../hooks/useColorScheme';
 import StepIndicator from '../../../components/medicine/add/StepIndicator';
 import AddContext from '../../../hooks/AddContext';
-import { StackNavigationProp } from '@react-navigation/stack';
 import * as Haptics from 'expo-haptics';
 import AsyncStorage from '@react-native-community/async-storage';
-
 import UserContext from '../../../hooks/UserContext';
-import { TouchableWithoutFeedback } from 'react-native-gesture-handler';
-
-import { schedulePushNotification } from '../../../components/Notification';
 
 interface Props {
   styles: any;
@@ -100,7 +96,7 @@ const ManualStep3View: React.FC<Props> = ({ styles, setStep, navigation }) => {
               trackings: [...userInfo.trackings, tracking],
             })
 
-            //todo: add new medicine
+            // todo: add new medicine
             const email = userInfo.email;
             const identifier = "97801";
 
@@ -132,7 +128,6 @@ const ManualStep3View: React.FC<Props> = ({ styles, setStep, navigation }) => {
             }
 
             await schedulePushNotification();
-
             Haptics.notificationAsync(Haptics.NotificationFeedbackType.Success);
             navigation.dispatch(StackActions.popToTop());
           }} style={styles.buttonContainer}>
@@ -146,7 +141,7 @@ const ManualStep3View: React.FC<Props> = ({ styles, setStep, navigation }) => {
           </TouchableOpacity>
         </View>
       </View>
-    </ScrollView >
+    </ScrollView>
   )
 }
 

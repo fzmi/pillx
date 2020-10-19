@@ -1,13 +1,8 @@
-import React from 'react';
-import { StyleSheet, TouchableOpacity, Image } from 'react-native';
+import React, { useContext, useState } from 'react';
+import { TouchableOpacity } from 'react-native';
 import { ScrollView, Text, View } from '../../../components/Themed';
-import { StackScreenProps } from '@react-navigation/stack';
 import { AntDesign, Entypo } from '@expo/vector-icons';
-import { StackActions } from '@react-navigation/native';
-import { Picker } from '@react-native-community/picker';
-import { showMessage } from "react-native-flash-message";
 
-import { AddTabParamList } from '../../../types';
 import Colors from '../../../constants/Colors';
 import useColorScheme from '../../../hooks/useColorScheme';
 import StepIndicator from '../../../components/medicine/add/StepIndicator';
@@ -21,10 +16,10 @@ interface Props {
 
 const ManualStep2View: React.FC<Props> = ({ styles, setStep }) => {
   const colorScheme = useColorScheme();
-  const { addInfo, setAddInfo } = React.useContext(AddContext);
+  const { addInfo, setAddInfo } = useContext(AddContext);
 
-  const [reminders, setReminders] = React.useState<Array<Date>>(addInfo.reminders);
-  const [showReminderModal, setShowReminderModal] = React.useState(false);
+  const [reminders, setReminders] = useState<Array<Date>>(addInfo.reminders);
+  const [showReminderModal, setShowReminderModal] = useState(false);
 
   const handleConfirm = (date: Date) => {
     date.setSeconds(0);
@@ -77,7 +72,6 @@ const ManualStep2View: React.FC<Props> = ({ styles, setStep }) => {
             <Entypo name="chevron-thin-left" size={24} color="white" />
             <Text style={styles.backButtonText}>Previous Step</Text>
           </TouchableOpacity>
-
         </View>
       </View>
 
@@ -90,9 +84,6 @@ const ManualStep2View: React.FC<Props> = ({ styles, setStep }) => {
         minuteInterval={5}
         headerTextIOS="Pick a reminder time"
       />
-
-      {/* <ReminderModal showReminderModal={showReminderModal} setShowReminderModal={setShowReminderModal}
-        reminders={reminders} setReminders={setReminders} /> */}
     </ScrollView>
   )
 }

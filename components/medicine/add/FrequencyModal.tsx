@@ -101,7 +101,7 @@ const FrequencyModal: React.FC<Props> = ({ showFrequencyModal, setShowFrequencyM
       setFrequency({ type: everyType, value: everyValue });
       setShowFrequencyModal(!showFrequencyModal);
     }} style={[styles.doneButton, { backgroundColor: Colors[colorScheme].buttonBlue }]}>
-      <Text style={styles.dayOfWeekText}>Done</Text>
+      <Text style={styles.doneButtonText}>Done</Text>
     </TouchableOpacity>
   </View>)
 
@@ -144,7 +144,7 @@ const FrequencyModal: React.FC<Props> = ({ showFrequencyModal, setShowFrequencyM
             {showDayOfWeek && (<DayOfWeekPage />)}
           </View>
           <TouchableHighlight onPress={() => { setShowFrequencyModal(!showFrequencyModal); }}
-            style={[styles.modalCencelButton, { backgroundColor: Colors[colorScheme].secondaryBackground }]}>
+            style={[styles.cancelButton, { backgroundColor: Colors[colorScheme].secondaryBackground }]}>
             <Text style={styles.buttonText}>Cancel</Text>
           </TouchableHighlight>
         </View>
@@ -183,8 +183,8 @@ const styles = StyleSheet.create({
   modalPage: {
     alignItems: 'center',
   },
-  modalCencelButton: {
-    marginTop: 15,
+  cancelButton: {
+    marginTop: 10,
     paddingVertical: 10,
     paddingHorizontal: 30,
     borderRadius: 10,
@@ -220,6 +220,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
     paddingVertical: 10,
     borderRadius: 10,
+    marginBottom: 10,
   },
   everyView: {
     flexDirection: "row",
@@ -251,7 +252,7 @@ const styles = StyleSheet.create({
   },
   doneButton: {
     flexDirection: "row",
-    marginTop: 5,
+    marginTop: 10,
     justifyContent: "center",
     alignItems: "center",
     paddingVertical: 12,

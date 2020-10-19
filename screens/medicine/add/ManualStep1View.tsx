@@ -1,18 +1,13 @@
-import React from 'react';
-import { StyleSheet, TouchableOpacity, Image, TextInput } from 'react-native';
+import React, { useContext, useState } from 'react';
+import { TouchableOpacity, TextInput } from 'react-native';
 import { ScrollView, Text, View } from '../../../components/Themed';
-import { StackScreenProps } from '@react-navigation/stack';
-import { AntDesign, Entypo, Feather } from '@expo/vector-icons';
-import { StackActions } from '@react-navigation/native';
+import { Entypo, Feather } from '@expo/vector-icons';
 
-import { showMessage } from "react-native-flash-message";
-
-import { AddTabParamList, Tracking } from '../../../types';
+import { Tracking } from '../../../types';
 import Colors from '../../../constants/Colors';
 import useColorScheme from '../../../hooks/useColorScheme';
 import StepIndicator from '../../../components/medicine/add/StepIndicator';
 import AddContext from '../../../hooks/AddContext';
-import { Input } from 'react-native-elements';
 import FrequencyModal from '../../../components/medicine/add/FrequencyModal';
 import PeriodModal from '../../../components/medicine/add/PeriodModal';
 
@@ -23,13 +18,13 @@ interface Props {
 
 const ManualStep1View: React.FC<Props> = ({ styles, setStep }) => {
   const colorScheme = useColorScheme();
-  const { addInfo, setAddInfo } = React.useContext(AddContext);
+  const { addInfo, setAddInfo } = useContext(AddContext);
 
-  const [name, setName] = React.useState<string>(addInfo.medicineName);
-  const [showFrequencyModal, setShowFrequencyModal] = React.useState<boolean>(false);
-  const [frequency, setFrequency] = React.useState<Tracking["frequency"]>(addInfo.frequency);
-  const [showPeriodModal, setShowPeriodModal] = React.useState<boolean>(false);
-  const [period, setPeriod] = React.useState<any>(addInfo.periodOfTreatment);
+  const [name, setName] = useState<string>(addInfo.medicineName);
+  const [showFrequencyModal, setShowFrequencyModal] = useState<boolean>(false);
+  const [frequency, setFrequency] = useState<Tracking["frequency"]>(addInfo.frequency);
+  const [showPeriodModal, setShowPeriodModal] = useState<boolean>(false);
+  const [period, setPeriod] = useState<any>(addInfo.periodOfTreatment);
   const days: { [key: number]: string; } = { 1: "Mon", 2: "Tue", 3: "Wed", 4: "Thu", 5: "Fri", 6: "Sat", 7: "Sun" };
 
   return (
