@@ -7,7 +7,8 @@ import { MedicineParamList, Tracking } from '../types';
 import Colors from '../constants/Colors';
 import useColorScheme from '../hooks/useColorScheme';
 import { Entypo } from '@expo/vector-icons';
-import Card from '../components/medicine/Card';
+// import Card from '../components/medicine/Card';
+import Card from '../components/medicine/Card2';
 import AsyncStorage from '@react-native-community/async-storage';
 
 import UserContext from '../hooks/UserContext';
@@ -35,15 +36,11 @@ export default function MedicineScreen({ navigation }: StackScreenProps<Medicine
 
         {/* Medicine Scroll View */}
         {userInfo.trackings && userInfo.trackings.length > 0 && (
-          <View style={{ flex: 1, paddingVertical: 30, backgroundColor: Colors[colorScheme].secondaryBackground }}>
+          <View style={{ flex: 1, backgroundColor: Colors[colorScheme].secondaryBackground }}>
             <ScrollView horizontal={true} showsHorizontalScrollIndicator={false}>
-              {userInfo.trackings.map((tracking: Tracking, index: number) => 
-                <Card key={index}
-                  tracking={tracking}
-                  cardColor='#ccc'
-                  progress={0.3}
-                  date="3 months"
-                />
+              {userInfo.trackings.map((tracking: Tracking, index: number) =>
+                // <Card key={index} tracking={tracking} cardColor='#ccc' progress={0.3} date="3 months" />
+                <Card key={index} tracking={tracking} index={index + 1} />
               )}
             </ScrollView>
           </View>
