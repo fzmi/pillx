@@ -10,7 +10,7 @@ import MethodScreen from '../screens/medicine/data/MethodScreen';
 
 const DataTab = createBottomTabNavigator<DataTabParamList>();
 
-// Root stack -> Button Tab -> Medicine -> Data
+// Root stack -> Bottom Tab -> Medicine -> Data
 export default function DataTabNavigator({ route }: StackScreenProps<MedicineParamList, 'Data'>) {
   const colorScheme = useColorScheme();
   const { medicineId } = route.params;

@@ -22,6 +22,7 @@ export default {
     settingIcon: '#333',
     profileBackgroundOuter: "#eee",
     profileBackgroundInner: "#fff",
+    headerBorder: "#bbb",
   },
   dark: {
     text: '#fff',
@@ -39,5 +40,6 @@ export default {
     settingIcon: '#fff',
     profileBackgroundOuter: "#000",
     profileBackgroundInner: "#111",
+    headerBorder: "#444",
   },
 };

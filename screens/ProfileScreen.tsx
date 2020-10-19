@@ -110,13 +110,13 @@ const styles = StyleSheet.create({
     width: 60,
     height: 60,
     borderRadius: 30,
-    marginTop: 10,
+    marginTop: 12,
     marginBottom: 10,
   },
   profileHeaderText: {
     fontSize: 24,
     fontWeight: "700",
-    marginVertical: 2,
+    marginBottom: 2,
   },
   profileText: {
     fontSize: 18,
@@ -178,8 +178,8 @@ const styles = StyleSheet.create({
     borderRadius: 15,
     paddingVertical: 15,
     paddingHorizontal: 20,
-    marginTop: 15,
-    marginBottom: 20,
+    marginTop: 10,
+    marginBottom: 30,
     marginHorizontal: 20,
   },
   filledButtonText: {

@@ -8,15 +8,25 @@ export type Tracking = {
     type: "day" | "week" | "month" | "dayOfWeek",
     value: number | Array<number>
   },
+  // reminder time for each day
   reminders: Array<Date>,
   startDate: Date,
   endDate?: Date,
 }
 
+// List of dosages for each day
+export type Dosages = Array<{
+  [date: string]: {
+    count: number,
+    medicines: Array<{time: Date, medicineId: string,}>
+  }
+}>
+
 // Medicine contains detailed information of medicine
 export type Medicine = {
   id?: string,
   name: string,
+  description?: string,
 }
 
 // Root stack
