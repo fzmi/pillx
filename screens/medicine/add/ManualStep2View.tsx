@@ -38,7 +38,7 @@ const ManualStep2View: React.FC<Props> = ({ styles, setStep }) => {
         <StepIndicator step={2} totalSteps={3} />
 
         <View style={{ backgroundColor: Colors[colorScheme].medicineStep2, paddingHorizontal: 18 }}>
-          <View style={{ marginVertical: 8, borderRadius: 10, padding: 20 }}>
+          <View style={{ marginVertical: 8, borderRadius: 10, padding: 20 }} lightColor="#fff" darkColor="#333">
             <Text style={{ fontSize: 24, fontWeight: '600' }}>Set Reminders</Text>
             <Text style={{ fontSize: 15, marginVertical: 3 }}>
               Add a reminder time when it is the day to take this medicine.
@@ -46,8 +46,8 @@ const ManualStep2View: React.FC<Props> = ({ styles, setStep }) => {
             <View style={styles.separator} lightColor="#eee" darkColor="rgba(255,255,255,0.1)" />
 
             {reminders.map((reminder: Date, index: number) => (
-              <View key={index}>
-                <View style={{ flexDirection: "row", justifyContent: "space-between", alignItems: "center" }}>
+              <View key={index} lightColor="#fff" darkColor="#333">
+                <View style={{ flexDirection: "row", justifyContent: "space-between", alignItems: "center" }} lightColor="#fff" darkColor="#333">
                   <Text style={{ fontSize: 20, fontWeight: '600' }}>
                     {reminder.toLocaleTimeString([], { hour: 'numeric', minute: '2-digit' })}
                   </Text>

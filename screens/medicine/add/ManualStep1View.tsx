@@ -7,7 +7,7 @@ import { StackActions } from '@react-navigation/native';
 
 import { showMessage } from "react-native-flash-message";
 
-import { AddTabParamList } from '../../../types';
+import { AddTabParamList, Tracking } from '../../../types';
 import Colors from '../../../constants/Colors';
 import useColorScheme from '../../../hooks/useColorScheme';
 import StepIndicator from '../../../components/medicine/add/StepIndicator';
@@ -25,11 +25,12 @@ const ManualStep1View: React.FC<Props> = ({ styles, setStep }) => {
   const colorScheme = useColorScheme();
   const { addInfo, setAddInfo } = React.useContext(AddContext);
 
-  const [name, setName] = React.useState(addInfo.medicineName);
-  const [showFrequencyModal, setShowFrequencyModal] = React.useState(false);
-  const [frequency, setFrequency] = React.useState<any>(addInfo.frequency);
-  const [showPeriodModal, setShowPeriodModal] = React.useState(false);
+  const [name, setName] = React.useState<string>(addInfo.medicineName);
+  const [showFrequencyModal, setShowFrequencyModal] = React.useState<boolean>(false);
+  const [frequency, setFrequency] = React.useState<Tracking["frequency"]>(addInfo.frequency);
+  const [showPeriodModal, setShowPeriodModal] = React.useState<boolean>(false);
   const [period, setPeriod] = React.useState<any>(addInfo.periodOfTreatment);
+  const days: { [key: number]: string; } = { 1: "Mon", 2: "Tue", 3: "Wed", 4: "Thu", 5: "Fri", 6: "Sat", 7: "Sun" };
 
   return (
     <ScrollView style={{ backgroundColor: Colors[colorScheme].medicineStep1 }}>
@@ -56,11 +57,12 @@ const ManualStep1View: React.FC<Props> = ({ styles, setStep }) => {
             <TouchableOpacity onPress={() => setShowFrequencyModal(true)}>
               <View style={styles.field} lightColor="#fff" darkColor="#333">
                 <Text style={styles.fieldLeftTitle}>Frequency:</Text>
-                <Feather name="edit" size={24} color="black" />
+                <Feather name="edit" size={24} color={Colors[colorScheme].text} />
               </View>
               <Text style={{ fontSize: 20, marginTop: 2 }}>
-                {(frequency.type === 'day' && frequency.value == 1) ?
-                  'daily' : `every ${frequency.value} ${frequency.type}${frequency.value > 1 ? 's' : ''}`
+                {(frequency.type === 'day' && frequency.value == 1) ? 'daily' :
+                  frequency.type !== 'dayOfWeek' ? `every ${frequency.value} ${frequency.type}${frequency.value > 1 ? 's' : ''}` :
+                    `every ${(frequency.value as Array<number>).map(value => days[value])}`
                 }
               </Text>
             </TouchableOpacity>
@@ -70,7 +72,7 @@ const ManualStep1View: React.FC<Props> = ({ styles, setStep }) => {
             <TouchableOpacity onPress={() => setShowPeriodModal(true)}>
               <View style={styles.field} lightColor="#fff" darkColor="#333">
                 <Text style={styles.fieldLeftTitle}>Period of Treatment:</Text>
-                <Feather name="edit" size={24} color="black" />
+                <Feather name="edit" size={24} color={Colors[colorScheme].text} />
               </View>
               <Text style={{ fontSize: 20, marginTop: 2 }}>
                 {`${period.value} ${period.type}${period.value > 1 ? 's' : ''}`}

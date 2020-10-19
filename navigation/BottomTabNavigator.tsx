@@ -7,7 +7,7 @@ import { createNativeStackNavigator } from 'react-native-screens/native-stack';
 import AsyncStorage from '@react-native-community/async-storage';
 import { showMessage } from "react-native-flash-message";
 
-import { BottomTabParamList, TodayParamList, ProfileParamList, MedicineParamList } from '../types';
+import { BottomTabParamList, TodayParamList, ProfileParamList, MedicineParamList, Tracking } from '../types';
 import Colors from '../constants/Colors';
 import useColorScheme from '../hooks/useColorScheme';
 import TodayScreen from '../screens/TodayScreen';
@@ -153,7 +153,7 @@ function MedicineNavigator() {
     medicineName: "Medicine",
     frequency: {
       type: "day",
-      value: 1
+      value: 1,
     },
     periodOfTreatment: {type: "week", value: 1},
     reminders: [new Date(0, 0, 0, 12, 0)],

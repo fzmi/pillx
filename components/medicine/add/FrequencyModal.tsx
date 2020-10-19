@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { StyleSheet, Modal, TouchableHighlight } from 'react-native';
+import { StyleSheet, Modal, TouchableHighlight, FlatList, Button } from 'react-native';
 import { View, Text } from '../../Themed';
 
 import { Entypo } from '@expo/vector-icons';
@@ -24,6 +24,25 @@ const FrequencyModal: React.FC<Props> = ({ showFrequencyModal, setShowFrequencyM
   const [everyValue, setEveryValue] = useState<number>(1);
   const [everyType, setEveryType] = useState<string>("day");
   const [showDayOfWeek, setShowDayOfWeek] = useState<boolean>(false);
+  const [selectedDays, setSelectedDays] = useState<Array<string>>([]);
+
+  const days = [{ day: "Monday", value: 1 }, { day: "Tuesday", value: 2 },
+  { day: "Wednesday", value: 3 }, { day: "Thursday", value: 4 }, { day: "Friday", value: 5 },
+  { day: "Saturday", value: 6 }, { day: "Sunday", value: 7 }];
+
+  const renderItem = ({ item }: any) => {
+    const backgroundColor = selectedDays.includes(item.day) ? "#555" : "#eee";
+    const color = selectedDays.includes(item.day) ? "white" : "black";
+    return (
+      <TouchableOpacity onPress={() => {
+        selectedDays.includes(item.day) ?
+          setSelectedDays(selectedDays.filter(day => day !== item.day)) : setSelectedDays([...selectedDays, item.day])
+      }} style={[styles.dayOfWeekItem, { backgroundColor: backgroundColor }]}>
+        <Text style={[styles.dayOfWeekText, { color: color }]}>{item.day}</Text>
+        <Entypo name="check" size={24} color="#eee" />
+      </TouchableOpacity>
+    );
+  };
 
   return (
     <Modal animationType="fade" transparent={true} visible={showFrequencyModal}>
@@ -38,6 +57,7 @@ const FrequencyModal: React.FC<Props> = ({ showFrequencyModal, setShowFrequencyM
                   <View>
                     <TouchableOpacity style={{ flexDirection: "row", justifyContent: "space-between", paddingVertical: 10 }}
                       onPress={() => {
+                        setFrequency({ type: "day", value: 1 });
                         setShowFrequencyModal(!showFrequencyModal);
                       }}>
                       <View style={{ width: "100%", flexDirection: "row", justifyContent: "space-between", alignItems: "center" }}>
@@ -67,8 +87,8 @@ const FrequencyModal: React.FC<Props> = ({ showFrequencyModal, setShowFrequencyM
 
                     <TouchableOpacity style={{ flexDirection: "row", justifyContent: "space-between", paddingVertical: 10 }}
                       onPress={() => {
-                        setAddInfo({ ...addInfo, medicineName: "My Medicine" });
-                        setShowFrequencyModal(!showFrequencyModal);
+                        setShowDayOfWeek(true);
+                        setShowFrequency(false);
                       }}>
                       <View style={{ width: "100%", flexDirection: "row", justifyContent: "space-between", alignItems: "center" }}>
                         <Text style={{ fontSize: 20, marginRight: 10 }}>Days of Week...</Text>
@@ -116,9 +136,49 @@ const FrequencyModal: React.FC<Props> = ({ showFrequencyModal, setShowFrequencyM
                     <TouchableOpacity
                       style={{ flexDirection: "row", marginTop: 5, justifyContent: "center", alignItems: "center", backgroundColor: Colors[colorScheme].buttonBlue, paddingVertical: 12, borderRadius: 10 }}
                       onPress={() => {
-                        setFrequency({type: everyType, value: everyValue});
+                        setFrequency({ type: everyType, value: everyValue });
                         setShowFrequencyModal(!showFrequencyModal);
                       }}>
+                      <Text style={{ fontSize: 18, color: "white", fontWeight: "600" }}>Done</Text>
+                    </TouchableOpacity>
+                  </View>
+                )}
+
+                {showDayOfWeek && (
+                  <View>
+                    <TouchableOpacity
+                      style={{ flexDirection: "row", justifyContent: "center", alignItems: "center", backgroundColor: Colors[colorScheme].secondaryBackground, paddingVertical: 10, borderRadius: 10 }}
+                      onPress={() => {
+                        setShowDayOfWeek(false);
+                        setShowFrequency(true);
+                      }}>
+                      <Entypo name="chevron-thin-left" size={24} color={Colors[colorScheme].text} />
+                      <Text style={{ fontSize: 18 }}>Back</Text>
+                    </TouchableOpacity>
+                    <View style={{ flexDirection: "row", justifyContent: "center", alignItems: "center", marginVertical: 10 }}>
+                      <Text style={{ fontSize: 20 }}>Every</Text>
+                      <FlatList
+                        data={days}
+                        renderItem={renderItem}
+                        keyExtractor={(item) => item.day}
+                        extraData={selectedDays}
+                      />
+                    </View>
+
+                    <TouchableOpacity
+                      style={{
+                        flexDirection: "row", justifyContent: "center", alignItems: "center",
+                        backgroundColor: selectedDays.length == 0 ? Colors[colorScheme].buttonBlueDisabled : Colors[colorScheme].buttonBlue, paddingVertical: 12, borderRadius: 10
+                      }}
+                      onPress={() => {
+                        if (selectedDays.length === 7) {
+                          setFrequency({ type: "day", value: 1 });
+                        } else {
+                          setFrequency({ type: "dayOfWeek", value: selectedDays.map(selectedDay => days.find(item => item.day === selectedDay)?.value).sort() });
+                        }
+                        setShowFrequencyModal(!showFrequencyModal);
+                      }}
+                      disabled={selectedDays.length == 0}>
                       <Text style={{ fontSize: 18, color: "white", fontWeight: "600" }}>Done</Text>
                     </TouchableOpacity>
                   </View>
@@ -130,9 +190,7 @@ const FrequencyModal: React.FC<Props> = ({ showFrequencyModal, setShowFrequencyM
 
           <TouchableHighlight
             style={{ marginTop: 15, backgroundColor: Colors[colorScheme].secondaryBackground, paddingVertical: 10, paddingHorizontal: 30, borderRadius: 10 }}
-            onPress={() => {
-              setShowFrequencyModal(!showFrequencyModal);
-            }}>
+            onPress={() => { setShowFrequencyModal(!showFrequencyModal); }}>
             <Text style={{ fontSize: 18 }}>Cancel</Text>
           </TouchableHighlight>
         </View>
@@ -187,6 +245,19 @@ const styles = StyleSheet.create({
     width: '100%',
     justifyContent: 'center',
     alignSelf: 'center',
+  },
+  dayOfWeekItem: {
+    paddingHorizontal: 20,
+    paddingVertical: 11,
+    marginVertical: 2,
+    marginLeft: 15,
+    borderRadius: 10,
+    flexDirection: "row",
+    justifyContent: "space-between",
+  },
+  dayOfWeekText: {
+    fontSize: 20,
+    marginRight: 20,
   },
 })
 

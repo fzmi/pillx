@@ -45,11 +45,11 @@ const ManualStep3View: React.FC<Props> = ({ styles, setStep, navigation }) => {
         <StepIndicator step={3} totalSteps={3} />
 
         <View style={{ backgroundColor: Colors[colorScheme].medicineStep3, paddingHorizontal: 18 }}>
-          <View style={{ marginVertical: 8, borderRadius: 10, padding: 20 }}>
+          <View style={{ marginVertical: 8, borderRadius: 10, padding: 20 }} lightColor="#fff" darkColor="#333">
             <Text style={{ fontSize: 24, fontWeight: '600' }}>Set Thumbnail</Text>
             <Text style={{ fontSize: 15, marginVertical: 3 }}>Select a header image for your medicine.</Text>
 
-            <View style={{ flexDirection: "row", flexWrap: "wrap" }}>
+            <View style={{ flexDirection: "row", flexWrap: "wrap" }} lightColor="#fff" darkColor="#333">
               {addInfo.imageUri != '' && (
                 <TouchableWithoutFeedback style={{ borderColor: "#aaa", borderWidth: 1, marginTop: 10, marginRight: 10 }}
                   onPress={() => { setThumbnail(0) }}>
