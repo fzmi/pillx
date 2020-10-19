@@ -46,11 +46,11 @@ const Card: React.FC<Props> = ({ tracking, index }) => {
         <View style={{ backgroundColor: "#eee", width: "100%", height: 2, marginBottom: 20 }}></View>
         {/* <Text style={{fontSize: 20}}>Reminders</Text> */}
         <View style={{ flexDirection: "row", justifyContent: "space-between", alignItems: "center", width: "100%", paddingHorizontal: 15, marginBottom: 10 }}>
-          <FontAwesome5 name="bell" size={24} color="black" />
+          <FontAwesome5 name="bell" size={24} color={Colors[colorScheme].text} />
           <Text style={{ fontWeight: "700", padding: 4, fontSize: 18 }}>Daily at 10:00, 12:00</Text>
         </View>
         <View style={{ flexDirection: "row", justifyContent: "space-between", alignItems: "center", width: "100%", paddingHorizontal: 15, marginBottom: 10 }}>
-          <Entypo name="block" size={22} color="black" />
+          <Entypo name="block" size={22} color={Colors[colorScheme].text} />
           <Text style={{ fontWeight: "700", padding: 4, fontSize: 18 }}>2 pills per dosage</Text>
         </View>
 
@@ -68,7 +68,7 @@ const Card: React.FC<Props> = ({ tracking, index }) => {
         <Text style={{ fontSize: 18, fontWeight: "500", color: "white" }}>See Methods &amp; Effects</Text>
       </TouchableOpacity>
       <TouchableOpacity style={{ width: "100%", paddingVertical: 14, marginTop: 10, backgroundColor: "#eee", alignItems: "center", justifyContent: "center", borderRadius: 15 }}>
-        <Text style={{ fontSize: 18, fontWeight: "500" }}>Edit Tracking</Text>
+        <Text style={{ fontSize: 18, fontWeight: "500", color: "black" }}>Edit Tracking</Text>
       </TouchableOpacity>
     </View>
   </View>);
