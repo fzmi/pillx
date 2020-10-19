@@ -5,6 +5,7 @@ import { Dimensions, StyleSheet, TouchableOpacity, Image, View as ClearView } fr
 import { Tracking } from "../../types";
 import Colors from '../../constants/Colors';
 import useColorScheme from '../../hooks/useColorScheme';
+import { useNavigation } from '@react-navigation/native';
 import { FontAwesome5, Entypo } from '@expo/vector-icons';
 
 interface Props {
@@ -13,6 +14,7 @@ interface Props {
 }
 
 const Card: React.FC<Props> = ({ tracking, index }) => {
+  const navigation = useNavigation();
   const colorScheme = useColorScheme();
   const trackingName = tracking.trackingName ? tracking.trackingName : "Medicine";
   // DERALIN 40 Propranolol hydrochloride 40mg tablet bottle
@@ -25,50 +27,50 @@ const Card: React.FC<Props> = ({ tracking, index }) => {
 
   return (<View style={styles.cardContainer}>
     <View style={[styles.headerBanner, { backgroundColor: Colors[colorScheme].buttonBlue }]}></View>
-    <ClearView style={{ marginTop: -40, flexDirection: "row", justifyContent: "space-between" }}>
+    <ClearView style={styles.headerOverlay}>
       <View style={[styles.headerThumbnail]}>
-        <Image source={imageUri} width={50} height={50} style={{ width: 50, height: 50 }} />
+        <Image source={imageUri} width={50} height={50} style={styles.headerImage} />
       </View>
-      <Text style={{ marginRight: 15, color: "white", fontSize: 25, fontWeight: "600" }}>{index}</Text>
+      <Text style={styles.headerIndex}>{index}</Text>
     </ClearView>
 
-    <ScrollView style={{ marginBottom: 15, width: "100%" }}>
-      <View style={{ paddingHorizontal: 15, alignItems: "center", width: "100%", height: "100%", alignContent: "space-between", justifyContent: "space-between" }}>
+    <ScrollView style={styles.trackingOuterScroll}>
+      <View style={styles.trackingContainer}>
         <Text style={styles.trackingName}>{trackingName}</Text>
         <Text style={[styles.medicineName, { color: Colors[colorScheme].secondaryText }]}>{medicineName}</Text>
-        <View style={{ width: "100%", height: 20, backgroundColor: "#eee", borderRadius: 20, marginBottom: 5 }}>
-          <View style={{ width: progressPercentage, height: 20, backgroundColor: "green", borderRadius: 20, alignItems: "flex-end", justifyContent: "center" }}>
-            {progress >= 0.2 && <Text style={{ color: "white", marginRight: 8 }}>{progressPercentage}</Text>}
+        <View style={styles.progressBarOuter}>
+          <View style={[styles.progressBarInner, { width: progressPercentage }]}>
+            {progress >= 0.2 && <Text style={styles.progressBarInnerText}>{progressPercentage}</Text>}
           </View>
         </View>
-        <Text style={{ fontSize: 15, fontWeight: "600", color: Colors[colorScheme].secondaryText, marginBottom: 30 }}>{remaining}</Text>
+        <Text style={[styles.progressBarRemaining, { color: Colors[colorScheme].secondaryText }]}>{remaining}</Text>
 
-        <View style={{ backgroundColor: "#eee", width: "100%", height: 2, marginBottom: 20 }}></View>
-        {/* <Text style={{fontSize: 20}}>Reminders</Text> */}
-        <View style={{ flexDirection: "row", justifyContent: "space-between", alignItems: "center", width: "100%", paddingHorizontal: 15, marginBottom: 10 }}>
+        <View style={styles.separator}></View>
+        <View style={styles.infoContainer}>
           <FontAwesome5 name="bell" size={24} color={Colors[colorScheme].text} />
-          <Text style={{ fontWeight: "700", padding: 4, fontSize: 18 }}>Daily at 10:00, 12:00</Text>
+          <Text style={styles.infoText}>Daily at 10:00, 12:00</Text>
         </View>
-        <View style={{ flexDirection: "row", justifyContent: "space-between", alignItems: "center", width: "100%", paddingHorizontal: 15, marginBottom: 10 }}>
+        <View style={styles.infoContainer}>
           <Entypo name="block" size={22} color={Colors[colorScheme].text} />
-          <Text style={{ fontWeight: "700", padding: 4, fontSize: 18 }}>2 pills per dosage</Text>
+          <Text style={styles.infoText}>2 pills per dosage</Text>
         </View>
 
-        <View style={{ backgroundColor: "#eee", width: "100%", height: 2, marginTop: 10, marginBottom: 20 }}></View>
+        <View style={[styles.separator, { marginTop: 10 }]}></View>
 
-        <View style={{ flexDirection: "row-reverse", width: "100%", paddingHorizontal: 15 }}>
-          <Text style={{ color: "#bbb", fontWeight: "500", fontSize: 14 }}>AUST R 12345</Text>
+        <View style={styles.identifierContainer}>
+          <Text style={styles.identifierText}>AUST R 12345</Text>
         </View>
-
       </View>
     </ScrollView>
 
-    <View style={{ marginBottom: 15, paddingHorizontal: 15, width: "100%" }}>
-      <TouchableOpacity style={{ width: "100%", paddingVertical: 14, backgroundColor: Colors[colorScheme].buttonBlue, alignItems: "center", justifyContent: "center", borderRadius: 15 }}>
-        <Text style={{ fontSize: 18, fontWeight: "500", color: "white" }}>See Methods &amp; Effects</Text>
+    <View style={styles.buttonGroup}>
+      <TouchableOpacity style={[styles.buttonContainer, { backgroundColor: Colors[colorScheme].buttonBlue }]}
+        onPress={() => navigation.navigate("Data", { medicineId: "med-id" })}>
+        <Text style={[styles.buttonText, { color: "white" }]}>See Methods &amp; Effects</Text>
       </TouchableOpacity>
-      <TouchableOpacity style={{ width: "100%", paddingVertical: 14, marginTop: 10, backgroundColor: "#eee", alignItems: "center", justifyContent: "center", borderRadius: 15 }}>
-        <Text style={{ fontSize: 18, fontWeight: "500", color: "black" }}>Edit Tracking</Text>
+      <TouchableOpacity style={[styles.buttonContainer, { marginTop: 10, backgroundColor: "#eee" }]}
+        onPress={() => navigation.navigate("EditScreen", { medicineId: "med-id" })}>
+        <Text style={[styles.buttonText, { color: "black" }]}>Edit Tracking</Text>
       </TouchableOpacity>
     </View>
   </View>);
@@ -95,6 +97,11 @@ const styles = StyleSheet.create({
     borderTopLeftRadius: 20,
     borderTopRightRadius: 20,
   },
+  headerOverlay: {
+    marginTop: -40,
+    flexDirection: "row",
+    justifyContent: "space-between",
+  },
   headerThumbnail: {
     height: 70,
     width: 70,
@@ -102,6 +109,28 @@ const styles = StyleSheet.create({
     marginBottom: 10,
     borderRadius: 20,
     padding: 10,
+  },
+  headerImage: {
+    width: 50,
+    height: 50,
+  },
+  headerIndex: {
+    marginRight: 15,
+    color: "white",
+    fontSize: 25,
+    fontWeight: "600"
+  },
+  trackingOuterScroll: {
+    marginBottom: 15,
+    width: "100%",
+  },
+  trackingContainer: {
+    paddingHorizontal: 15,
+    alignItems: "center",
+    width: "100%",
+    height: "100%",
+    alignContent: "space-between",
+    justifyContent: "space-between"
   },
   trackingName: {
     fontSize: 28,
@@ -114,5 +143,73 @@ const styles = StyleSheet.create({
     textAlign: "center",
     marginBottom: 20,
     fontWeight: "600",
-  }
+  },
+  progressBarOuter: {
+    width: "100%",
+    height: 20,
+    backgroundColor: "#eee",
+    borderRadius: 20,
+    marginBottom: 5,
+  },
+  progressBarInner: {
+    height: 20,
+    backgroundColor: "green",
+    borderRadius: 20,
+    alignItems: "flex-end",
+    justifyContent: "center",
+  },
+  progressBarInnerText: {
+    color: "white",
+    marginRight: 8,
+  },
+  progressBarRemaining: {
+    fontSize: 15,
+    fontWeight: "600",
+    marginBottom: 30,
+  },
+  separator: {
+    backgroundColor: "#eee",
+    width: "100%",
+    height: 2,
+    marginBottom: 20,
+  },
+  infoContainer: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "center",
+    width: "100%",
+    paddingHorizontal: 15,
+    marginBottom: 10,
+  },
+  infoText: {
+    fontWeight: "700",
+    padding: 4,
+    fontSize: 18,
+  },
+  identifierContainer: {
+    flexDirection: "row-reverse",
+    width: "100%",
+    paddingHorizontal: 15,
+  },
+  identifierText: {
+    color: "#bbb",
+    fontWeight: "500",
+    fontSize: 14
+  },
+  buttonGroup: {
+    marginBottom: 15,
+    paddingHorizontal: 15,
+    width: "100%",
+  },
+  buttonContainer: {
+    width: "100%",
+    paddingVertical: 14,
+    alignItems: "center",
+    justifyContent: "center",
+    borderRadius: 15,
+  },
+  buttonText: {
+    fontSize: 18,
+    fontWeight: "500",
+  },
 });
