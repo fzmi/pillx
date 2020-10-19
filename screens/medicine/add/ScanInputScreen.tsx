@@ -20,7 +20,7 @@ export default function ScanInputScreen({ navigation }: StackScreenProps<AddTabP
   const colorScheme = useColorScheme();
   const headerHeight = useHeaderHeight();
 
-  const [hasPermission, setHasPermission] = React.useState<Boolean | null>(null);
+  const [hasPermission, setHasPermission] = React.useState<boolean | null>(null);
   const [flash, setFlash] = React.useState(Camera.Constants.FlashMode.off);
   const [zoom, setZoom] = React.useState(0);
   const [cameraOn, setcameraOn] = React.useState(false);

@@ -96,7 +96,7 @@ const ManualStep1View: React.FC<Props> = ({ styles, setStep }) => {
       </View>
 
       <FrequencyModal showFrequencyModal={showFrequencyModal} setShowFrequencyModal={setShowFrequencyModal}
-        frequency={frequency} setFrequency={setFrequency} />
+        setFrequency={setFrequency} />
       <PeriodModal showPeriodModal={showPeriodModal} setShowPeriodModal={setShowPeriodModal}
         period={period} setPeriod={setPeriod} />
     </ScrollView>

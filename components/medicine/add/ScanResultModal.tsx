@@ -1,8 +1,8 @@
 import React from 'react';
-import { StyleSheet, Modal, TouchableHighlight, Alert, Image } from 'react-native';
+import { StyleSheet, Modal, TouchableHighlight, Image } from 'react-native';
 import { View, Text } from '../../Themed';
 
-import { Entypo, Ionicons } from '@expo/vector-icons';
+import { Entypo } from '@expo/vector-icons';
 import AddContext from '../../../hooks/AddContext';
 import Colors from '../../../constants/Colors';
 import useColorScheme from '../../../hooks/useColorScheme';

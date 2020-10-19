@@ -1,12 +1,9 @@
 import React from 'react';
-import { StyleSheet, Modal, TouchableHighlight, Alert, Image } from 'react-native';
+import { StyleSheet, Modal, TouchableHighlight } from 'react-native';
 import { View, Text } from '../../Themed';
 
-import { Entypo, Ionicons } from '@expo/vector-icons';
-import AddContext from '../../../hooks/AddContext';
 import Colors from '../../../constants/Colors';
 import useColorScheme from '../../../hooks/useColorScheme';
-import { TouchableOpacity } from 'react-native-gesture-handler';
 import { Picker } from '@react-native-community/picker';
 
 interface Props {
@@ -21,48 +18,32 @@ const PeriodModal: React.FC<Props> = ({ showPeriodModal, setShowPeriodModal, per
 
   return (
     <Modal animationType="fade" transparent={true} visible={showPeriodModal}>
-      <View style={styles.centeredView}>
+      <View style={styles.fullScreenView}>
         <View style={styles.modalView}>
           <Text style={styles.modalText}>Select Period of Treatment</Text>
-          <AddContext.Consumer>
-            {({ addInfo, setAddInfo }) => (
-              <View style={{ alignItems: 'center' }}>
+          <View style={styles.periodPage}>
 
-                <View style={{ flexDirection: "row" }}>
-                  <Picker
-                    selectedValue={period.value}
-                    style={{ width: 100 }}
-                    onValueChange={(itemValue, itemIndex) => setPeriod({ ...period, value: itemValue })}
-                    itemStyle={{ color: Colors[colorScheme].text }}
-                  >
-                    {[...Array(6)].map((e, i) => (
-                      <Picker.Item key={i} label={`${i + 1}`} value={i + 1} />
-                    ))}
-                  </Picker>
+            <View style={styles.periodContainer}>
+              <Picker selectedValue={period.value} style={styles.picker}
+                onValueChange={itemValue => setPeriod({ ...period, value: itemValue })}
+                itemStyle={{ color: Colors[colorScheme].text }}>
+                {[...Array(6)].map((e, i) => (<Picker.Item key={i} label={`${i + 1}`} value={i + 1} />))}
+              </Picker>
 
-                  <Picker
-                    selectedValue={period.type}
-                    style={{ width: 100 }}
-                    onValueChange={(itemValue, itemIndex) => setPeriod({ ...period, type: itemValue })}
-                    itemStyle={{ color: Colors[colorScheme].text }}
-                  >
-                    <Picker.Item label={`day${period.value == 1 ? '' : 's'}`} value="day" />
-                    <Picker.Item label={`week${period.value == 1 ? '' : 's'}`} value="week" />
-                    <Picker.Item label={`month${period.value == 1 ? '' : 's'}`} value="month" />
-                  </Picker>
-                </View>
+              <Picker selectedValue={period.type} style={styles.picker}
+                onValueChange={itemValue => setPeriod({ ...period, type: itemValue })}
+                itemStyle={{ color: Colors[colorScheme].text }}>
+                <Picker.Item label={`day${period.value == 1 ? '' : 's'}`} value="day" />
+                <Picker.Item label={`week${period.value == 1 ? '' : 's'}`} value="week" />
+                <Picker.Item label={`month${period.value == 1 ? '' : 's'}`} value="month" />
+              </Picker>
+            </View>
 
-                <TouchableHighlight style={{
-                  marginTop: 15, backgroundColor: Colors[colorScheme].buttonBlue,
-                  paddingVertical: 10, paddingHorizontal: 30, borderRadius: 10
-                }} onPress={() => {
-                  setShowPeriodModal(!showPeriodModal);
-                }}>
-                  <Text style={{ fontSize: 18, color: "white" }}>Done</Text>
-                </TouchableHighlight>
-              </View>
-            )}
-          </AddContext.Consumer>
+            <TouchableHighlight onPress={() => setShowPeriodModal(!showPeriodModal)}
+              style={[styles.doneButton, { backgroundColor: Colors[colorScheme].buttonBlue }]}>
+              <Text style={styles.buttonText}>Done</Text>
+            </TouchableHighlight>
+          </View>
         </View>
       </View>
     </Modal>
@@ -70,7 +51,7 @@ const PeriodModal: React.FC<Props> = ({ showPeriodModal, setShowPeriodModal, per
 }
 
 const styles = StyleSheet.create({
-  centeredView: {
+  fullScreenView: {
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
@@ -90,31 +71,30 @@ const styles = StyleSheet.create({
     shadowRadius: 3.84,
     elevation: 5,
   },
-  openButton: {
-    backgroundColor: '#F194FF',
-    borderRadius: 20,
-    paddingVertical: 10,
-    paddingHorizontal: 30,
-    elevation: 2,
-  },
-  textStyle: {
-    color: 'white',
-    fontWeight: '500',
-    textAlign: 'center',
-    fontSize: 20,
-  },
   modalText: {
     textAlign: 'center',
     fontSize: 24,
     fontWeight: '700',
     marginBottom: 15,
   },
-  separator: {
-    marginVertical: 2,
-    height: 1,
-    width: '100%',
-    justifyContent: 'center',
-    alignSelf: 'center',
+  periodContainer: {
+    alignItems: 'center',
+  },
+  periodPage: {
+    flexDirection: "row",
+  },
+  picker: {
+    width: 100,
+  },
+  doneButton: {
+    marginTop: 15,
+    paddingVertical: 10,
+    paddingHorizontal: 30,
+    borderRadius: 10,
+  },
+  buttonText: {
+    fontSize: 18,
+    color: "white",
   },
 })
 
