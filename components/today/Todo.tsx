@@ -45,7 +45,7 @@ const Todo: React.FC<Props> = props => {
   return (
     <View style={{ backgroundColor: "transparent" }}>
       <View
-        style={[styles.item, { height: props.item.height }, {backgroundColor: taken ? 'white' : 'grey'}]}
+        style={[styles.item, { height: props.item.height }, {backgroundColor: taken ? 'white' : '#A9A9A9'}]}
       >
         <View style={styles.content}>
           <View style={{ backgroundColor: "transparent" }}>
@@ -63,7 +63,10 @@ const Todo: React.FC<Props> = props => {
         </View>
         <View style={{ display: "flex", flexDirection: "row", backgroundColor: "transparent" }}>
 
-          <TouchableOpacity style={{ backgroundColor: Colors[colorScheme].buttonBlue, padding: 10, borderRadius: 5, flex: 3, margin: 5, display: "flex", flexDirection: "row", justifyContent: "center", alignItems: "center" }}
+          <TouchableOpacity style={{ 
+            // backgroundColor: Colors[colorScheme].buttonBlue, 
+            backgroundColor:taken ? (Colors[colorScheme].buttonBlue) : ("#696969"),
+            padding: 10, borderRadius: 5, flex: 3, margin: 5, display: "flex", flexDirection: "row", justifyContent: "center", alignItems: "center" }}
             onPress={() => {
               Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
               taken ? (takenAlert()) : (takenCancelAlert())
