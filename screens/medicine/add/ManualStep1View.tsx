@@ -1,5 +1,5 @@
 import React, { useContext, useState } from 'react';
-import { TouchableOpacity, TextInput } from 'react-native';
+import { TouchableOpacity, TextInput, View as ClearView } from 'react-native';
 import { ScrollView, Text, View } from '../../../components/Themed';
 import { Entypo, Feather } from '@expo/vector-icons';
 
@@ -36,7 +36,7 @@ const ManualStep1View: React.FC<Props> = ({ styles, setStep }) => {
           <View style={{ marginVertical: 8, borderRadius: 10, padding: 20 }} lightColor="#fff" darkColor="#333">
             <Text style={{ fontSize: 24, fontWeight: '600' }}>Set Tracking Plan</Text>
             <Text style={{ fontSize: 15, marginVertical: 3 }}>Add the name, frequency and treatment duration of this medicine.</Text>
-            <View style={styles.separator} lightColor="#eee" darkColor="rgba(255,255,255,0.1)" />
+            <View style={[styles.separator, {marginVertical: 12}]} lightColor="#eee" darkColor="rgba(255,255,255,0.1)" />
 
             {/* Medicine Name */}
             <View style={styles.field} lightColor="#fff" darkColor="#333">
@@ -46,32 +46,40 @@ const ManualStep1View: React.FC<Props> = ({ styles, setStep }) => {
               <TextInput value={name} editable clearButtonMode={"while-editing"}
                 onChangeText={text => setName(text)} style={{ fontSize: 20 }} />
             </View>
-            <View style={styles.separator} lightColor="#eee" darkColor="rgba(255,255,255,0.1)" />
+            <View style={[styles.separator, {marginTop: 10, marginBottom: 12}]} lightColor="#eee" darkColor="rgba(255,255,255,0.1)" />
 
             {/* Frequency */}
             <TouchableOpacity onPress={() => setShowFrequencyModal(true)}>
               <View style={styles.field} lightColor="#fff" darkColor="#333">
-                <Text style={styles.fieldLeftTitle}>Frequency:</Text>
-                <Feather name="edit" size={24} color={Colors[colorScheme].text} />
+                <ClearView>
+                  <Text style={styles.fieldLeftTitle}>Frequency:</Text>
+                  <Text style={{ fontSize: 20, marginTop: 2 }}>
+                    {(frequency.type === 'day' && frequency.value == 1) ? 'daily' :
+                      frequency.type !== 'dayOfWeek' ? `every ${frequency.value} ${frequency.type}${frequency.value > 1 ? 's' : ''}` :
+                        `${(frequency.value as Array<number>).map(value => days[value])}`}
+                  </Text>
+                </ClearView>
+                <View style={styles.fieldRightEdit}>
+                  <Feather name="edit" size={24} color="black" />
+                </View>
               </View>
-              <Text style={{ fontSize: 20, marginTop: 2 }}>
-                {(frequency.type === 'day' && frequency.value == 1) ? 'daily' :
-                  frequency.type !== 'dayOfWeek' ? `every ${frequency.value} ${frequency.type}${frequency.value > 1 ? 's' : ''}` :
-                    `every ${(frequency.value as Array<number>).map(value => days[value])}`
-                }
-              </Text>
+
             </TouchableOpacity>
-            <View style={styles.separator} lightColor="#eee" darkColor="rgba(255,255,255,0.1)" />
+            <View style={[styles.separator, {marginVertical: 12}]} lightColor="#eee" darkColor="rgba(255,255,255,0.1)" />
 
             {/* Period of Treatment */}
             <TouchableOpacity onPress={() => setShowPeriodModal(true)}>
               <View style={styles.field} lightColor="#fff" darkColor="#333">
-                <Text style={styles.fieldLeftTitle}>Period of Treatment:</Text>
-                <Feather name="edit" size={24} color={Colors[colorScheme].text} />
+                <ClearView>
+                  <Text style={styles.fieldLeftTitle}>Period of Treatment:</Text>
+                  <Text style={{ fontSize: 20, marginTop: 2 }}>
+                    {`${period.value} ${period.type}${period.value > 1 ? 's' : ''}`}
+                  </Text>
+                </ClearView>
+                <View style={styles.fieldRightEdit}>
+                  <Feather name="edit" size={24} color="black" />
+                </View>
               </View>
-              <Text style={{ fontSize: 20, marginTop: 2 }}>
-                {`${period.value} ${period.type}${period.value > 1 ? 's' : ''}`}
-              </Text>
             </TouchableOpacity>
           </View>
 

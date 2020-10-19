@@ -21,9 +21,9 @@ const PeriodModal: React.FC<Props> = ({ showPeriodModal, setShowPeriodModal, per
       <View style={styles.fullScreenView}>
         <View style={styles.modalView}>
           <Text style={styles.modalText}>Select Period of Treatment</Text>
-          <View style={styles.periodPage}>
+          <View style={styles.periodContainer}>
 
-            <View style={styles.periodContainer}>
+            <View style={styles.periodPage}>
               <Picker selectedValue={period.value} style={styles.picker}
                 onValueChange={itemValue => setPeriod({ ...period, value: itemValue })}
                 itemStyle={{ color: Colors[colorScheme].text }}>

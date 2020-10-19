@@ -64,11 +64,10 @@ const styles = StyleSheet.create({
     marginLeft: 10,
   },
   separator: {
-    marginVertical: 14,
     height: 1,
     width: '100%',
     justifyContent: 'center',
-    alignSelf: 'center'
+    alignSelf: 'center',
   },
   field: {
     flexDirection: "row",
@@ -84,17 +83,22 @@ const styles = StyleSheet.create({
     justifyContent: "space-between",
     alignItems: "center",
   },
+  fieldRightEdit: {
+    backgroundColor: "#eee",
+    padding: 12,
+    borderRadius: 10,
+  },
   fieldRightText: {
     fontSize: 18,
     fontWeight: '400',
     marginHorizontal: 10,
   },
   fieldTextInput: {
-    marginTop: 6,
-    paddingVertical: 6,
+    marginTop: 4,
+    marginLeft: -6,
+    paddingHorizontal: 6,
+    paddingVertical: 7,
     backgroundColor: "#eee",
     borderRadius: 10,
-    marginHorizontal: -6,
-    paddingHorizontal: 6,
   }
 });
