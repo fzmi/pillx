@@ -44,7 +44,8 @@ const Todo: React.FC<Props> = props => {
 
   return (
     <View style={{ backgroundColor: "transparent" }}>
-      <View
+      {taken ? (
+        <View
         style={[styles.item, { height: props.item.height }, {backgroundColor: taken ? 'white' : '#A9A9A9'}]}
       >
         <View style={styles.content}>
@@ -84,6 +85,24 @@ const Todo: React.FC<Props> = props => {
 
         </View>
       </View>
+      ) : (
+      <TouchableOpacity
+        style={[styles.item, { height: props.item.height }, {backgroundColor: taken ? 'white' : '#A9A9A9'}]}
+        onPress={() => {
+          Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
+          taken ? (takenAlert()) : (takenCancelAlert())
+        }}
+      >
+        <View style={styles.content}>
+          <View style={{ backgroundColor: "transparent", flexDirection:"row", flex: 1 }}>
+            <View style={{ flexDirection: "row", backgroundColor: "transparent", flex: 1 }}>
+              <Text style={{ fontSize: 24, fontWeight: "bold", marginBottom: 4 }}>{props.item.trackingName}</Text>
+            </View>
+              <Ionicons name="ios-checkmark-circle" size={30} color="white" />
+          </View>
+        </View>
+      </TouchableOpacity>
+      )}      
     </View>
   )
 }
