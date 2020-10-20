@@ -2,19 +2,21 @@ import React, { useContext, useState } from 'react';
 import { TouchableOpacity, Image } from 'react-native';
 import { ScrollView, Text, View } from '../../../components/Themed';
 
-import { AddTabParamList, Tracking } from '../../../types';
 import { AntDesign, Entypo } from '@expo/vector-icons';
 import { StackActions } from '@react-navigation/native';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { showMessage } from "react-native-flash-message";
 import { TouchableWithoutFeedback } from 'react-native-gesture-handler';
+import AsyncStorage from '@react-native-community/async-storage';
+
+import { AddTabParamList, Tracking } from '../../../types';
 import { schedulePushNotification } from '../../../components/Notification';
 import Colors from '../../../constants/Colors';
 import useColorScheme from '../../../hooks/useColorScheme';
 import StepIndicator from '../../../components/medicine/add/StepIndicator';
 import AddContext from '../../../hooks/AddContext';
 import * as Haptics from 'expo-haptics';
-import AsyncStorage from '@react-native-community/async-storage';
+
 import UserContext from '../../../hooks/UserContext';
 
 interface Props {
@@ -45,25 +47,9 @@ const ManualStep3View: React.FC<Props> = ({ styles, setStep, navigation }) => {
       endDate.setMonth(endDate.getMonth() + addInfo.periodOfTreatment.value);
     }
     const medicineId = addInfo.medicineId;
-
-    // save update locally
-    const tracking: Tracking = {
-      trackingName: addInfo.trackingName,
-      medicineId: medicineId,
-      medicineName: addInfo.medicineName,
-      image: thumbnail === 0 ? addInfo.imageUri : imageUri[thumbnail - 1],
-      frequency: addInfo.frequency as any,
-      reminders: addInfo.reminders,
-      startDate: new Date(),
-      endDate: endDate,
-    }
-    setUserInfo({
-      ...userInfo,
-      trackings: [...userInfo.trackings, tracking],
-    })
+    const email = userInfo.email;
 
     // log update to server
-    const email = userInfo.email;
     await fetch(`http://deco3801-rever.uqcloud.net/user/medicine/add?email=${email}&identifier=${medicineId}`, {
       method: "POST",
     })
@@ -101,6 +87,37 @@ const ManualStep3View: React.FC<Props> = ({ styles, setStep, navigation }) => {
         if ((result as string).includes("Failure")) {
           throw "Invalid dosage";
         }
+        try {
+          // save update locally
+          const tracking: Tracking = {
+            trackingName: addInfo.trackingName,
+            medicineId: medicineId,
+            medicineName: addInfo.medicineName,
+            image: thumbnail === 0 ? addInfo.imageUri : imageUri[thumbnail - 1],
+            frequency: addInfo.frequency as any,
+            reminders: addInfo.reminders,
+            startDate: new Date(),
+            endDate: endDate,
+          }
+          setUserInfo({
+            ...userInfo,
+            trackings: [...userInfo.trackings, tracking],
+          })
+        } catch (error) {
+          throw "Cannot save medicine locally";
+        }
+        showMessage({
+          message: "Added Medicine",
+          description: "Successfully added a new medicine.",
+          type: "success",
+          icon: "success",
+          duration: 3000,
+        })
+        return schedulePushNotification();
+      })
+      .then(() => {
+        Haptics.notificationAsync(Haptics.NotificationFeedbackType.Success);
+        navigation.dispatch(StackActions.popToTop());
       })
       .catch(error => {
         showMessage({
@@ -111,18 +128,7 @@ const ManualStep3View: React.FC<Props> = ({ styles, setStep, navigation }) => {
           duration: 2500,
         });
         console.log(error);
-      })
-    showMessage({
-      message: "Added Medicine",
-      description: "Successfully added a new medicine.",
-      type: "success",
-      icon: "success",
-      duration: 3000,
-    });
-
-    await schedulePushNotification();
-    Haptics.notificationAsync(Haptics.NotificationFeedbackType.Success);
-    navigation.dispatch(StackActions.popToTop());
+      });
   }
 
   return (

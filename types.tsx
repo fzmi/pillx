@@ -15,13 +15,13 @@ export type Tracking = {
   endDate?: Date,
 }
 
-// List of dosages for each day
-export type Dosages = Array<{
-  [date: string]: {
-    count: number,
-    medicines: Array<{time: Date, medicineId: string,}>
-  }
-}>
+export type Dosage = {
+  trackingName: string,
+  medicineId?: string,
+  medicineName?: string,
+  time: Date,
+  taken: boolean,
+}
 
 // Medicine contains detailed information of medicine
 export type Medicine = {

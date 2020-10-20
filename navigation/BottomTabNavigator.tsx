@@ -36,12 +36,15 @@ export default function BottomTabNavigator() {
       const userData = await fetchUserData();
       const trackings = await fetchUserMedicine();
       setUser({
-        ...user, userInfo: {
+        ...user,
+        userInfo: {
+          ...user.userInfo,
           name: userData?.fullName,
           email: userData?.email,
           trackings: trackings,
-        }
-      })
+        },
+        isLoading: false,
+      });
     })();
   }, []);
 

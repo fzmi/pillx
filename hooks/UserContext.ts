@@ -6,7 +6,7 @@ const UserContext = React.createContext({
   userInfo: {
     name: '',
     email: '',
-    trackings: Array<Tracking>(),
+    trackings: [] as Array<Tracking>,
   },
   setUserInfo: (data: any) => {},
   isLoading: true,

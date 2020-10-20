@@ -85,8 +85,8 @@ export default function ProfileScreen({ navigation }: StackScreenProps<ProfilePa
             <Text style={styles.buttonTextLeft}>Server</Text>
           </View>
           <View style={[styles.buttonItemRight, { backgroundColor: Colors[colorScheme].profileBackgroundInner }]}>
-            <View style={[styles.connectionIndicator, { backgroundColor: connected ? "green" : "#fc3d39" }]}></View>
-            <Text style={styles.buttonTextRight}>{connected ? 'Connected' : 'Not Connected'}</Text>
+            <View style={[styles.connectionIndicator, { backgroundColor: !isLoading && connected ? "green" : "#fc3d39" }]}></View>
+            <Text style={styles.buttonTextRight}>{!isLoading && connected ? 'Connected' : 'Not Connected'}</Text>
           </View>
         </View>
       </View>

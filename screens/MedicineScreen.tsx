@@ -1,5 +1,5 @@
 import React, { useContext, useEffect } from 'react';
-import { StyleSheet, ScrollView, TouchableOpacity } from 'react-native';
+import { ActivityIndicator, StyleSheet, ScrollView, TouchableOpacity } from 'react-native';
 import { Text, View } from '../components/Themed';
 
 import { StackScreenProps } from '@react-navigation/stack';
@@ -18,10 +18,6 @@ export default function MedicineScreen({ navigation }: StackScreenProps<Medicine
   const colorScheme = useColorScheme();
   const { userInfo, isLoading } = useContext(UserContext);
 
-  useEffect(() => {
-
-  }, []);
-
   return (
     <SafeAreaView style={[styles.container, { backgroundColor: Colors[colorScheme].background }]} edges={['top']}>
       <View style={[styles.container, { backgroundColor: Colors[colorScheme].secondaryBackground }]}>
@@ -37,7 +33,7 @@ export default function MedicineScreen({ navigation }: StackScreenProps<Medicine
         {/* Medicine Scroll View */}
         {userInfo.trackings && userInfo.trackings.length > 0 && (
           <View style={{ flex: 1, backgroundColor: Colors[colorScheme].secondaryBackground }}>
-            <ScrollView horizontal={true} showsHorizontalScrollIndicator={false}>
+            <ScrollView horizontal={true} showsHorizontalScrollIndicator={true}>
               {userInfo.trackings.map((tracking: Tracking, index: number) =>
                 // <Card key={index} tracking={tracking} cardColor='#ccc' progress={0.3} date="3 months" />
                 <Card key={index} tracking={tracking} index={index + 1} />
@@ -46,11 +42,20 @@ export default function MedicineScreen({ navigation }: StackScreenProps<Medicine
           </View>
         )}
 
+        {/* Loading View */}
+        {isLoading && (
+          <View style={{ flex: 1, alignItems: "center", justifyContent: "center", paddingHorizontal: 30 }}>
+            <ActivityIndicator size="large" />
+            <Text style={{ marginVertical: 15, fontSize: 26, textAlign: "center", fontWeight: "500" }}>Loading medicines...</Text>
+            <Text style={{ textAlign: "center" }}>If loading takes large amount of time, please make sure the PillX server is on or check network connection.</Text>
+          </View>
+        )}
+
         {/* Empty Medicine View */}
-        {(!userInfo.trackings || !userInfo.trackings.length) && (
+        {!isLoading && (!userInfo.trackings || !userInfo.trackings.length) && (
           <View style={{ flex: 1, alignItems: "center", justifyContent: "center", paddingHorizontal: 30 }}>
             <Text style={{ fontSize: 26, textAlign: "center", fontWeight: "600" }}>No Medicine Trackings</Text>
-            <Text style={{ marginVertical: 20, fontSize: 16, textAlign: "center" }}>Tap the button below or on the top-right to add a new tracking.</Text>
+            <Text style={{ marginVertical: 12, marginBottom: 20, fontSize: 16, textAlign: "center" }}>Tap the button below or on the top-right to add a new tracking.</Text>
             <TouchableOpacity style={{ paddingVertical: 12, paddingHorizontal: 30, backgroundColor: Colors[colorScheme].buttonBlue, borderRadius: 20 }}
               onPress={() => { navigation.navigate("Add"); }}>
               <Text style={{ color: "white", fontSize: 18, fontWeight: "600" }}>New Medicine Tracking</Text>

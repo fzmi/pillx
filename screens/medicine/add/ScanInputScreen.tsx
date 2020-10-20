@@ -1,5 +1,5 @@
 import React from 'react';
-import { StyleSheet, TouchableHighlight, Platform, Alert, RefreshControl } from 'react-native';
+import { StyleSheet, TouchableHighlight, Platform } from 'react-native';
 import { Text, View } from '../../../components/Themed';
 import { StackScreenProps, useHeaderHeight } from '@react-navigation/stack';
 import { useFocusEffect } from '@react-navigation/native';
@@ -45,13 +45,9 @@ export default function ScanInputScreen({ navigation }: StackScreenProps<AddTabP
         type: "default",
         icon: "info",
         autoHide: false,
-        position: {
-          top: headerHeight
-        },
+        position: { top: headerHeight },
         floating: true,
-        textStyle: {
-          paddingRight: 8
-        },
+        textStyle: { paddingRight: 8 },
         backgroundColor: '#222'
       });
       return () => {
@@ -69,10 +65,8 @@ export default function ScanInputScreen({ navigation }: StackScreenProps<AddTabP
   }
 
   const uploadImage = async (photo: CameraCapturedPicture) => {
-    return (ImageManipulator.manipulateAsync(
-      photo.uri, [{ resize: { width: 480, height: 640 } }],
-      { compress: 1, format: ImageManipulator.SaveFormat.JPEG }
-    )
+    return ImageManipulator.manipulateAsync(photo.uri, [{ resize: { width: 480, height: 640 } }],
+      { compress: 1, format: ImageManipulator.SaveFormat.JPEG })
       .then(result => result.uri)
       .then(uri => {
         const body = new FormData();
@@ -92,9 +86,8 @@ export default function ScanInputScreen({ navigation }: StackScreenProps<AddTabP
           body: body
         });
       })
-      .then(response => response.text())
+      .then(response => response.json())
       .then(result => {
-        // console.log(result);
         return result;
       })
       .catch(error => {
@@ -106,7 +99,7 @@ export default function ScanInputScreen({ navigation }: StackScreenProps<AddTabP
           duration: 2500,
         });
         console.log(error);
-      }));
+      });
   }
 
   return (
@@ -135,17 +128,17 @@ export default function ScanInputScreen({ navigation }: StackScreenProps<AddTabP
                       if (camera.current) {
                         Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
                         let photo = await camera.current.takePictureAsync();
-                        let uri = photo.uri;
-                        // todo: add the image to the addInfo state
-                        const response: string = ((await uploadImage(photo)) as string).trim();
-                        const medicineResults = [
-                          { id: "17614", name: response },
-                        ];
+                        let medicineResults = [];
+                        const result = await uploadImage(photo);
+                        if (result) {
+                          medicineResults = result.map((value: any) => ({
+                            id: value.identifier, name: (value.name as string).trim()
+                          }))
+                        }
                         setAddInfo({
                           ...addInfo,
-                          scannedText: response,
                           medicineResults: medicineResults,
-                          imageUri: uri,
+                          imageUri: photo.uri,
                         });
                         camera.current.pausePreview();
                         setModalVisible(true);

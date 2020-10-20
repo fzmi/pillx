@@ -1,22 +1,54 @@
-import React from 'react';
-import { StyleSheet, TouchableOpacity, Alert, Image, TouchableHighlight, Button } from 'react-native';
-import { ScrollView, Text, View } from '../components/Themed';
+import React, { useState, useEffect } from 'react';
+import { ActivityIndicator, DevSettings, StyleSheet } from 'react-native';
+import { Text, View } from '../components/Themed';
 import { Calendar, Agenda, CalendarList } from 'react-native-calendars';
 import { StackScreenProps } from '@react-navigation/stack';
+
 import { TodayParamList } from '../types';
 import Colors from '../constants/Colors';
 import useColorScheme from '../hooks/useColorScheme';
 import Todo from '../components/today/Todo';
 import UserContext from '../hooks/UserContext';
 import { Ionicons } from '@expo/vector-icons';
+import AsyncStorage from '@react-native-community/async-storage';
 
 export default function TodayScreen({ navigation }: StackScreenProps<TodayParamList, 'TodayScreen'>) {
   const colorScheme = useColorScheme();
-  const { userInfo } = React.useContext(UserContext);
+  const { userInfo, isLoading, setUserInfo } = React.useContext(UserContext);
+  const [data, setData] = useState({});
 
-  const date = new Date().toISOString().slice(0, 10);
-  let monthData: any = {};
-  monthData[date] = userInfo.trackings;
+  useEffect(() => {
+    const today = new Date().toISOString().slice(0, 10);
+    // fetchDosages(today);
+
+    // todo: remove dummy data
+    setData({
+      [today]: [
+        { trackingName: "Medicine", medicineId: "12345", medicineName: "Medicine", time: new Date(), taken: true },
+        { trackingName: "Medicine", medicineId: "12345", medicineName: "Medicine", time: new Date(), taken: false },
+        { trackingName: "Medicine", medicineId: "67890", medicineName: "Medicine", time: new Date(), taken: false }]
+    });
+  }, []);
+
+  // Get the dosages for a certain day
+  const fetchDosages = async (isoDate: string) => {
+    const userToken = await AsyncStorage.getItem('userToken');
+    return fetch(`http://deco3801-rever.uqcloud.net/user/medicine/getAllOnDate?email=${userToken}&onDate=${isoDate}`, {
+      method: 'GET',
+      headers: {
+        Accept: "application/json",
+        'Content-Type': 'application/json',
+      }
+    })
+      .then(response => response.json())
+      .then(data => {
+
+        console.log(data);
+      })
+      .catch(error => {
+        console.log(error);
+      })
+  }
 
   React.useLayoutEffect(() => {
     navigation.setOptions({
@@ -35,7 +67,14 @@ export default function TodayScreen({ navigation }: StackScreenProps<TodayParamL
 
   return (
     <View style={{ flex: 1 }}>
-      <Agenda
+      {/* Loading View */}
+      {isLoading ? (
+        <View style={{ flex: 1, alignItems: "center", justifyContent: "center", paddingHorizontal: 30 }}>
+          <ActivityIndicator size="large" />
+          <Text style={{ marginVertical: 15, fontSize: 26, textAlign: "center", fontWeight: "600" }}>Loading trackings...</Text>
+          <Text style={{ textAlign: "center" }}>If loading takes large amount of time, please make sure the PillX server is on or check network connection.</Text>
+        </View>
+      ) : (<Agenda
         theme={{
           color: Colors[colorScheme].tint,
           dotColor: Colors[colorScheme].tint,
@@ -44,7 +83,7 @@ export default function TodayScreen({ navigation }: StackScreenProps<TodayParamL
           selectedColor: Colors[colorScheme].tint,
           todayColor: Colors[colorScheme].tint,
         }}
-        items={monthData}
+        items={data}
         renderItem={(item: any, firstItemInDay: any) => { return <Todo item={item} /> }}
         renderEmptyDate={emptyDate}
         markedDates={{
@@ -53,6 +92,7 @@ export default function TodayScreen({ navigation }: StackScreenProps<TodayParamL
         }}
         renderDay={(day: any, item: any) => { return (<View style={{ marginRight: 20 }} />); }}
       />
+        )}
       {/* <CalendarList
         // Enable horizontal scrolling, default = false
         horizontal={true}

@@ -16,7 +16,6 @@ export default function AddTabNavigator({ navigation }: StackScreenProps<Medicin
   const colorScheme = useColorScheme();
 
   const [addInfo, setAddInfo] = React.useState({
-    scannedText: '',
     trackingName: '',
     medicineResults: [],
     medicineName: "Medicine",
