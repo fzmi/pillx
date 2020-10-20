@@ -50,7 +50,6 @@ export default function ScanInputScreen() {
       <View style={{ flexGrow: 0.3 }}>
         <Text>{data}</Text>
       </View>
-
     </View>
   );
 }

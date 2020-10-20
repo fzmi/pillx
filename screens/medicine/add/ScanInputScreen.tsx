@@ -1,12 +1,13 @@
 import React from 'react';
-import { StyleSheet, TouchableHighlight, Platform, Alert } from 'react-native';
+import { StyleSheet, TouchableHighlight, Platform, Alert, RefreshControl } from 'react-native';
 import { Text, View } from '../../../components/Themed';
 import { StackScreenProps, useHeaderHeight } from '@react-navigation/stack';
 import { useFocusEffect } from '@react-navigation/native';
 import { Entypo, Feather, MaterialCommunityIcons } from '@expo/vector-icons';
 import { showMessage, hideMessage } from "react-native-flash-message";
-import { Camera } from 'expo-camera';
+import { Camera, CameraCapturedPicture } from 'expo-camera';
 import * as Haptics from 'expo-haptics';
+import * as ImageManipulator from 'expo-image-manipulator';
 // import BarCodeScanner from 'expo-barcode-scanner';
 
 import { AddTabParamList } from '../../../types';
@@ -67,38 +68,45 @@ export default function ScanInputScreen({ navigation }: StackScreenProps<AddTabP
     return <Text>No access to camera</Text>;
   }
 
-  const uploadImage = async (uri: string) => {
-    try {
-      const body = new FormData();
-      // uri workaround, looks like a react native bug: https://github.com/facebook/react-native/issues/29364
-      // also needs to override the typescript formdata (see global.d.ts)
-      body.append('file', {
-        uri: Platform.OS == 'ios' ? uri.replace("file://", "/private") : uri,
-        name: 'image.jpg', type: 'image/jpeg'
-      });
-      body.append('Content-Type', 'image/jpeg');
-      let response = await fetch("http://deco3801-rever.uqcloud.net/scanning", {
-        method: 'POST',
-        headers: {
-          Accept: "application/json",
-          "Content-Type": "multipart/form-data",
-        },
-        body: body
-      });
-      let responseJson = await response.json();
-      return {
-        data: responseJson,
-      }
-    } catch (error) {
-      showMessage({
-        message: "Server Error",
-        description: "Cannot upload image to PillX server.",
-        type: "danger",
-        icon: "danger",
-        duration: 2500,
-      });
-      console.log(error);
-    }
+  const uploadImage = async (photo: CameraCapturedPicture) => {
+    return (ImageManipulator.manipulateAsync(
+      photo.uri, [{ resize: { width: 480, height: 640 } }],
+      { compress: 1, format: ImageManipulator.SaveFormat.JPEG }
+    )
+      .then(result => result.uri)
+      .then(uri => {
+        const body = new FormData();
+        body.append('file', {
+          // uri workaround, looks like a react native bug: https://github.com/facebook/react-native/issues/29364
+          // also needs to override the typescript formdata (see global.d.ts)
+          uri: Platform.OS == 'ios' ? uri.replace("file://", "/private") : uri,
+          name: 'image.jpg', type: 'image/jpeg'
+        });
+        body.append('Content-Type', 'image/jpeg');
+        return fetch("http://deco3801-rever.uqcloud.net/scanning", {
+          method: 'POST',
+          headers: {
+            Accept: "application/json",
+            "Content-Type": "multipart/form-data",
+          },
+          body: body
+        });
+      })
+      .then(response => response.text())
+      .then(result => {
+        // console.log(result);
+        return result;
+      })
+      .catch(error => {
+        showMessage({
+          message: "Server Error",
+          description: "Cannot upload image to PillX server.",
+          type: "danger",
+          icon: "danger",
+          duration: 2500,
+        });
+        console.log(error);
+      }));
   }
 
   return (
@@ -129,11 +137,10 @@ export default function ScanInputScreen({ navigation }: StackScreenProps<AddTabP
                         let photo = await camera.current.takePictureAsync();
                         let uri = photo.uri;
                         // todo: add the image to the addInfo state
-                        const response = uploadImage(uri);
-
+                        const response: string = ((await uploadImage(photo)) as string).trim();
                         const medicineResults = [
-                          {id: "97801", name: "Pantonix 20mg"},
-                          {id: "17614", name: "Pantonix 40mg"},
+                          { id: "17614", name: response },
+                          { id: "97801", name: "Pantonix 20mg" },
                         ];
                         setAddInfo({
                           ...addInfo,
