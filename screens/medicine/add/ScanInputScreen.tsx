@@ -140,10 +140,10 @@ export default function ScanInputScreen({ navigation }: StackScreenProps<AddTabP
                         const response: string = ((await uploadImage(photo)) as string).trim();
                         const medicineResults = [
                           { id: "17614", name: response },
-                          { id: "97801", name: "Pantonix 20mg" },
                         ];
                         setAddInfo({
                           ...addInfo,
+                          scannedText: response,
                           medicineResults: medicineResults,
                           imageUri: uri,
                         });

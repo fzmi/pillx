@@ -41,7 +41,7 @@ const ScanResultModal: React.FC<Props> = ({ modalVisible, setModalVisible, camer
                       <View style={{ width: "100%", flexDirection: "row", justifyContent: "space-between", alignItems: "center" }}>
                         <View>
                           <Text style={{ fontSize: 20, marginRight: 10, fontWeight: "700" }}>{result.name}</Text>
-                          <Text>{result.id}</Text>
+                          <Text>AUST R {result.id}</Text>
                         </View>
                         <Entypo name="chevron-thin-right" size={24} color={Colors[colorScheme].text} />
                       </View>

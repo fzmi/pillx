@@ -4,6 +4,7 @@ import { Tracking } from '../types';
 // don't store tokens here
 const AddContext = React.createContext({
   addInfo: {
+    scannedText: '',
     medicineResults: [] as any,
     trackingName: '',
     medicineId: '',
