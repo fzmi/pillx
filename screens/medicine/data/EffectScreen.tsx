@@ -28,7 +28,10 @@ export default function EffectScreen({ route, navigation }: StackScreenProps<Dat
   <View style={styles.container}>      
     <View style={styles.content}>
       <Image style={styles.pillImage} source={require("../../../assets/images/pills/pill1.png")}></Image>
-      
+      <View style={{justifyContent:'center', alignContent:'center', alignItems: 'center', alignSelf: 'center'}}>
+        <Text style={styles.pillTitle}>Fish and Omega</Text>
+        <Text>Everyday</Text>
+      </View>
     </View>
     
     <View
@@ -39,7 +42,6 @@ export default function EffectScreen({ route, navigation }: StackScreenProps<Dat
       }} />
       
     <View style={styles.content}>
-      
       <Image style={styles.contentImage} source={require("../../../assets/images/medicine/effect/effect1.png")}></Image>
     </View>
     
@@ -68,5 +70,13 @@ const styles = StyleSheet.create({
     maxHeight: 60,
     borderRadius: 5,
     marginRight: 5,
+    alignSelf: 'center',
   },
+  pillTitle: {
+    fontWeight: 'bold',
+    fontSize: 20,
+  },
+  pillFrequency: {
+    fontSize: 15,
+  }
 });

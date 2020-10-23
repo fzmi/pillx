@@ -1,8 +1,7 @@
 import React, { useState } from 'react';
 import { Alert, Button,StyleSheet, TouchableOpacity, Image } from 'react-native';
 import { View, Text } from '../Themed';
-
-import { Entypo, Ionicons } from '@expo/vector-icons';
+import { Entypo, Ionicons, MaterialIcons } from '@expo/vector-icons';
 import Colors from '../../constants/Colors';
 import useColorScheme from '../../hooks/useColorScheme';
 import * as Haptics from 'expo-haptics';
@@ -74,9 +73,9 @@ const Todo: React.FC<Props> = props => {
             }}
             
           >
-            <Ionicons name="ios-checkmark-circle" size={30} color="white" />
+            <MaterialIcons name="touch-app" size={30} color="white" />
             <Text style={{ fontSize: 20, color: "#fff", marginLeft: 10 }}>
-              {taken ? ("Taken") : ("Already Taken")}
+              {taken ? ("Take") : ("Already Taken")}
             </Text>
 
           </TouchableOpacity>
