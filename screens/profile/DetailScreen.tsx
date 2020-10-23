@@ -17,7 +17,7 @@ export default function SettingsScreen({ navigation }: StackScreenProps<ProfileP
   return (
     <ScrollView style={{ backgroundColor: Colors[colorScheme].profileBackgroundOuter }}>
       <View style={[styles.buttonGroup, { backgroundColor: Colors[colorScheme].profileBackgroundInner }]}>
-        <View style={[styles.buttonItem, { backgroundColor: Colors[colorScheme].profileBackgroundInner }]}>
+        <TouchableOpacity onPress={() => { navigation.navigate("SettingsScreen"); }} style={styles.buttonItem}>
           <View style={[styles.buttonItemLeft, { backgroundColor: Colors[colorScheme].profileBackgroundInner }]}>
             <Ionicons name="ios-settings" style={styles.buttonIcon} size={30} color={Colors[colorScheme].settingIcon} />
             <Text style={styles.buttonTextLeft}>Dark Theme</Text>
@@ -29,7 +29,7 @@ export default function SettingsScreen({ navigation }: StackScreenProps<ProfileP
             onValueChange={toggleSwitch}
             value={isEnabled}
           />
-        </View>
+        </TouchableOpacity>
       </View>
     </ScrollView>
   )
@@ -66,7 +66,6 @@ const styles = StyleSheet.create({
     marginVertical: 10,
   },
   buttonItem: {
-    borderRadius: 15,
     paddingVertical: 15,
     paddingHorizontal: 15,
     flexDirection: "row",

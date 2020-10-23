@@ -89,9 +89,9 @@ export default function BottomTabNavigator() {
       const trackings: Array<Tracking> = (responseJson as Array<any>).map(medicine => {
         if (!medicine.dosageSetting) {
           return {
-            trackingName: "",
-            medicineId: "",
-            medicineName: "null",
+            trackingName: "Not Available",
+            medicineId: medicine.identifier === null ? "" : medicine.identifier,
+            medicineName: "Not Available",
             instruction: "",
             image: "",
             frequency: {
@@ -118,7 +118,7 @@ export default function BottomTabNavigator() {
           trackingName: "Medicine",
           medicineId: medicine.identifier === null ? "" : medicine.identifier,
           medicineName: medicine.name,
-          instruction: "",
+          instruction: medicine.identifier,
           image: "",
           frequency: {
             type: frequencyType as "day" | "week" | "month" | "dayOfWeek",

@@ -19,11 +19,14 @@ const Card: React.FC<Props> = ({ tracking, index }) => {
   const trackingName = tracking.trackingName ? tracking.trackingName : "Medicine";
   // DERALIN 40 Propranolol hydrochloride 40mg tablet bottle
   const medicineName = (tracking.medicineName && tracking.medicineName !== "null") ? tracking.medicineName : "";
-  const progress = 0.45;
+  const progress = 0.5;
   const progressPercentage = `${progress * 100}%`;
-  const remaining = "3 months remaining";
+
   const imageUri = require('../../assets/images/pills/pill2.png');
   const reminders = [new Date()];
+
+  const time = tracking.startDate.getTime() - tracking.endDate!.getTime()
+  const remaining = `${tracking.startDate.getTime()} remaining`;
 
   return (<View style={styles.cardContainer}>
     <View style={[styles.headerBanner, { backgroundColor: Colors[colorScheme].buttonBlue }]}></View>
@@ -58,18 +61,18 @@ const Card: React.FC<Props> = ({ tracking, index }) => {
         <View style={[styles.separator, { marginTop: 10 }]}></View>
 
         <View style={styles.identifierContainer}>
-          <Text style={styles.identifierText}>AUST R 12345</Text>
+          <Text style={styles.identifierText}>{tracking.medicineId ? `AUST R ${tracking.medicineId}` : ""}</Text>
         </View>
       </View>
     </ScrollView>
 
     <View style={styles.buttonGroup}>
       <TouchableOpacity style={[styles.buttonContainer, { backgroundColor: Colors[colorScheme].buttonBlue }]}
-        onPress={() => navigation.navigate("Data", { medicineId: "med-id" })}>
+        onPress={() => navigation.navigate("Data", { medicineId: tracking.medicineId })}>
         <Text style={[styles.buttonText, { color: "white" }]}>See Methods &amp; Effects</Text>
       </TouchableOpacity>
       <TouchableOpacity style={[styles.buttonContainer, { marginTop: 10, backgroundColor: "#eee" }]}
-        onPress={() => navigation.navigate("EditScreen", { medicineId: "med-id" })}>
+        onPress={() => navigation.navigate("EditScreen", { medicineId: tracking.medicineId })}>
         <Text style={[styles.buttonText, { color: "black" }]}>Edit Tracking</Text>
       </TouchableOpacity>
     </View>
