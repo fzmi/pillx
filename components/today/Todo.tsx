@@ -82,7 +82,6 @@ const Todo: React.FC<Props> = props => {
           </TouchableOpacity>
           {/* <TouchableOpacity style={{ borderColor: "#333", borderWidth: 1, borderRadius: 5, flex: 1, margin: 5, display: "flex", alignItems: "center", justifyContent: "center" }}> */}
 
-
         </View>
       </View>
       ) : (

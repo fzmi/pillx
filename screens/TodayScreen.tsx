@@ -82,6 +82,7 @@ export default function TodayScreen({ navigation }: StackScreenProps<TodayParamL
           selectedDayBackgroundColor: Colors[colorScheme].tint,
           selectedColor: Colors[colorScheme].tint,
           todayColor: Colors[colorScheme].tint,
+          todayTextColor: Colors[colorScheme].tint,
         }}
         items={data}
         renderItem={(item: any, firstItemInDay: any) => { return <Todo item={item} /> }}
