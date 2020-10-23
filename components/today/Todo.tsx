@@ -10,8 +10,14 @@ interface Props {
   item: any;
 }
 const Todo: React.FC<Props> = props => {
+
   const colorScheme = useColorScheme();
   const [taken, setTaken] = useState(false);
+
+  React.useEffect(() => {
+    setTaken(props.item.taken);
+  }, []);
+
   const takenAlert = () =>
     Alert.alert(
       "Taken medicine",
@@ -39,7 +45,6 @@ const Todo: React.FC<Props> = props => {
     ],
     { cancelable: false }
   );
-
 
   return (
     <View style={{ backgroundColor: "transparent" }}>
