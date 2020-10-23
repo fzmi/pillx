@@ -1,255 +1,215 @@
-import React from "react";
-import { Text, View } from '../Themed';
-import { Dimensions, StyleSheet, TouchableOpacity } from "react-native";
-import * as Progress from 'react-native-progress';
-import { useNavigation } from '@react-navigation/native';
-import { AntDesign, Entypo, FontAwesome, MaterialCommunityIcons } from '@expo/vector-icons';
-import useColorScheme from '../../hooks/useColorScheme';
+// demo card for A/B testing
+import React from 'react';
+import { Text, View, ScrollView } from '../Themed';
+import { Dimensions, StyleSheet, TouchableOpacity, Image, View as ClearView } from "react-native";
 import { Tracking } from "../../types";
+import Colors from '../../constants/Colors';
+import useColorScheme from '../../hooks/useColorScheme';
+import { useNavigation } from '@react-navigation/native';
+import { FontAwesome5, Entypo } from '@expo/vector-icons';
 
-interface CardProps {
-  tracking: Tracking;
-  cardColor: string;
-  label?: string;
-  date: string;
-  progress: number;
+interface Props {
+  tracking: Tracking,
+  index: number,
 }
 
-const Divider = () => {
-  return (
-    <View
-      style={{
-        borderTopColor: '#F4F4F4',
-        borderTopWidth: 1,
-        marginVertical: 10,
-      }} />
-  )
-};
-
-const ReminderItem = () => {
-  return (
-    <View style={CommonStyles.reminderItem}>
-      <View style={{
-        backgroundColor: '#F4F4F4',
-        borderRadius: 100,
-        justifyContent: 'center',
-        paddingHorizontal: 20,
-        paddingVertical: 5,
-      }}>
-        <Text style={{ fontWeight: 'bold' }}>8 a.m.</Text>
-      </View>
-
-    </View>
-  )
-}
-
-const EditButton = () => {
+const Card: React.FC<Props> = ({ tracking, index }) => {
   const navigation = useNavigation();
+  const colorScheme = useColorScheme();
+  const trackingName = tracking.trackingName ? tracking.trackingName : "Medicine";
+  // DERALIN 40 Propranolol hydrochloride 40mg tablet bottle
+  const medicineName = (tracking.medicineName && tracking.medicineName !== "null") ? tracking.medicineName : "";
+  const progress = 0.45;
+  const progressPercentage = `${progress * 100}%`;
+  const remaining = "3 months remaining";
+  const imageUri = require('../../assets/images/pills/pill2.png');
+  const reminders = [new Date()];
 
-  return (
-    <View style={CommonStyles.editButtonContainer}>
-      <View style={CommonStyles.editButton}>
-        <TouchableOpacity onPress={() => { navigation.navigate("EditScreen", { medicineId: "med-id" }) }}>
-          <Text style={CommonStyles.editButtonText}>Edit</Text>
-        </TouchableOpacity>
+  return (<View style={styles.cardContainer}>
+    <View style={[styles.headerBanner, { backgroundColor: Colors[colorScheme].buttonBlue }]}></View>
+    <ClearView style={styles.headerOverlay}>
+      <View style={[styles.headerThumbnail]}>
+        <Image source={imageUri} width={50} height={50} style={styles.headerImage} />
       </View>
-    </View>
-  )
-}
+      <Text style={styles.headerIndex}>{index}</Text>
+    </ClearView>
 
-const Card: React.FC<CardProps> = props => {
-  // colorScheme = useColorScheme();
-  const navigation = useNavigation();
-
-  return (
-    <View style={CommonStyles.card}>
-      <View style={[CommonStyles.cardImage, { backgroundColor: props.cardColor }]} >
-        {/* Put medicine image or placeholder here */}
-        {/* <Image source={props.imageUri} /> */}
-      </View>
-
-      <View style={CommonStyles.content} >
-        <View style={CommonStyles.medInfoCardContent}>
-          <Text style={CommonStyles.medInfoCardContentTitle}>{props.tracking.trackingName}</Text>
-          <Text style={CommonStyles.medInfoCardContentText}>{props.tracking.medicineName}</Text>
-          <Text style={CommonStyles.medInfoCardContentText}>{props.date}</Text>
-          <Progress.Bar
-            progress={props.progress}
-            color={'#724ea3'}
-            unfilledColor={'#B9B9B9'}
-            borderWidth={0}
-            height={20}
-            borderRadius={100}>
-          </Progress.Bar>
-          <Text style={CommonStyles.medInfoCardContentText}>{props.progress * 100}%</Text>
-          <Text style={CommonStyles.medInfoCardContentText}>{props.tracking.instruction}</Text>
-
-        </View>
-        <EditButton />
-        <Divider />
-        <ReminderItem />
-      </View>
-
-      <TouchableOpacity style={CommonStyles.methodButtonContainer}
-        onPress={() => { navigation.navigate("Data", { medicineId: "med-id" }) }}>
-        <View style={CommonStyles.methodButton}>
-          <Text style={CommonStyles.methodButtonText}>See methods &amp; effects</Text>
-          <View style={CommonStyles.methodButtonIcon}>
-            <AntDesign name="right" size={24} color="white" />
+    <ScrollView style={styles.trackingOuterScroll}>
+      <View style={styles.trackingContainer}>
+        <Text style={styles.trackingName}>{trackingName}</Text>
+        <Text style={[styles.medicineName, { color: Colors[colorScheme].secondaryText }]}>{medicineName}</Text>
+        <View style={styles.progressBarOuter}>
+          <View style={[styles.progressBarInner, { width: progressPercentage }]}>
+            {progress >= 0.2 && <Text style={styles.progressBarInnerText}>{progressPercentage}</Text>}
           </View>
         </View>
-      </TouchableOpacity>
+        <Text style={[styles.progressBarRemaining, { color: Colors[colorScheme].secondaryText }]}>{remaining}</Text>
 
+        <View style={styles.separator}></View>
+        <View style={styles.infoContainer}>
+          <FontAwesome5 name="bell" size={24} color={Colors[colorScheme].text} />
+          <Text style={styles.infoText}>Daily at 10:00, 12:00</Text>
+        </View>
+        <View style={styles.infoContainer}>
+          <Entypo name="block" size={22} color={Colors[colorScheme].text} />
+          <Text style={styles.infoText}>2 pills per dosage</Text>
+        </View>
+
+        <View style={[styles.separator, { marginTop: 10 }]}></View>
+
+        <View style={styles.identifierContainer}>
+          <Text style={styles.identifierText}>AUST R 12345</Text>
+        </View>
+      </View>
+    </ScrollView>
+
+    <View style={styles.buttonGroup}>
+      <TouchableOpacity style={[styles.buttonContainer, { backgroundColor: Colors[colorScheme].buttonBlue }]}
+        onPress={() => navigation.navigate("Data", { medicineId: "med-id" })}>
+        <Text style={[styles.buttonText, { color: "white" }]}>See Methods &amp; Effects</Text>
+      </TouchableOpacity>
+      <TouchableOpacity style={[styles.buttonContainer, { marginTop: 10, backgroundColor: "#eee" }]}
+        onPress={() => navigation.navigate("EditScreen", { medicineId: "med-id" })}>
+        <Text style={[styles.buttonText, { color: "black" }]}>Edit Tracking</Text>
+      </TouchableOpacity>
     </View>
-  );
-}
+  </View>);
+};
 
 export default Card;
 
-const CommonStyles = StyleSheet.create({
-  card: {
+const styles = StyleSheet.create({
+  cardContainer: {
     flex: 1,
-    width: Dimensions.get('window').width * 0.7,
+    width: Dimensions.get('window').width * 0.75,
     marginLeft: 20,
+    marginVertical: 30,
     borderRadius: 20,
+    elevation: 2,
+    shadowOffset: { width: 5, height: 5 },
+    shadowColor: "grey",
+    shadowOpacity: 0.5,
+    shadowRadius: 10,
   },
-  cardImage: {
-    flex: 2,
+  headerBanner: {
+    height: 55,
+    width: "100%",
     borderTopLeftRadius: 20,
     borderTopRightRadius: 20,
   },
-  content: {
-    flex: 4,
+  headerOverlay: {
     marginTop: -40,
-    marginHorizontal: 30,
+    flexDirection: "row",
+    justifyContent: "space-between",
+  },
+  headerThumbnail: {
+    height: 70,
+    width: 70,
+    marginLeft: 15,
+    marginBottom: 10,
     borderRadius: 20,
-    backgroundColor: 'white',
-    shadowOffset: { width: 0, height: 10, },
-    shadowColor: 'black',
-    shadowOpacity: 0.1,
-  },
-  editButtonContainer: {
-    position: 'absolute',
-    flexDirection: 'row',
-    justifyContent: 'center',
-    left: 0,
-    right: 0,
-    bottom: 0,
-    borderRadius: 20,
-  },
-  editButton: {
-    backgroundColor: '#724ea3',
-    borderRadius: 100,
-    width: 80,
-    height: 80,
-    shadowOffset: { width: 0, height: 10, },
-    shadowColor: 'black',
-    shadowOpacity: 0.1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    bottom: -20
-  },
-  editButtonText: {
-    color: 'white',
-    fontWeight: 'bold',
-    paddingHorizontal: 5,
-    fontSize: 25,
-    fontStyle: 'italic'
-  },
-  header: {
-    height: 100,
-  },
-  headerProfileImage: {
-    width: 30,
-    height: 30,
-    borderRadius: 15,
-    marginRight: 20,
-  },
-  methodButton: {
-    flexDirection: 'row',
-    justifyContent: 'center',
-    alignItems: 'center',
-    marginTop: 30
-  },
-  methodButtonText: {
-    fontSize: 15,
-    color: '#8D8D8D',
-    fontWeight: 'bold',
-    paddingHorizontal: 10
-  },
-  methodButtonIcon: {
-    backgroundColor: '#8D8D8D',
-    borderRadius: 100,
-    padding: 6,
-    shadowOffset: { width: 0, height: 10, },
-    shadowColor: 'black',
-    shadowOpacity: 0.1,
-  },
-  methodButtonContainer: {
-    flex: 1,
-  },
-  medInfoView: {
-    marginTop: -30,
-    height: 200,
-    marginHorizontal: 30,
-    borderRadius: 20,
-    backgroundColor: 'white',
-    shadowOffset: { width: 0, height: 10, },
-    shadowColor: 'black',
-    shadowOpacity: 0.1,
-    marginVertical: 20,
-  },
-  medInfoCardContent: {
-    alignItems: 'center',
-    paddingTop: 30,
-    margin: 10
-  },
-  medInfoEditContainer: {
-    flexDirection: 'row',
-    borderRadius: 100,
-    borderWidth: 1,
-    borderColor: '#71CDF9',
-    alignContent: 'center',
-    justifyContent: 'center',
-    paddingHorizontal: 8,
-    margin: 10
-  },
-  medInfoCardContentTitle: {
-    fontSize: 25,
-    fontWeight: 'bold',
     padding: 10,
   },
-  medInfoCardContentText: {
+  headerImage: {
+    width: 50,
+    height: 50,
+  },
+  headerIndex: {
+    marginRight: 15,
+    color: "white",
+    fontSize: 25,
+    fontWeight: "600"
+  },
+  trackingOuterScroll: {
+    marginBottom: 15,
+    width: "100%",
+  },
+  trackingContainer: {
+    paddingHorizontal: 15,
+    alignItems: "center",
+    width: "100%",
+    height: "100%",
+    alignContent: "space-between",
+    justifyContent: "space-between"
+  },
+  trackingName: {
+    fontSize: 28,
+    fontWeight: "700",
+    textAlign: "center",
+    marginBottom: 10,
+  },
+  medicineName: {
     fontSize: 15,
-    color: "#707070",
-    fontWeight: 'bold',
-    paddingVertical: 5
+    textAlign: "center",
+    marginBottom: 20,
+    fontWeight: "600",
   },
-  medInfoProgessbarText: {
-    flex: 1,
-    color: 'white',
+  progressBarOuter: {
+    width: "100%",
+    height: 20,
+    backgroundColor: "#eee",
+    borderRadius: 20,
+    marginBottom: 5,
   },
-  reminderView: {
-    height: 200,
-    marginHorizontal: 30,
-    borderRadius: 5,
-    backgroundColor: 'white',
-    shadowOffset: { width: 0, height: 10, },
-    shadowColor: 'black',
-    shadowOpacity: 0.1,
+  progressBarInner: {
+    height: 20,
+    backgroundColor: "green",
+    borderRadius: 20,
+    alignItems: "flex-end",
+    justifyContent: "center",
   },
-  reminderContent: {
-    alignContent: 'center',
-    justifyContent: 'center',
-    marginHorizontal: 40,
-    marginVertical: 20
+  progressBarInnerText: {
+    color: "white",
+    marginRight: 8,
   },
-  reminderTopbar: {
-    flexDirection: 'row',
-    marginVertical: 10
+  progressBarRemaining: {
+    fontSize: 15,
+    fontWeight: "600",
+    marginBottom: 30,
   },
-  reminderItem: {
-    flexDirection: 'row',
-    justifyContent: 'center',
+  separator: {
+    backgroundColor: "#eee",
+    width: "100%",
+    height: 2,
+    marginBottom: 20,
+  },
+  infoContainer: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "center",
+    width: "100%",
+    paddingHorizontal: 15,
+    marginBottom: 10,
+  },
+  infoText: {
+    fontWeight: "700",
+    padding: 4,
+    fontSize: 18,
+  },
+  identifierContainer: {
+    flexDirection: "row-reverse",
+    width: "100%",
+    paddingHorizontal: 15,
+  },
+  identifierText: {
+    color: "#bbb",
+    fontWeight: "500",
+    fontSize: 14
+  },
+  buttonGroup: {
+    marginBottom: 15,
+    paddingHorizontal: 15,
+    width: "100%",
+  },
+  buttonContainer: {
+    width: "100%",
+    paddingVertical: 14,
+    alignItems: "center",
+    justifyContent: "center",
+    borderRadius: 15,
+  },
+  buttonText: {
+    fontSize: 18,
+    fontWeight: "500",
   },
 });
