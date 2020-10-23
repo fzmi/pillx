@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Alert, Button,StyleSheet, TouchableOpacity, Image } from 'react-native';
 import { View, Text } from '../Themed';
-import { Entypo, Ionicons, MaterialIcons } from '@expo/vector-icons';
+import { Entypo, Ionicons } from '@expo/vector-icons';
 import Colors from '../../constants/Colors';
 import useColorScheme from '../../hooks/useColorScheme';
 import * as Haptics from 'expo-haptics';
@@ -73,8 +73,8 @@ const Todo: React.FC<Props> = props => {
             }}
             
           >
-            <MaterialIcons name="touch-app" size={30} color="white" />
-            <Text style={{ fontSize: 20, color: "#fff", marginLeft: 10 }}>
+            <Entypo name="circle" size={30} color="white" />
+            <Text style={{ fontSize: 20, color: "#fff", marginLeft: 10, fontWeight: "500" }}>
               {taken ? ("Take") : ("Already Taken")}
             </Text>
 
@@ -85,7 +85,7 @@ const Todo: React.FC<Props> = props => {
       </View>
       ) : (
       <TouchableOpacity
-        style={[styles.item, { height: props.item.height }, {backgroundColor: taken ? 'white' : '#A9A9A9'}]}
+        style={[styles.item, { height: props.item.height }, {backgroundColor: taken ? 'white' : '#E4E4E4'}]}
         onPress={() => {
           Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
           taken ? (takenAlert()) : (takenCancelAlert())
@@ -96,7 +96,9 @@ const Todo: React.FC<Props> = props => {
             <View style={{ flexDirection: "row", backgroundColor: "transparent", flex: 1 }}>
               <Text style={{ fontSize: 24, fontWeight: "bold", marginBottom: 4 }}>{props.item.trackingName}</Text>
             </View>
-              <Ionicons name="ios-checkmark-circle" size={30} color="white" />
+              {/* <Ionicons name="ios-checkmark-circle" size={30} color={Colors[colorScheme].buttonBlue} /> */}
+              <Ionicons name="ios-checkmark-circle" size={30} color={Colors[colorScheme].buttonBlue} />
+
           </View>
         </View>
       </TouchableOpacity>
@@ -117,7 +119,7 @@ const styles = StyleSheet.create({
     shadowColor: "#222",
     shadowOffset: { width: 0, height: 2, },
     shadowOpacity: 0.25,
-    shadowRadius: 3.84
+    shadowRadius: 3.84,
   },
   itemTaken: {
     backgroundColor: 'grey',
