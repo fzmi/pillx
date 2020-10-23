@@ -16,7 +16,10 @@ export default function MethodScreen({ route, navigation }: StackScreenProps<Dat
     <View style={styles.container}>      
     <View style={styles.content}>
       <Image style={styles.pillImage} source={require("../../../assets/images/pills/pill1.png")}></Image>
-      
+      <View style={styles.textContent}>
+        <Text style={styles.pillTitle}>Fish and Omega</Text>
+        <Text>Two pills per time</Text>
+      </View>
     </View>
     
     <View
@@ -27,7 +30,6 @@ export default function MethodScreen({ route, navigation }: StackScreenProps<Dat
       }} />
       
     <View style={styles.content}>
-      
       <Image style={styles.contentImage} source={require("../../../assets/images/medicine/method/external.png")}></Image>
     </View>
     
@@ -44,6 +46,14 @@ export default function MethodScreen({ route, navigation }: StackScreenProps<Dat
       flex: 1,
       justifyContent: 'center',
       alignSelf: 'center',
+      alignContent:'center', 
+      alignItems: 'center', 
+    },
+    textContent: {
+      justifyContent: 'center',
+      alignSelf: 'center',
+      alignContent:'center', 
+      alignItems: 'center', 
     },
     contentImage: {
       flex: 1,
@@ -56,5 +66,9 @@ export default function MethodScreen({ route, navigation }: StackScreenProps<Dat
       maxHeight: 60,
       borderRadius: 5,
       marginRight: 5,
+    },
+    pillTitle: {
+      fontWeight: 'bold',
+      fontSize: 20,
     },
   });

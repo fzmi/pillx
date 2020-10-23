@@ -28,7 +28,7 @@ export default function EffectScreen({ route, navigation }: StackScreenProps<Dat
   <View style={styles.container}>      
     <View style={styles.content}>
       <Image style={styles.pillImage} source={require("../../../assets/images/pills/pill1.png")}></Image>
-      <View style={{justifyContent:'center', alignContent:'center', alignItems: 'center', alignSelf: 'center'}}>
+      <View style={styles.textContent}>
         <Text style={styles.pillTitle}>Fish and Omega</Text>
         <Text>Everyday</Text>
       </View>
@@ -58,6 +58,14 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     alignSelf: 'center',
+    alignContent:'center', 
+    alignItems: 'center', 
+  },
+  textContent: {
+    justifyContent: 'center',
+    alignSelf: 'center',
+    alignContent:'center', 
+    alignItems: 'center', 
   },
   contentImage: {
     flex: 1,
