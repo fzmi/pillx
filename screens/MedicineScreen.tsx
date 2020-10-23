@@ -7,8 +7,7 @@ import { MedicineParamList, Tracking } from '../types';
 import Colors from '../constants/Colors';
 import useColorScheme from '../hooks/useColorScheme';
 import { Entypo } from '@expo/vector-icons';
-// import Card from '../components/medicine/Card';
-import Card from '../components/medicine/Card2';
+import Card from '../components/medicine/Card';
 import AsyncStorage from '@react-native-community/async-storage';
 
 import UserContext from '../hooks/UserContext';
