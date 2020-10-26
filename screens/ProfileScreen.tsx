@@ -16,6 +16,7 @@ export default function ProfileScreen({ navigation }: StackScreenProps<ProfilePa
   const { userInfo, isLoading } = React.useContext(UserContext);
   const colorScheme = useColorScheme();
   const connected = userInfo.email !== undefined;
+  const name = userInfo.name;
 
   return (
     <ScrollView style={{ backgroundColor: Colors[colorScheme].profileBackgroundOuter }}>
@@ -32,6 +33,7 @@ export default function ProfileScreen({ navigation }: StackScreenProps<ProfilePa
           <View style={[styles.buttonItemLeft, { backgroundColor: Colors[colorScheme].profileBackgroundInner }]}>
             <Image style={styles.buttonImage} source={require("../assets/images/profile/Name.png")} />
             <Text style={styles.buttonTextLeft}>Name</Text>
+
           </View>
           <Entypo name="chevron-thin-right" size={24} color={Colors[colorScheme].text} />
         </TouchableOpacity>
