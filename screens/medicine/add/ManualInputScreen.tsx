@@ -101,5 +101,10 @@ const styles = StyleSheet.create({
     paddingVertical: 7,
     backgroundColor: "#eee",
     borderRadius: 10,
-  }
+  },
+  fieldTextSmall: {
+    fontSize: 15,
+    fontWeight: "600",
+    paddingTop: 7
+  },
 });

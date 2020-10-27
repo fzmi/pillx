@@ -6,7 +6,7 @@ import { AntDesign, Entypo } from '@expo/vector-icons';
 import Colors from '../../../constants/Colors';
 import useColorScheme from '../../../hooks/useColorScheme';
 import StepIndicator from '../../../components/medicine/add/StepIndicator';
-import AddContext from '../../../hooks/AddContext';
+import AddContext from '../../../hooks/useAddContext';
 import DateTimePickerModal from "react-native-modal-datetime-picker";
 
 interface Props {

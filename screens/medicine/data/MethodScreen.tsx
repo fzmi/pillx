@@ -3,7 +3,7 @@ import { View, Text } from '../../../components/Themed';
 import { TouchableOpacity, StyleSheet, Image } from 'react-native';
 import { StackScreenProps } from '@react-navigation/stack';
 import { DataTabParamList } from '../../../types';
-import UserContext from '../../../hooks/UserContext';
+import UserContext from '../../../hooks/useUserContext';
 
 export default function MethodScreen({ route, navigation }: StackScreenProps<DataTabParamList, 'MethodScreen'>) {
   // contains user info

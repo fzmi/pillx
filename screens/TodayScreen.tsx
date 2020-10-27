@@ -8,7 +8,7 @@ import { TodayParamList } from '../types';
 import Colors from '../constants/Colors';
 import useColorScheme from '../hooks/useColorScheme';
 import Todo from '../components/today/Todo';
-import UserContext from '../hooks/UserContext';
+import UserContext from '../hooks/useUserContext';
 import { Ionicons } from '@expo/vector-icons';
 import AsyncStorage from '@react-native-community/async-storage';
 
@@ -19,14 +19,14 @@ export default function TodayScreen({ navigation }: StackScreenProps<TodayParamL
 
   useEffect(() => {
     const today = new Date().toISOString().slice(0, 10);
-    // fetchDosages(today);
+    fetchDosages(today);
 
     // todo: remove dummy data
     setData({
       [today]: [
-        { trackingName: "Medicine", medicineId: "12345", medicineName: "Medicine", time: new Date(), taken: true },
-        { trackingName: "Medicine", medicineId: "12345", medicineName: "Medicine", time: new Date(), taken: false },
-        { trackingName: "Medicine", medicineId: "67890", medicineName: "Medicine", time: new Date(), taken: false }]
+        { trackingName: "Med 1", medicineId: "12345", medicineName: "Medicine 1", time: new Date(), taken: true },
+        { trackingName: "Med 2", medicineId: "12345", medicineName: "Medicine 2", time: new Date(), taken: false },
+        { trackingName: "Med 3", medicineId: "67890", medicineName: "Medicine 3", time: new Date(), taken: false }]
     });
   }, []);
 

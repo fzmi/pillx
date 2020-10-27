@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import { Alert, Button,StyleSheet, TouchableOpacity, Image } from 'react-native';
+import React, { useEffect, useState } from 'react';
+import { Alert, Button, StyleSheet, TouchableOpacity, Image } from 'react-native';
 import { View, Text } from '../Themed';
 import { Entypo, Ionicons } from '@expo/vector-icons';
 import Colors from '../../constants/Colors';
@@ -9,105 +9,87 @@ import * as Haptics from 'expo-haptics';
 interface Props {
   item: any;
 }
-const Todo: React.FC<Props> = props => {
 
+const Todo: React.FC<Props> = props => {
   const colorScheme = useColorScheme();
   const [taken, setTaken] = useState(false);
 
-  React.useEffect(() => {
+  useEffect(() => {
     setTaken(props.item.taken);
   }, []);
 
   const takenAlert = () =>
-    Alert.alert(
-      "Taken medicine",
-      "Are you sure you have taken this medicine?",
-      [
-        {
-          text: "Cancel",
-          onPress: () => setTaken(true),
-        },
-        { text: "Yes", onPress: () => setTaken(false) }
-      ],
-      { cancelable: false }
+    Alert.alert("Taken medicine", "Are you sure you have taken this medicine?",
+      [{ text: "Cancel", onPress: () => setTaken(true), },
+      { text: "Yes", onPress: () => setTaken(false) }],
+      { cancelable: false },
     );
 
   const takenCancelAlert = () =>
-  Alert.alert(
-    "Untaken medicine",
-    "Are you sure you have not taken this medicine?",
-    [
-      {
-        text: "Cancel",
-        onPress: () => setTaken(false),
-      },
-      { text: "Yes", onPress: () => setTaken(true) }
-    ],
-    { cancelable: false }
-  );
+    Alert.alert("Untaken medicine", "Are you sure you have not taken this medicine?",
+      [{ text: "Cancel", onPress: () => setTaken(false), },
+      { text: "Yes", onPress: () => setTaken(true) }],
+      { cancelable: false },
+    );
 
   return (
     <View style={{ backgroundColor: "transparent" }}>
       {taken ? (
-        <View
-        style={[styles.item, { height: props.item.height }, {backgroundColor: taken ? 'white' : '#A9A9A9'}]}
-      >
-        <View style={styles.content}>
-          <View style={{ backgroundColor: "transparent" }}>
-            <View style={{ flexDirection: "row", backgroundColor: "transparent" }}>
-              <Text style={{ fontSize: 24, fontWeight: "bold", marginBottom: 4 }}>{props.item.trackingName}</Text>
-              <TouchableOpacity style={{ flex: 1, marginLeft: 3, display: "flex", alignItems: "center", justifyContent: "center" }}>
-                <Ionicons name="ios-information-circle" size={25} color="#333" />
-              </TouchableOpacity>
+        <View style={[styles.item, { height: props.item.height }, { backgroundColor: taken ? 'white' : '#A9A9A9' }]}>
+          <View style={styles.content}>
+            <View style={{ backgroundColor: "transparent" }}>
+              <View style={{ flexDirection: "row", backgroundColor: "transparent" }}>
+                <Text style={{ fontSize: 24, fontWeight: "bold", marginBottom: 4 }}>{props.item.trackingName}</Text>
+                <TouchableOpacity style={{ flex: 1, marginLeft: 3, display: "flex", alignItems: "center", justifyContent: "center" }}>
+                  <Ionicons name="ios-information-circle" size={25} color="#333" />
+                </TouchableOpacity>
+              </View>
+
+              <Text style={{ fontSize: 18, marginBottom: 10, color: "#444" }}><Entypo name="clock" size={16} color={"#333"} />&nbsp;&nbsp;{props.item.description}</Text>
+              {/* <Text style={{ fontSize: 16, color: "#333" }}>{props.item.image}</Text> */}
             </View>
-
-            <Text style={{ fontSize: 18, marginBottom: 10, color: "#444" }}><Entypo name="clock" size={16} color={"#333"} />&nbsp;&nbsp;{props.item.description}</Text>
-            {/* <Text style={{ fontSize: 16, color: "#333" }}>{props.item.image}</Text> */}
+            <Image style={styles.pillImage} source={isNaN(props.item.image) ? { uri: props.item.image } : props.item.image} />
           </View>
-          <Image style={styles.pillImage} source={isNaN(props.item.image) ? { uri: props.item.image } : props.item.image} />
-        </View>
-        <View style={{ display: "flex", flexDirection: "row", backgroundColor: "transparent" }}>
+          <View style={{ display: "flex", flexDirection: "row", backgroundColor: "transparent" }}>
 
-          <TouchableOpacity style={{ 
-            // backgroundColor: Colors[colorScheme].buttonBlue, 
-            backgroundColor:taken ? (Colors[colorScheme].buttonBlue) : ("#696969"),
-            padding: 10, borderRadius: 5, flex: 3, margin: 5, display: "flex", flexDirection: "row", justifyContent: "center", alignItems: "center" }}
+            <TouchableOpacity style={{
+              // backgroundColor: Colors[colorScheme].buttonBlue, 
+              backgroundColor: taken ? (Colors[colorScheme].buttonBlue) : ("#696969"),
+              padding: 10, borderRadius: 20, flex: 3, margin: 5, display: "flex", flexDirection: "row", justifyContent: "center", alignItems: "center"
+            }}
+              onPress={() => {
+                Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
+                taken ? (takenAlert()) : (takenCancelAlert())
+              }}>
+              <Entypo name="circle" size={30} color="white" />
+              <Text style={{ fontSize: 20, color: "#fff", marginLeft: 10, fontWeight: "500" }}>
+                {taken ? ("Take") : ("Already Taken")}
+              </Text>
+
+            </TouchableOpacity>
+            {/* <TouchableOpacity style={{ borderColor: "#333", borderWidth: 1, borderRadius: 5, flex: 1, margin: 5, display: "flex", alignItems: "center", justifyContent: "center" }}> */}
+
+          </View>
+        </View>
+      ) : (
+          <TouchableOpacity
+            style={[styles.item, { height: props.item.height }, { backgroundColor: taken ? 'white' : '#E4E4E4' }]}
             onPress={() => {
               Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
               taken ? (takenAlert()) : (takenCancelAlert())
-            }}
-            
-          >
-            <Entypo name="circle" size={30} color="white" />
-            <Text style={{ fontSize: 20, color: "#fff", marginLeft: 10, fontWeight: "500" }}>
-              {taken ? ("Take") : ("Already Taken")}
-            </Text>
+            }}>
+            <View style={styles.content}>
+              <View style={{ backgroundColor: "transparent", flexDirection: "row", flex: 1 }}>
+                <View style={{ flexDirection: "row", backgroundColor: "transparent", flex: 1 }}>
+                  <Text style={{ fontSize: 24, fontWeight: "bold", marginBottom: 4 }}>{props.item.trackingName}</Text>
+                </View>
+                {/* <Ionicons name="ios-checkmark-circle" size={30} color={Colors[colorScheme].buttonBlue} /> */}
+                <Ionicons name="ios-checkmark-circle" size={30} color={Colors[colorScheme].buttonBlue} />
 
-          </TouchableOpacity>
-          {/* <TouchableOpacity style={{ borderColor: "#333", borderWidth: 1, borderRadius: 5, flex: 1, margin: 5, display: "flex", alignItems: "center", justifyContent: "center" }}> */}
-
-        </View>
-      </View>
-      ) : (
-      <TouchableOpacity
-        style={[styles.item, { height: props.item.height }, {backgroundColor: taken ? 'white' : '#E4E4E4'}]}
-        onPress={() => {
-          Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
-          taken ? (takenAlert()) : (takenCancelAlert())
-        }}
-      >
-        <View style={styles.content}>
-          <View style={{ backgroundColor: "transparent", flexDirection:"row", flex: 1 }}>
-            <View style={{ flexDirection: "row", backgroundColor: "transparent", flex: 1 }}>
-              <Text style={{ fontSize: 24, fontWeight: "bold", marginBottom: 4 }}>{props.item.trackingName}</Text>
+              </View>
             </View>
-              {/* <Ionicons name="ios-checkmark-circle" size={30} color={Colors[colorScheme].buttonBlue} /> */}
-              <Ionicons name="ios-checkmark-circle" size={30} color={Colors[colorScheme].buttonBlue} />
-
-          </View>
-        </View>
-      </TouchableOpacity>
-      )}      
+          </TouchableOpacity>
+        )}
     </View>
   )
 }
@@ -117,7 +99,7 @@ export default Todo;
 const styles = StyleSheet.create({
   item: {
     flex: 1,
-    borderRadius: 5,
+    borderRadius: 20,
     padding: 10,
     marginRight: 20,
     marginTop: 15,
@@ -125,18 +107,6 @@ const styles = StyleSheet.create({
     shadowOffset: { width: 0, height: 2, },
     shadowOpacity: 0.25,
     shadowRadius: 3.84,
-  },
-  itemTaken: {
-    backgroundColor: 'grey',
-    flex: 1,
-    borderRadius: 5,
-    padding: 10,
-    marginRight: 20,
-    marginTop: 15,
-    shadowColor: "#222",
-    shadowOffset: { width: 0, height: 2, },
-    shadowOpacity: 0.25,
-    shadowRadius: 3.84
   },
   content: {
     display: "flex",

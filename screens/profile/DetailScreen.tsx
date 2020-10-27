@@ -9,6 +9,10 @@ import Colors from '../../constants/Colors';
 import useColorScheme from '../../hooks/useColorScheme';
 import Layout from '../../constants/Layout';
 
+interface Props {
+  
+}
+
 export default function SettingsScreen({ navigation }: StackScreenProps<ProfileParamList, 'ProfileScreen'>) {
   const colorScheme = useColorScheme();
   const [isEnabled, setIsEnabled] = useState(false);

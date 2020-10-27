@@ -7,7 +7,7 @@ import { Tracking } from '../../../types';
 import Colors from '../../../constants/Colors';
 import useColorScheme from '../../../hooks/useColorScheme';
 import StepIndicator from '../../../components/medicine/add/StepIndicator';
-import AddContext from '../../../hooks/AddContext';
+import AddContext from '../../../hooks/useAddContext';
 import FrequencyModal from '../../../components/medicine/add/FrequencyModal';
 import PeriodModal from '../../../components/medicine/add/PeriodModal';
 
@@ -20,7 +20,7 @@ const ManualStep1View: React.FC<Props> = ({ styles, setStep }) => {
   const colorScheme = useColorScheme();
   const { addInfo, setAddInfo } = useContext(AddContext);
 
-  const [name, setName] = useState<string>(addInfo.medicineName);
+  const [name, setName] = useState<string>(addInfo.medicineName.split(" ")[0]);
   const [showFrequencyModal, setShowFrequencyModal] = useState<boolean>(false);
   const [frequency, setFrequency] = useState<Tracking["frequency"]>(addInfo.frequency);
   const [showPeriodModal, setShowPeriodModal] = useState<boolean>(false);
@@ -46,6 +46,9 @@ const ManualStep1View: React.FC<Props> = ({ styles, setStep }) => {
               <TextInput value={name} editable clearButtonMode={"while-editing"}
                 onChangeText={text => setName(text)} style={{ fontSize: 20 }} />
             </View>
+            {addInfo.medicineName &&
+              <Text style={[styles.fieldTextSmall, { color: Colors[colorScheme].secondaryText }]}>{addInfo.medicineName}</Text>
+            }
             <View style={[styles.separator, { marginTop: 10, marginBottom: 12 }]} lightColor="#eee" darkColor="rgba(255,255,255,0.1)" />
 
             {/* Frequency */}

@@ -5,19 +5,19 @@ import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { createStackNavigator } from '@react-navigation/stack';
 import { createNativeStackNavigator } from 'react-native-screens/native-stack';
-import { showMessage } from "react-native-flash-message";
-import AsyncStorage from '@react-native-community/async-storage';
 
 import { BottomTabParamList, TodayParamList, ProfileParamList, MedicineParamList, Tracking } from '../types';
-import Colors from '../constants/Colors';
+import UserContext from '../hooks/useUserContext';
 import useColorScheme from '../hooks/useColorScheme';
+import useUserMedicine from '../hooks/useUserMedicine';
+import useUserData from '../hooks/useUserData';
+import Colors from '../constants/Colors';
 import TodayScreen from '../screens/TodayScreen';
 import MedicineScreen from '../screens/MedicineScreen';
 import ProfileScreen from '../screens/ProfileScreen';
 import AddTabNavigator from '../navigation/AddTabNavigator';
 import DataTabNavigator from '../navigation/DataTabNavigator';
 import EditScreen from '../screens/medicine/edit/EditScreen';
-import UserContext from '../hooks/UserContext';
 import SettingsScreen from '../screens/profile/SettingsScreen';
 
 const BottomTab = createBottomTabNavigator<BottomTabParamList>();
@@ -33,8 +33,8 @@ export default function BottomTabNavigator() {
   // Load the user data when initialising
   useEffect(() => {
     (async () => {
-      const userData = await fetchUserData();
-      const trackings = await fetchUserMedicine();
+      const userData = await useUserData();
+      const trackings = await useUserMedicine();
       setUser({
         ...user,
         userInfo: {
@@ -47,93 +47,6 @@ export default function BottomTabNavigator() {
       });
     })();
   }, []);
-
-  // Get the user information from the server
-  const fetchUserData = async () => {
-    try {
-      const userToken = await AsyncStorage.getItem('userToken');
-      const response = await fetch("http://deco3801-rever.uqcloud.net/user/get?email=" + userToken, {
-        method: 'GET',
-        headers: {
-          Accept: "application/json",
-          'Content-Type': 'application/json',
-        }
-      });
-      const responseJson = await response.json();
-      return responseJson;
-    } catch (error) {
-      showMessage({
-        message: "Network Error",
-        description: "Cannot connect to PillX server.",
-        type: "danger",
-        icon: "danger",
-        duration: 2500,
-      });
-      console.log(error);
-    }
-  }
-
-  const fetchUserMedicine = async () => {
-    try {
-      const userToken = await AsyncStorage.getItem('userToken');
-      const response = await fetch("http://deco3801-rever.uqcloud.net/user/medicine/getAll?email=" + userToken, {
-        method: 'GET',
-        headers: {
-          Accept: "application/json",
-          'Content-Type': 'application/json',
-        }
-      });
-      const responseJson = await response.json();
-
-      // translate response into Trackings, Medicines
-      const trackings: Array<Tracking> = (responseJson as Array<any>).map(medicine => {
-        if (!medicine.dosageSetting) {
-          return {
-            trackingName: "Not Available",
-            medicineId: medicine.identifier === null ? "" : medicine.identifier,
-            medicineName: "Not Available",
-            instruction: "",
-            image: "",
-            frequency: {
-              type: "day",
-              value: 1,
-            },
-            reminders: [],
-            startDate: new Date(),
-            endDate: new Date(),
-          };
-        }
-        let frequencyType: string;
-        let frequencyValue: number | Array<number>;
-        if (medicine.dosageSetting.intervalUsage as boolean) {
-          frequencyType = (medicine.dosageSetting.intervalType as string).slice(0, -1).toLowerCase();
-          frequencyValue = medicine.dosageSetting.interval as number;
-        } else {
-          frequencyType = "dayOfWeek";
-          frequencyValue = (medicine.dosageSetting.weekdays as Array<boolean>).map((value: boolean, index: number) =>
-            (value ? index + 1 : -1)).filter(value => value !== -1);
-        }
-        return {
-          // todo
-          trackingName: "Medicine",
-          medicineId: medicine.identifier === null ? "" : medicine.identifier,
-          medicineName: medicine.name,
-          instruction: medicine.identifier,
-          image: "",
-          frequency: {
-            type: frequencyType as "day" | "week" | "month" | "dayOfWeek",
-            value: frequencyValue,
-          },
-          reminders: [],
-          startDate: new Date(`${medicine.startDate} ${medicine.time}`),
-          endDate: new Date(`${medicine.endDate} ${medicine.time}`)
-        }
-      })
-      return trackings;
-    } catch (error) {
-      console.log(error);
-    }
-  }
 
   const userContext = {
     userInfo: user.userInfo,

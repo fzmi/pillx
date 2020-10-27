@@ -14,10 +14,10 @@ import { schedulePushNotification } from '../../../components/Notification';
 import Colors from '../../../constants/Colors';
 import useColorScheme from '../../../hooks/useColorScheme';
 import StepIndicator from '../../../components/medicine/add/StepIndicator';
-import AddContext from '../../../hooks/AddContext';
+import AddContext from '../../../hooks/useAddContext';
 import * as Haptics from 'expo-haptics';
 
-import UserContext from '../../../hooks/UserContext';
+import UserContext from '../../../hooks/useUserContext';
 
 interface Props {
   styles: any;

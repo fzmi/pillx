@@ -1,24 +1,25 @@
-import React, {useEffect} from 'react';
+import React, { useEffect } from 'react';
 import { View, Text } from '../../../components/Themed';
 import { TouchableOpacity, StyleSheet, Image, Button } from 'react-native';
 import { StackScreenProps } from '@react-navigation/stack';
 import { MedicineParamList } from '../../../types';
-import UserContext from '../../../hooks/UserContext';
+import UserContext from '../../../hooks/useUserContext';
 import { useFocusEffect, StackActions } from '@react-navigation/native';
 import useColorScheme from '../../../hooks/useColorScheme';
 import Colors from '../../../constants/Colors';
-import { MaterialIcons } from '@expo/vector-icons'; 
+import { MaterialIcons } from '@expo/vector-icons';
 import EditStep1View from './EditStep1View';
 import EditStep2View from './EditStep2View';
 import EditStep3View from './EditStep3View';
+import useUserMedicine from '../../../hooks/useUserMedicine';
 
-export default function EditScreen({route, navigation }: StackScreenProps<MedicineParamList, 'EditScreen'>) {
+export default function EditScreen({ route, navigation }: StackScreenProps<MedicineParamList, 'EditScreen'>) {
   const colorScheme = useColorScheme();
 
   const [step, setStep] = React.useState(1);
 
   // contains user info
-  const { userInfo, isLoading } = React.useContext(UserContext);
+  const { userInfo, isLoading, setUserInfo } = React.useContext(UserContext);
 
   // use this medicine id to get information
   const { medicineId } = route.params;
@@ -29,7 +30,19 @@ export default function EditScreen({route, navigation }: StackScreenProps<Medici
     })
       .then(response => response.text())
       .then(result => {
-
+        if (result !== "Success") {
+          throw "Failed to delete medicine";
+        }
+        return useUserMedicine();
+      })
+      .then(newTrackings => {
+        setUserInfo({
+          ...userInfo,
+          trackings: newTrackings,
+        })
+      })
+      .catch(error => {
+        console.log(error);
       })
   }
 
@@ -38,13 +51,13 @@ export default function EditScreen({route, navigation }: StackScreenProps<Medici
       { step == 1 && <EditStep1View styles={styles} setStep={setStep} />}
       { step == 2 && <EditStep2View styles={styles} setStep={setStep} />}
       { step == 3 && <EditStep3View styles={styles} setStep={setStep} navigation={navigation} />}
-      <View style={[styles.deleteButtonContainer,{backgroundColor: Colors[colorScheme].secondaryBackground}]}>
-        <TouchableOpacity style={styles.deleteButton} onPress={() => {
-            deleteMedicine();
-            navigation.goBack();
-          }}>
-            <Text style={styles.deleteButtonText}>Delete Tracking</Text>
-            <MaterialIcons name="delete" size={30} color="white" />
+      <View style={[styles.deleteButtonContainer, { backgroundColor: Colors[colorScheme].secondaryBackground }]}>
+        <TouchableOpacity style={styles.deleteButton} onPress={async () => {
+          await deleteMedicine();
+          navigation.goBack();
+        }}>
+          <Text style={styles.deleteButtonText}>Delete Tracking</Text>
+          <MaterialIcons name="delete" size={30} color="white" />
         </TouchableOpacity>
       </View>
     </View>
@@ -85,7 +98,7 @@ const styles = StyleSheet.create({
   deleteButtonContainer: {
     backgroundColor: 'transparent',
     paddingVertical: 10,
-    paddingHorizontal:30,
+    paddingHorizontal: 30,
     borderRadius: 8,
     flexDirection: 'row',
     justifyContent: 'center',
@@ -93,7 +106,7 @@ const styles = StyleSheet.create({
   deleteButton: {
     backgroundColor: '#f44336',
     paddingVertical: 10,
-    paddingHorizontal:30,
+    paddingHorizontal: 30,
     borderRadius: 40,
     flexDirection: 'row',
     justifyContent: 'center',

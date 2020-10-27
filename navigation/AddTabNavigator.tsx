@@ -7,7 +7,7 @@ import Colors from '../constants/Colors';
 import useColorScheme from '../hooks/useColorScheme';
 import ManualInputScreen from '../screens/medicine/add/ManualInputScreen';
 import ScanInputScreen from '../screens/medicine/add/ScanInputScreen';
-import AddContext from '../hooks/AddContext';
+import AddContext from '../hooks/useAddContext';
 
 const AddTab = createBottomTabNavigator<AddTabParamList>();
 
@@ -18,7 +18,7 @@ export default function AddTabNavigator({ navigation }: StackScreenProps<Medicin
   const [addInfo, setAddInfo] = React.useState({
     trackingName: '',
     medicineResults: [],
-    medicineName: "Medicine",
+    medicineName: "",
     medicineId: "97801",
     frequency: { type: "day", value: 1 } as Tracking["frequency"],
     periodOfTreatment: { type: "week", value: 1 },

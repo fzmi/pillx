@@ -4,7 +4,7 @@ import { TouchableOpacity, StyleSheet, Image } from 'react-native';
 import useColorScheme from '../../../hooks/useColorScheme';
 import { StackScreenProps } from '@react-navigation/stack';
 import { DataTabParamList } from '../../../types';
-import UserContext from '../../../hooks/UserContext';
+import UserContext from '../../../hooks/useUserContext';
 
 
 interface Props {

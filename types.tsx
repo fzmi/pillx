@@ -30,6 +30,12 @@ export type Medicine = {
   description?: string,
 }
 
+// Root modals
+export type ModalStackParamList = {
+  App: undefined;
+  Tutorial: undefined;
+}
+
 // Root stack
 export type RootStackParamList = {
   Root: undefined;
@@ -72,6 +78,7 @@ export type MedicineParamList = {
 export type ProfileParamList = {
   ProfileScreen: undefined;
   SettingsScreen: undefined;
+  Tutorial: undefined;
 };
 
 // Root stack -> Button Tab -> Medicine -> Add

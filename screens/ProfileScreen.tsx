@@ -7,8 +7,8 @@ import { ProfileParamList } from '../types';
 import { Ionicons, Entypo } from '@expo/vector-icons';
 import Colors from '../constants/Colors';
 import useColorScheme from '../hooks/useColorScheme';
-import AuthContext from '../hooks/AuthContext';
-import UserContext from '../hooks/UserContext';
+import AuthContext from '../hooks/useAuthContext';
+import UserContext from '../hooks/useUserContext';
 import Layout from '../constants/Layout';
 
 export default function ProfileScreen({ navigation }: StackScreenProps<ProfileParamList, 'ProfileScreen'>) {
@@ -73,6 +73,16 @@ export default function ProfileScreen({ navigation }: StackScreenProps<ProfilePa
           <View style={[styles.buttonItemLeft, { backgroundColor: Colors[colorScheme].profileBackgroundInner }]}>
             <Ionicons name="md-settings" style={styles.buttonIcon} size={30} color={Colors[colorScheme].settingIcon} />
             <Text style={styles.buttonTextLeft}>Settings</Text>
+          </View>
+          <Entypo name="chevron-thin-right" size={24} color={Colors[colorScheme].text} />
+        </TouchableOpacity>
+
+        <View style={styles.buttonSeparator} lightColor="#eee" darkColor="rgba(255,255,255,0.1)" />
+
+        <TouchableOpacity onPress={() => { navigation.navigate("Tutorial") }} style={styles.buttonItem}>
+          <View style={[styles.buttonItemLeft, { backgroundColor: Colors[colorScheme].profileBackgroundInner }]}>
+            <Ionicons name="md-help-circle" style={styles.buttonIcon} size={30} color={Colors[colorScheme].settingIcon} />
+            <Text style={styles.buttonTextLeft}>App Tutorial</Text>
           </View>
           <Entypo name="chevron-thin-right" size={24} color={Colors[colorScheme].text} />
         </TouchableOpacity>

@@ -1,5 +1,5 @@
-import React from 'react';
-import { StyleSheet, TouchableHighlight, Platform } from 'react-native';
+import React, { useCallback, useEffect, useRef, useState } from 'react';
+import { StyleSheet, TouchableHighlight, Platform, Button } from 'react-native';
 import { Text, View } from '../../../components/Themed';
 import { StackScreenProps, useHeaderHeight } from '@react-navigation/stack';
 import { useFocusEffect } from '@react-navigation/native';
@@ -8,27 +8,34 @@ import { showMessage, hideMessage } from "react-native-flash-message";
 import { Camera, CameraCapturedPicture } from 'expo-camera';
 import * as Haptics from 'expo-haptics';
 import * as ImageManipulator from 'expo-image-manipulator';
-// import BarCodeScanner from 'expo-barcode-scanner';
+import { BarCodeScanner } from 'expo-barcode-scanner';
 
 import { AddTabParamList } from '../../../types';
 import Colors from '../../../constants/Colors';
 import useColorScheme from '../../../hooks/useColorScheme';
 import ScanResultModal from '../../../components/medicine/add/ScanResultModal';
-import AddContext from '../../../hooks/AddContext';
+import AddContext from '../../../hooks/useAddContext';
 
 export default function ScanInputScreen({ navigation }: StackScreenProps<AddTabParamList, 'ScanInputScreen'>) {
-  const camera = React.useRef<Camera>(null!);
+  const camera = useRef<Camera>(null!);
   const colorScheme = useColorScheme();
   const headerHeight = useHeaderHeight();
 
-  const [hasPermission, setHasPermission] = React.useState<boolean | null>(null);
-  const [flash, setFlash] = React.useState(Camera.Constants.FlashMode.off);
-  const [zoom, setZoom] = React.useState(0);
-  const [cameraOn, setcameraOn] = React.useState(false);
-  const [modalVisible, setModalVisible] = React.useState(false);
+  const [hasPermission, setHasPermission] = useState<boolean | null>(null);
+  const [flash, setFlash] = useState(Camera.Constants.FlashMode.off);
+  const [zoom, setZoom] = useState(0);
+  const [cameraOn, setcameraOn] = useState(false);
+  const [modalVisible, setModalVisible] = useState(false);
+
+  const [barCodeMode, setBarCodeMode] = useState(false);
+
+  const [scanned, setScanned] = useState(false);
+  const [data, setData] = useState(null);
+
+  const scanner = React.useRef<BarCodeScanner>(null!);
 
   // load component
-  React.useEffect(() => {
+  useEffect(() => {
     (async () => {
       const { status } = await Camera.requestPermissionsAsync();
       setHasPermission(status === 'granted');
@@ -37,7 +44,7 @@ export default function ScanInputScreen({ navigation }: StackScreenProps<AddTabP
 
   // only turn on the camera when the screen is on focus
   useFocusEffect(
-    React.useCallback(() => {
+    useCallback(() => {
       setcameraOn(true);
       showMessage({
         message: "Scan Instruction",
@@ -102,10 +109,16 @@ export default function ScanInputScreen({ navigation }: StackScreenProps<AddTabP
       });
   }
 
+  const handleBarCodeScanned = ({ type, data }: any) => {
+    setScanned(true);
+    setData(data);
+    alert(`Bar code with type ${type} and data ${data} has been scanned!`);
+  };
+
   return (
     <View style={{ flex: 1 }}>
       <View style={styles.scanView}>
-        {cameraOn &&
+        {cameraOn && !barCodeMode &&
           <Camera style={styles.camera} ref={camera} flashMode={flash} zoom={zoom}>
             <View style={styles.cameraView}>
               <TouchableHighlight
@@ -157,6 +170,14 @@ export default function ScanInputScreen({ navigation }: StackScreenProps<AddTabP
               </TouchableHighlight>
             </View>
           </Camera>}
+
+        {cameraOn && barCodeMode &&
+          <BarCodeScanner
+            onBarCodeScanned={scanned ? () => { } : handleBarCodeScanned}
+            style={StyleSheet.absoluteFillObject}
+            ref={scanner}
+          />}
+        {scanned && <Button title={'Tap to Scan Again'} onPress={() => setScanned(false)} />}
       </View>
 
       <ScanResultModal modalVisible={modalVisible} setModalVisible={setModalVisible}

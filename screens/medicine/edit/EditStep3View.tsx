@@ -14,15 +14,15 @@ import { schedulePushNotification } from '../../../components/Notification';
 import Colors from '../../../constants/Colors';
 import useColorScheme from '../../../hooks/useColorScheme';
 import StepIndicator from '../../../components/medicine/add/StepIndicator';
-import AddContext from '../../../hooks/AddContext';
+import AddContext from '../../../hooks/useAddContext';
 import * as Haptics from 'expo-haptics';
 
-import UserContext from '../../../hooks/UserContext';
+import UserContext from '../../../hooks/useUserContext';
 
 interface Props {
   styles: any;
   setStep: React.Dispatch<React.SetStateAction<number>>;
-  navigation: StackNavigationProp<AddTabParamList, "MedicineParamList">;
+  navigation: StackNavigationProp<AddTabParamList, "ScanInputScreen">;
 }
 
 const EditStep3View: React.FC<Props> = ({ styles, setStep, navigation }) => {
@@ -104,6 +104,7 @@ const EditStep3View: React.FC<Props> = ({ styles, setStep, navigation }) => {
             trackings: [...userInfo.trackings, tracking],
           })
         } catch (error) {
+          console.log(error);
           throw "Cannot save medicine locally";
         }
         showMessage({

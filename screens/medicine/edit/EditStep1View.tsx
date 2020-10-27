@@ -7,7 +7,7 @@ import { Tracking } from '../../../types';
 import Colors from '../../../constants/Colors';
 import useColorScheme from '../../../hooks/useColorScheme';
 import StepIndicator from '../../../components/medicine/add/StepIndicator';
-import AddContext from '../../../hooks/AddContext';
+import AddContext from '../../../hooks/useAddContext';
 import FrequencyModal from '../../../components/medicine/add/FrequencyModal';
 import PeriodModal from '../../../components/medicine/add/PeriodModal';
 

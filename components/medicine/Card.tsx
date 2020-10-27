@@ -1,4 +1,3 @@
-// demo card for A/B testing
 import React from 'react';
 import { Text, View, ScrollView } from '../Themed';
 import { Dimensions, StyleSheet, TouchableOpacity, Image, View as ClearView } from "react-native";
@@ -16,17 +15,16 @@ interface Props {
 const Card: React.FC<Props> = ({ tracking, index }) => {
   const navigation = useNavigation();
   const colorScheme = useColorScheme();
-  const trackingName = tracking.trackingName ? tracking.trackingName : "Medicine";
-  // DERALIN 40 Propranolol hydrochloride 40mg tablet bottle
-  const medicineName = (tracking.medicineName && tracking.medicineName !== "null") ? tracking.medicineName : "";
-  const progress = 0.5;
-  const progressPercentage = `${progress * 100}%`;
 
+  // Tracking information
   const imageUri = require('../../assets/images/pills/pill2.png');
+  const trackingName = tracking.trackingName ? tracking.trackingName : "Medicine";
+  const medicineName = (tracking.medicineName && tracking.medicineName !== "null") ? tracking.medicineName : "";
+  const progress = ((new Date()).getTime() - tracking.startDate.getTime()) /
+    (tracking.endDate!.getTime() - tracking.startDate.getTime());
+  const progressPercentage = `${progress * 100}%`;
+  const remaining = `${timeSince(tracking.startDate, tracking.endDate!)} remaining`;
   const reminders = [new Date()];
-
-  const time = tracking.startDate.getTime() - tracking.endDate!.getTime()
-  const remaining = `${tracking.startDate.getTime()} remaining`;
 
   return (<View style={styles.cardContainer}>
     <View style={[styles.headerBanner, { backgroundColor: Colors[colorScheme].buttonBlue }]}></View>
@@ -80,6 +78,32 @@ const Card: React.FC<Props> = ({ tracking, index }) => {
 };
 
 export default Card;
+
+// Utility function calculating durations
+function timeSince(start: Date, end: Date) {
+  var seconds = Math.floor((end.getTime() - start.getTime()) / 1000);
+  var interval = seconds / 31536000;
+  if (interval > 1) {
+    return Math.floor(interval) + " years";
+  }
+  interval = seconds / 2592000;
+  if (interval > 1) {
+    return Math.floor(interval) + " months";
+  }
+  interval = seconds / 86400;
+  if (interval > 1) {
+    return Math.floor(interval) + " days";
+  }
+  interval = seconds / 3600;
+  if (interval > 1) {
+    return Math.floor(interval) + " hours";
+  }
+  interval = seconds / 60;
+  if (interval > 1) {
+    return Math.floor(interval) + " minutes";
+  }
+  return Math.floor(seconds) + " seconds";
+}
 
 const styles = StyleSheet.create({
   cardContainer: {

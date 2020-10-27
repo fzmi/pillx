@@ -5,21 +5,29 @@ import { createStackNavigator } from '@react-navigation/stack';
 import AsyncStorage from '@react-native-community/async-storage';
 import { showMessage } from "react-native-flash-message";
 
-import { RootStackParamList } from '../types';
+import { ModalStackParamList, RootStackParamList } from '../types';
 import NotFoundScreen from '../screens/NotFoundScreen';
 import BottomTabNavigator from './BottomTabNavigator';
 import LinkingConfiguration from './LinkingConfiguration';
 import PublicStackNavigator from './PublicStackNavigator';
-import AuthContext from '../hooks/AuthContext';
+import AuthContext from '../hooks/useAuthContext';
+import TutorialScreen from '../screens/public/TutorialScreen';
 
 // If you are not familiar with React Navigation, we recommend going through the
 // "Fundamentals" guide: https://reactnavigation.org/docs/getting-started
+const ModalStack = createStackNavigator<ModalStackParamList>();
+
 export default function Navigation({ colorScheme }: { colorScheme: ColorSchemeName }) {
   return (
     <NavigationContainer
       linking={LinkingConfiguration}
       theme={colorScheme === 'dark' ? DarkTheme : DefaultTheme}>
-      <RootNavigator />
+      <ModalStack.Navigator
+        mode="modal"
+        headerMode="none">
+        <ModalStack.Screen name="App" component={RootNavigator} />
+        <ModalStack.Screen name="Tutorial" component={TutorialScreen} />
+      </ModalStack.Navigator>
     </NavigationContainer>
   );
 }
@@ -136,7 +144,7 @@ function RootNavigator() {
 
   return (
     <AuthContext.Provider value={authContext}>
-      <Stack.Navigator screenOptions={{ headerShown: false }}>
+      <Stack.Navigator headerMode="none">
         {state.userToken == null ? (
           // public routes
           <Stack.Screen name="Public" component={PublicStackNavigator} />

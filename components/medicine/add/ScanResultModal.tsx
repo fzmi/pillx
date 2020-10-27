@@ -3,7 +3,7 @@ import { StyleSheet, Modal, TouchableOpacity, TouchableHighlight, Image } from '
 import { View, Text } from '../../Themed';
 
 import { Entypo } from '@expo/vector-icons';
-import AddContext from '../../../hooks/AddContext';
+import AddContext from '../../../hooks/useAddContext';
 import Colors from '../../../constants/Colors';
 import useColorScheme from '../../../hooks/useColorScheme';
 import { useNavigation } from '@react-navigation/native';
@@ -54,7 +54,7 @@ const ScanResultModal: React.FC<Props> = ({ modalVisible, setModalVisible, camer
 
                 <TouchableOpacity style={{ flexDirection: "row", justifyContent: "space-between", paddingVertical: 10 }}
                   onPress={() => {
-                    setAddInfo({ ...addInfo, medicineName: "My Medicine" });
+                    setAddInfo({ ...addInfo, medicineName: "" });
                     setModalVisible(!modalVisible);
                     navigation.navigate("ManualInputScreen");
                   }}>

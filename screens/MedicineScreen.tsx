@@ -10,7 +10,7 @@ import { Entypo } from '@expo/vector-icons';
 import Card from '../components/medicine/Card';
 import AsyncStorage from '@react-native-community/async-storage';
 
-import UserContext from '../hooks/UserContext';
+import UserContext from '../hooks/useUserContext';
 import { SafeAreaView } from 'react-native-safe-area-context';
 
 export default function MedicineScreen({ navigation }: StackScreenProps<MedicineParamList, 'MedicineScreen'>) {
