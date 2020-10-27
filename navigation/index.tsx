@@ -71,7 +71,7 @@ function RootNavigator() {
       if (data.email) {
         // todo: send email, password to the server to verify and get a token
 
-        await fetch(`http://deco3801-rever.uqcloud.net/user/get?email=${data.email}`, {
+        await fetch(`https://deco3801-rever.uqcloud.net/user/get?email=${data.email}`, {
           method: "POST",
         })
           .then(response => response.json())
@@ -112,7 +112,7 @@ function RootNavigator() {
     },
     signUp: async (data: any) => {
       // send user data to server and get a token
-      await fetch(`http://deco3801-rever.uqcloud.net/user/add?` +
+      await fetch(`https://deco3801-rever.uqcloud.net/user/add?` +
         `email=${data.email}&fullName=${data.name}&password=${data.password}`, {
         method: 'POST',
       })

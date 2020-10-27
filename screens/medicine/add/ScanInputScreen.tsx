@@ -84,7 +84,7 @@ export default function ScanInputScreen({ navigation }: StackScreenProps<AddTabP
           name: 'image.jpg', type: 'image/jpeg'
         });
         body.append('Content-Type', 'image/jpeg');
-        return fetch("http://deco3801-rever.uqcloud.net/scanning", {
+        return fetch("https://deco3801-rever.uqcloud.net/scanning", {
           method: 'POST',
           headers: {
             Accept: "application/json",

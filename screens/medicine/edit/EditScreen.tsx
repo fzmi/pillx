@@ -25,7 +25,7 @@ export default function EditScreen({ route, navigation }: StackScreenProps<Medic
   const { medicineId } = route.params;
 
   const deleteMedicine = async () => {
-    await fetch(`http://deco3801-rever.uqcloud.net/user/medicine/delete?email=${userInfo.email}&identifier=${medicineId}`, {
+    await fetch(`https://deco3801-rever.uqcloud.net/user/medicine/delete?email=${userInfo.email}&identifier=${medicineId}`, {
       method: "POST",
     })
       .then(response => response.text())

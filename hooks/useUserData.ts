@@ -5,7 +5,7 @@ import { showMessage } from "react-native-flash-message";
 export default async function useUserData() {
   try {
     const userToken = await AsyncStorage.getItem('userToken');
-    const response = await fetch("http://deco3801-rever.uqcloud.net/user/get?email=" + userToken, {
+    const response = await fetch("https://deco3801-rever.uqcloud.net/user/get?email=" + userToken, {
       method: 'GET',
       headers: {
         Accept: "application/json",

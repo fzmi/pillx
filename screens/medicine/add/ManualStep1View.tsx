@@ -19,8 +19,8 @@ interface Props {
 const ManualStep1View: React.FC<Props> = ({ styles, setStep }) => {
   const colorScheme = useColorScheme();
   const { addInfo, setAddInfo } = useContext(AddContext);
-
-  const [name, setName] = useState<string>(addInfo.medicineName.split(" ")[0]);
+  
+  const [name, setName] = useState<string>(addInfo.medicineName.split(" ")[0] === '' ? "My Medicine" : addInfo.medicineName.split(" ")[0]);
   const [showFrequencyModal, setShowFrequencyModal] = useState<boolean>(false);
   const [frequency, setFrequency] = useState<Tracking["frequency"]>(addInfo.frequency);
   const [showPeriodModal, setShowPeriodModal] = useState<boolean>(false);
@@ -46,7 +46,7 @@ const ManualStep1View: React.FC<Props> = ({ styles, setStep }) => {
               <TextInput value={name} editable clearButtonMode={"while-editing"}
                 onChangeText={text => setName(text)} style={{ fontSize: 20 }} />
             </View>
-            {addInfo.medicineName &&
+            {addInfo.medicineName !== '' &&
               <Text style={[styles.fieldTextSmall, { color: Colors[colorScheme].secondaryText }]}>{addInfo.medicineName}</Text>
             }
             <View style={[styles.separator, { marginTop: 10, marginBottom: 12 }]} lightColor="#eee" darkColor="rgba(255,255,255,0.1)" />

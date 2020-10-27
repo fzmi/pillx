@@ -33,7 +33,7 @@ export default function TodayScreen({ navigation }: StackScreenProps<TodayParamL
   // Get the dosages for a certain day
   const fetchDosages = async (isoDate: string) => {
     const userToken = await AsyncStorage.getItem('userToken');
-    return fetch(`http://deco3801-rever.uqcloud.net/user/medicine/getAllOnDate?email=${userToken}&onDate=${isoDate}`, {
+    return fetch(`https://deco3801-rever.uqcloud.net/user/medicine/getAllOnDate?email=${userToken}&onDate=${isoDate}`, {
       method: 'GET',
       headers: {
         Accept: "application/json",

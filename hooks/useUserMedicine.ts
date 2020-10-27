@@ -5,7 +5,7 @@ import { Tracking } from '../types';
 export default async function useUserMedicine() {
   try {
     const userToken = await AsyncStorage.getItem('userToken');
-    const response = await fetch("http://deco3801-rever.uqcloud.net/user/medicine/getAll?email=" + userToken, {
+    const response = await fetch("https://deco3801-rever.uqcloud.net/user/medicine/getAll?email=" + userToken, {
       method: 'GET',
       headers: {
         Accept: "application/json",

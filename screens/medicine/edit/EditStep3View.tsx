@@ -50,7 +50,7 @@ const EditStep3View: React.FC<Props> = ({ styles, setStep, navigation }) => {
     const email = userInfo.email;
 
     // log update to server
-    await fetch(`http://deco3801-rever.uqcloud.net/user/medicine/add?email=${email}&identifier=${medicineId}`, {
+    await fetch(`https://deco3801-rever.uqcloud.net/user/medicine/add?email=${email}&identifier=${medicineId}`, {
       method: "POST",
     })
       .then(response => response.text())
@@ -63,7 +63,7 @@ const EditStep3View: React.FC<Props> = ({ styles, setStep, navigation }) => {
           // todo: missing reminders of that day
           const weekdays = [false, false, false, false, false, false, false].map((value: boolean, index: number) =>
             (addInfo.frequency.value as Array<number>).includes(index + 1) ? !value : value);
-          return fetch(`http://deco3801-rever.uqcloud.net/user/medicine/dosage/add/weekdays?email=${email}` +
+          return fetch(`https://deco3801-rever.uqcloud.net/user/medicine/dosage/add/weekdays?email=${email}` +
             `&identifier=${medicineId}&startDate=${startDate.toISOString().split('T')[0]}` +
             `&endDate=${endDate.toISOString().split('T')[0]}&time=${startDate.toISOString().split('T')[1]}` +
             `&weekdays=${weekdays}`, {
@@ -73,7 +73,7 @@ const EditStep3View: React.FC<Props> = ({ styles, setStep, navigation }) => {
           // interval
           // todo: missing reminders of that day
           const intervalType = addInfo.frequency.type.toUpperCase() + "S";
-          const url = `http://deco3801-rever.uqcloud.net/user/medicine/dosage/add/interval?email=${email}` +
+          const url = `https://deco3801-rever.uqcloud.net/user/medicine/dosage/add/interval?email=${email}` +
             `&identifier=${medicineId}&startDate=${startDate.toISOString().split('T')[0]}` +
             `&endDate=${endDate.toISOString().split('T')[0]}&time=${startDate.toISOString().split('T')[1]}` +
             `&intervalType=${intervalType}&interval=${addInfo.frequency.value}`;

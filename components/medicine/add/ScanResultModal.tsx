@@ -1,6 +1,6 @@
 import React from 'react';
 import { StyleSheet, Modal, TouchableOpacity, TouchableHighlight, Image } from 'react-native';
-import { View, Text } from '../../Themed';
+import { View, Text, ScrollView } from '../../Themed';
 
 import { Entypo } from '@expo/vector-icons';
 import AddContext from '../../../hooks/useAddContext';
@@ -25,44 +25,46 @@ const ScanResultModal: React.FC<Props> = ({ modalVisible, setModalVisible, camer
           <Text style={styles.modalText}>Select Medicine</Text>
           <AddContext.Consumer>
             {({ addInfo, setAddInfo }) => (
-              <View style={{ alignItems: 'center' }}>
+              <View style={{ alignItems: 'center', width: "100%" }}>
                 {addInfo.imageUri != '' && (
                   <Image style={{ width: 100, height: 100, marginVertical: 15 }} source={{ uri: addInfo.imageUri }} />
                 )}
 
-                {addInfo.medicineResults.map((result: any, index: number) => (
-                  <View key={index}>
-                    <TouchableOpacity style={{ flexDirection: "row", paddingVertical: 10 }}
-                      onPress={() => {
-                        setAddInfo({ ...addInfo, medicineName: result.name, medicineId: result.id });
-                        setModalVisible(!modalVisible);
-                        navigation.navigate("ManualInputScreen");
-                      }}>
-                      <View style={{ width: "100%", flexDirection: "row", justifyContent: "space-between", alignItems: "center" }}>
-                        <View>
-                          <Text style={{ fontSize: 20, marginRight: 10, fontWeight: "700" }}>{result.name}</Text>
-                          <Text>AUST R {result.id}</Text>
+                <ScrollView style={{ width: "100%" }} contentContainerStyle={{ alignItems: "center" }}>
+                  {addInfo.medicineResults.map((result: any, index: number) => (
+                    <View key={index}>
+                      <TouchableOpacity style={{ flexDirection: "row", paddingVertical: 10 }}
+                        onPress={() => {
+                          setAddInfo({ ...addInfo, medicineName: result.name, medicineId: result.id });
+                          setModalVisible(!modalVisible);
+                          navigation.navigate("ManualInputScreen");
+                        }}>
+                        <View style={{ flexDirection: "row", justifyContent: "space-between", alignItems: "center" }}>
+                          <View>
+                            <Text style={{ fontSize: 20, fontWeight: "700", marginBottom: 5 }}>{result.name}</Text>
+                            <Text>AUST R {result.id}</Text>
+                          </View>
+                          <Entypo name="chevron-thin-right" size={24} color={Colors[colorScheme].text} />
                         </View>
-                        <Entypo name="chevron-thin-right" size={24} color={Colors[colorScheme].text} />
+                      </TouchableOpacity>
+                      <View style={{ flexDirection: "row" }}>
+                        <View style={styles.separator} lightColor="#eee" darkColor="rgba(255,255,255,0.1)" />
                       </View>
-                    </TouchableOpacity>
-                    <View style={{ flexDirection: "row" }}>
-                      <View style={styles.separator} lightColor="#eee" darkColor="rgba(255,255,255,0.1)" />
                     </View>
-                  </View>
-                ))}
+                  ))}
 
-                <TouchableOpacity style={{ flexDirection: "row", justifyContent: "space-between", paddingVertical: 10 }}
-                  onPress={() => {
-                    setAddInfo({ ...addInfo, medicineName: "" });
-                    setModalVisible(!modalVisible);
-                    navigation.navigate("ManualInputScreen");
-                  }}>
-                  <View style={{ width: "100%", flexDirection: "row", justifyContent: "space-between", alignItems: "center" }}>
-                    <Text style={{ fontSize: 20, marginRight: 10 }}>Add medicine manually</Text>
-                    <Entypo name="chevron-thin-right" size={24} color={Colors[colorScheme].text} />
-                  </View>
-                </TouchableOpacity>
+                  <TouchableOpacity style={{ flexDirection: "row", justifyContent: "space-between", paddingVertical: 10 }}
+                    onPress={() => {
+                      setAddInfo({ ...addInfo, medicineName: "" });
+                      setModalVisible(!modalVisible);
+                      navigation.navigate("ManualInputScreen");
+                    }}>
+                    <View style={{ width: "100%", flexDirection: "row", justifyContent: "space-between", alignItems: "center" }}>
+                      <Text style={{ fontSize: 20, marginRight: 10 }}>Add medicine manually</Text>
+                      <Entypo name="chevron-thin-right" size={24} color={Colors[colorScheme].text} />
+                    </View>
+                  </TouchableOpacity>
+                </ScrollView>
               </View>
             )}
           </AddContext.Consumer>
@@ -101,6 +103,7 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.25,
     shadowRadius: 3.84,
     elevation: 5,
+    maxHeight: "70%",
   },
   openButton: {
     backgroundColor: '#F194FF',

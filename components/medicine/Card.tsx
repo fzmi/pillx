@@ -20,14 +20,14 @@ const Card: React.FC<Props> = ({ tracking, index }) => {
   const imageUri = require('../../assets/images/pills/pill2.png');
   const trackingName = tracking.trackingName ? tracking.trackingName : "Medicine";
   const medicineName = (tracking.medicineName && tracking.medicineName !== "null") ? tracking.medicineName : "";
-  const progress = ((new Date()).getTime() - tracking.startDate.getTime()) /
-    (tracking.endDate!.getTime() - tracking.startDate.getTime());
+  const progress = Math.max(0.08, ((new Date()).getTime() - tracking.startDate.getTime()) /
+    (tracking.endDate!.getTime() - tracking.startDate.getTime()));
   const progressPercentage = `${progress * 100}%`;
   const remaining = `${timeSince(tracking.startDate, tracking.endDate!)} remaining`;
   const reminders = [new Date()];
 
   return (<View style={styles.cardContainer}>
-    <View style={[styles.headerBanner, { backgroundColor: Colors[colorScheme].buttonBlue }]}></View>
+    <ClearView style={[styles.headerBanner, { backgroundColor: Colors[colorScheme].buttonBlue }]}></ClearView>
     <ClearView style={styles.headerOverlay}>
       <View style={[styles.headerThumbnail]}>
         <Image source={imageUri} width={50} height={50} style={styles.headerImage} />
@@ -64,7 +64,7 @@ const Card: React.FC<Props> = ({ tracking, index }) => {
       </View>
     </ScrollView>
 
-    <View style={styles.buttonGroup}>
+    <ClearView style={styles.buttonGroup}>
       <TouchableOpacity style={[styles.buttonContainer, { backgroundColor: Colors[colorScheme].buttonBlue }]}
         onPress={() => navigation.navigate("Data", { medicineId: tracking.medicineId })}>
         <Text style={[styles.buttonText, { color: "white" }]}>See Methods &amp; Effects</Text>
@@ -73,7 +73,7 @@ const Card: React.FC<Props> = ({ tracking, index }) => {
         onPress={() => navigation.navigate("EditScreen", { medicineId: tracking.medicineId })}>
         <Text style={[styles.buttonText, { color: "black" }]}>Edit Tracking</Text>
       </TouchableOpacity>
-    </View>
+    </ClearView>
   </View>);
 };
 
