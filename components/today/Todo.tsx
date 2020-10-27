@@ -56,12 +56,9 @@ const Todo: React.FC<Props> = props => {
               // backgroundColor: Colors[colorScheme].buttonBlue, 
               backgroundColor: taken ? (Colors[colorScheme].buttonBlue) : ("#696969"),
               padding: 10, borderRadius: 20, flex: 3, margin: 5, display: "flex", flexDirection: "row", justifyContent: "center", alignItems: "center"
-            }}
-              onPress={() => {
-                Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
-                taken ? (takenAlert()) : (takenCancelAlert())
-              }}>
-              <Entypo name="circle" size={30} color="white" />
+            }}>
+              <Ionicons name="ios-checkmark-circle" size={30} color={"white"} />
+
               <Text style={{ fontSize: 20, color: "#fff", marginLeft: 10, fontWeight: "500" }}>
                 {taken ? ("Take") : ("Already Taken")}
               </Text>
@@ -83,7 +80,6 @@ const Todo: React.FC<Props> = props => {
                 <View style={{ flexDirection: "row", backgroundColor: "transparent", flex: 1 }}>
                   <Text style={{ fontSize: 24, fontWeight: "bold", marginBottom: 4 }}>{props.item.trackingName}</Text>
                 </View>
-                {/* <Ionicons name="ios-checkmark-circle" size={30} color={Colors[colorScheme].buttonBlue} /> */}
                 <Ionicons name="ios-checkmark-circle" size={30} color={Colors[colorScheme].buttonBlue} />
 
               </View>

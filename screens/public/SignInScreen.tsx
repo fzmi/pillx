@@ -1,7 +1,6 @@
 import React from 'react';
 import { Image, StyleSheet, TouchableOpacity, TextInput } from 'react-native';
 import { Text, View, ScrollView } from '../../components/Themed';
-
 import { StackScreenProps } from '@react-navigation/stack';
 import AuthContext from '../../hooks/useAuthContext';
 import Layout from '../../constants/Layout';
@@ -55,7 +54,7 @@ export default function SignInScreen({ navigation }: StackScreenProps<PublicStac
             <Text style={styles.linkText}>Not a member?&nbsp;&nbsp;Sign Up</Text>
           </TouchableOpacity>
 
-          <TouchableOpacity onPress={() => navigation.navigate('RecoverScreen')} style={{marginTop: 5, marginBottom: 20, paddingVertical: 10}}>
+          <TouchableOpacity onPress={() => navigation.navigate('RecoverScreen')} style={{marginTop: 5, marginBottom: 5, paddingVertical: 10}}>
             <Text style={styles.linkText}>Forgot password?</Text>
           </TouchableOpacity>
         </View>
