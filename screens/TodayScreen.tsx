@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useLayoutEffect, useState, useEffect } from 'react';
 import { ActivityIndicator, DevSettings, StyleSheet } from 'react-native';
 import { Text, View } from '../components/Themed';
 import { Calendar, Agenda, CalendarList } from 'react-native-calendars';
@@ -50,7 +50,7 @@ export default function TodayScreen({ navigation }: StackScreenProps<TodayParamL
       })
   }
 
-  React.useLayoutEffect(() => {
+  useLayoutEffect(() => {
     navigation.setOptions({
       headerTitle: "October 2020",
     });

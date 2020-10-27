@@ -38,8 +38,8 @@ const ManualStep3View: React.FC<Props> = ({ styles, setStep, navigation }) => {
 
   const addMedicine = async () => {
 
-    console.log(addInfo.reminders);
-    return;
+    // console.log(addInfo.reminders);
+    // return;
 
     let startDate: Date = new Date();
     let endDate: Date = new Date();
@@ -53,8 +53,6 @@ const ManualStep3View: React.FC<Props> = ({ styles, setStep, navigation }) => {
     const medicineId = addInfo.medicineId;
     const email = userInfo.email;
     const reminders = addInfo.reminders;
-
-
 
     // log update to server
     await fetch(`https://deco3801-rever.uqcloud.net/user/medicine/add?email=${email}&identifier=${medicineId}`, {

@@ -19,7 +19,7 @@ interface Props {
 const ManualStep1View: React.FC<Props> = ({ styles, setStep }) => {
   const colorScheme = useColorScheme();
   const { addInfo, setAddInfo } = useContext(AddContext);
-  
+
   const [name, setName] = useState<string>(addInfo.medicineName.split(" ")[0] === '' ? "My Medicine" : addInfo.medicineName.split(" ")[0]);
   const [showFrequencyModal, setShowFrequencyModal] = useState<boolean>(false);
   const [frequency, setFrequency] = useState<Tracking["frequency"]>(addInfo.frequency);
@@ -57,9 +57,9 @@ const ManualStep1View: React.FC<Props> = ({ styles, setStep }) => {
                 <ClearView>
                   <Text style={styles.fieldLeftTitle}>Frequency:</Text>
                   <Text style={{ fontSize: 20, marginTop: 2 }}>
-                    {(frequency.type === 'day' && frequency.value == 1) ? 'daily' :
-                      frequency.type !== 'dayOfWeek' ? `every ${frequency.value} ${frequency.type}${frequency.value > 1 ? 's' : ''}` :
-                        `${(frequency.value as Array<number>).map(value => days[value])}`}
+                    {(frequency.type === 'day' && frequency.value == 1) ? 'daily' : frequency.type !== 'dayOfWeek' ?
+                      `every ${frequency.value} ${frequency.type}${frequency.value > 1 ? 's' : ''}` :
+                      `${(frequency.value as Array<number>).map(value => days[value])}`}
                   </Text>
                 </ClearView>
                 <View style={styles.fieldRightEdit}>

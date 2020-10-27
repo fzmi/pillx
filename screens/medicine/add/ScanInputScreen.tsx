@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useRef, useState } from 'react';
+import React, { useCallback, useEffect, useLayoutEffect, useRef, useState } from 'react';
 import { StyleSheet, TouchableHighlight, Platform, Button } from 'react-native';
 import { Text, View } from '../../../components/Themed';
 import { StackScreenProps, useHeaderHeight } from '@react-navigation/stack';
@@ -17,22 +17,20 @@ import ScanResultModal from '../../../components/medicine/add/ScanResultModal';
 import AddContext from '../../../hooks/useAddContext';
 
 export default function ScanInputScreen({ navigation }: StackScreenProps<AddTabParamList, 'ScanInputScreen'>) {
-  const camera = useRef<Camera>(null!);
   const colorScheme = useColorScheme();
   const headerHeight = useHeaderHeight();
 
+  const camera = useRef<Camera>(null!);
   const [hasPermission, setHasPermission] = useState<boolean | null>(null);
   const [flash, setFlash] = useState(Camera.Constants.FlashMode.off);
   const [zoom, setZoom] = useState(0);
   const [cameraOn, setcameraOn] = useState(false);
   const [modalVisible, setModalVisible] = useState(false);
 
+  const scanner = useRef<BarCodeScanner>(null!);
   const [barCodeMode, setBarCodeMode] = useState(false);
-
   const [scanned, setScanned] = useState(false);
   const [data, setData] = useState(null);
-
-  const scanner = React.useRef<BarCodeScanner>(null!);
 
   // load component
   useEffect(() => {
@@ -118,6 +116,7 @@ export default function ScanInputScreen({ navigation }: StackScreenProps<AddTabP
   return (
     <View style={{ flex: 1 }}>
       <View style={styles.scanView}>
+
         {cameraOn && !barCodeMode &&
           <Camera style={styles.camera} ref={camera} flashMode={flash} zoom={zoom}>
             <View style={styles.cameraView}>
@@ -172,12 +171,25 @@ export default function ScanInputScreen({ navigation }: StackScreenProps<AddTabP
           </Camera>}
 
         {cameraOn && barCodeMode &&
-          <BarCodeScanner
-            onBarCodeScanned={scanned ? () => { } : handleBarCodeScanned}
-            style={StyleSheet.absoluteFillObject}
-            ref={scanner}
-          />}
-        {scanned && <Button title={'Tap to Scan Again'} onPress={() => setScanned(false)} />}
+          <>
+            <BarCodeScanner
+              onBarCodeScanned={scanned ? () => { } : handleBarCodeScanned}
+              style={StyleSheet.absoluteFillObject}
+              ref={scanner}
+            />
+            <View style={styles.cameraView}>
+              <TouchableHighlight
+                style={[styles.cameraTextButton,
+                { backgroundColor: flash === Camera.Constants.FlashMode.off ? '#222' : 'white', marginRight: 20 }]}
+                onPress={() => {
+                  Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
+                }}>
+                <Text style={{color: "white", fontWeight: "500", fontSize: 18}}>AUST R/L</Text>
+              </TouchableHighlight>
+            </View>
+
+            {scanned && <Button title={'Tap to Scan Again'} onPress={() => setScanned(false)} />}
+          </>}
       </View>
 
       <ScanResultModal modalVisible={modalVisible} setModalVisible={setModalVisible}
@@ -223,4 +235,13 @@ const styles = StyleSheet.create({
     width: 50,
     height: 50,
   },
+  cameraTextButton: {
+    alignSelf: 'flex-end',
+    alignItems: 'center',
+    justifyContent: 'center',
+    marginBottom: 20,
+    borderRadius: 40,
+    paddingVertical: 15,
+    paddingHorizontal: 20,
+  }
 });

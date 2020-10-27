@@ -43,7 +43,6 @@ export default async function useUserMedicine() {
           (value ? index + 1 : -1)).filter(value => value !== -1);
       }
 
-      console.log(medicine.dosageSetting);
       return {
         // todo
         trackingName: "Medicine",
@@ -55,7 +54,7 @@ export default async function useUserMedicine() {
           type: frequencyType as "day" | "week" | "month" | "dayOfWeek",
           value: frequencyValue,
         },
-        reminders: [],
+        reminders: (medicine.dosageSetting.time as Array<string>).map((value: string) => new Date(0, 0, 0, parseInt(value.split(":")[0]), parseInt(value.split(":")[1]))),
         startDate: new Date(`${medicine.dosageSetting.startDate}`),
         endDate: new Date(`${medicine.dosageSetting.endDate}`)
       }

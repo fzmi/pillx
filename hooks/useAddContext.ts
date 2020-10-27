@@ -10,7 +10,7 @@ const AddContext = React.createContext({
     medicineName: '',
     frequency: { type: "day", value: 1, } as Tracking["frequency"],
     periodOfTreatment: { type: 'week', value: 1, },
-    reminders: [] as any,
+    reminders: [] as Array<Date>,
     imageUri: '',
   },
   setAddInfo: (data: any) => { },

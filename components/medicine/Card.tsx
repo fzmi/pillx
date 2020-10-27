@@ -5,7 +5,7 @@ import { Tracking } from "../../types";
 import Colors from '../../constants/Colors';
 import useColorScheme from '../../hooks/useColorScheme';
 import { useNavigation } from '@react-navigation/native';
-import { FontAwesome5, Entypo } from '@expo/vector-icons';
+import { FontAwesome5, MaterialCommunityIcons } from '@expo/vector-icons';
 
 interface Props {
   tracking: Tracking,
@@ -25,6 +25,8 @@ const Card: React.FC<Props> = ({ tracking, index }) => {
   const progressPercentage = `${progress * 100}%`;
   const remaining = `${timeSince(tracking.startDate, tracking.endDate!)} remaining`;
   const reminders = [new Date()];
+  const frequency = tracking.frequency;
+  const days: { [key: number]: string; } = { 1: "Mon", 2: "Tue", 3: "Wed", 4: "Thu", 5: "Fri", 6: "Sat", 7: "Sun" };
 
   return (<View style={styles.cardContainer}>
     <ClearView style={[styles.headerBanner, { backgroundColor: Colors[colorScheme].buttonBlue }]}></ClearView>
@@ -48,12 +50,14 @@ const Card: React.FC<Props> = ({ tracking, index }) => {
 
         <View style={styles.separator}></View>
         <View style={styles.infoContainer}>
-          <FontAwesome5 name="bell" size={24} color={Colors[colorScheme].text} />
-          <Text style={styles.infoText}>Daily at 10:00, 12:00</Text>
+          <MaterialCommunityIcons name="progress-clock" size={25} color="black" />
+          <Text style={styles.infoText}>{(frequency.type === 'day' && frequency.value == 1) ? 'Daily' : frequency.type !== 'dayOfWeek' ?
+                      `Every ${frequency.value} ${frequency.type}${frequency.value > 1 ? 's' : ''}` :
+                      `${(frequency.value as Array<number>).map(value => days[value])}`}</Text>
         </View>
         <View style={styles.infoContainer}>
-          <Entypo name="block" size={22} color={Colors[colorScheme].text} />
-          <Text style={styles.infoText}>2 pills per dosage</Text>
+          <MaterialCommunityIcons name="bell-ring-outline" size={25} color="black" />
+          <Text style={styles.infoText}>{tracking.reminders.map(reminder => reminder.toISOString().split("T")[1]).join(",")}</Text>
         </View>
 
         <View style={[styles.separator, { marginTop: 10 }]}></View>
