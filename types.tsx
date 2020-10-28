@@ -72,12 +72,14 @@ export type MedicineParamList = {
   EditScreen: {
     medicineId: any;
   };
+  Tutorial: undefined;
 };
 
 // Root stack -> Button Tab -> Profile
 export type ProfileParamList = {
   ProfileScreen: undefined;
   SettingsScreen: undefined;
+  DetailScreen: undefined;
   Tutorial: undefined;
 };
 

@@ -32,7 +32,6 @@ export default function AddStackNavigator({ navigation }: StackScreenProps<Medic
 
   useLayoutEffect(() => {
     navigation.setOptions({
-      headerRight: () => (<Button title="Skip" onPress={() => { }} />),
       headerRightContainerStyle: { paddingRight: 5 },
     });
   }, [navigation]);

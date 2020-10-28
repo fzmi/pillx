@@ -48,9 +48,10 @@ export default function ManualStep3Screen({ navigation, route }: StackScreenProp
     const medicineId = addInfo.medicineId;
     const email = userInfo.email;
     const reminders = addInfo.reminders;
+    const trackingName = addInfo.trackingName;
 
     // log update to server
-    await fetch(`https://deco3801-rever.uqcloud.net/user/medicine/add?email=${email}&identifier=${medicineId}`, {
+    await fetch(`https://deco3801-rever.uqcloud.net/user/medicine/add?email=${email}&identifier=${medicineId}&customName=${trackingName}`, {
       method: "POST",
     })
       .then(response => response.text())
@@ -65,7 +66,7 @@ export default function ManualStep3Screen({ navigation, route }: StackScreenProp
             (addInfo.frequency.value as Array<number>).includes(index + 1) ? !value : value);
           return fetch(`https://deco3801-rever.uqcloud.net/user/medicine/dosage/add/weekdays?email=${email}` +
             `&identifier=${medicineId}&startDate=${startDate.toISOString().split('T')[0]}` +
-            `&endDate=${endDate.toISOString().split('T')[0]}&time=${reminders.map(reminder => reminder.toISOString().split("T"[1])).join(",")}` +
+            `&endDate=${endDate.toISOString().split('T')[0]}&time=${reminders.map(reminder => reminder.toISOString().split("T")[1]).join(",")}` +
             `&weekdays=${weekdays}`, {
             method: "POST",
           })
@@ -75,7 +76,7 @@ export default function ManualStep3Screen({ navigation, route }: StackScreenProp
           const intervalType = addInfo.frequency.type.toUpperCase() + "S";
           const url = `https://deco3801-rever.uqcloud.net/user/medicine/dosage/add/interval?email=${email}` +
             `&identifier=${medicineId}&startDate=${startDate.toISOString().split('T')[0]}` +
-            `&endDate=${endDate.toISOString().split('T')[0]}&time=${reminders.map(reminder => reminder.toISOString().split("T"[1])).join(",")}` +
+            `&endDate=${endDate.toISOString().split('T')[0]}&time=${reminders.map(reminder => reminder.toISOString().split("T")[1]).join(",")}` +
             `&intervalType=${intervalType}&interval=${addInfo.frequency.value}`;
           return fetch(url, {
             method: "POST",

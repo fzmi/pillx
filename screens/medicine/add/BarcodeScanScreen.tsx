@@ -1,5 +1,5 @@
 import React, { useCallback, useContext, useState, useEffect } from 'react';
-import { Text, View, StyleSheet, Button } from 'react-native';
+import { Text, View, StyleSheet, Button, TouchableHighlight } from 'react-native';
 import { BarCodeScanner } from 'expo-barcode-scanner';
 import { useFocusEffect } from '@react-navigation/native';
 import { StackScreenProps } from '@react-navigation/stack';
@@ -11,6 +11,8 @@ import { ScanInputTabParamList } from '../../../types';
 import Colors from '../../../constants/Colors';
 import useColorScheme from '../../../hooks/useColorScheme';
 import ScanResultModal from '../../../components/medicine/add/ScanResultModal';
+import UserContext from '../../../hooks/useUserContext';
+import { schedulePushNotification } from '../../../components/Notification';
 
 export default function BarcodeScanScreen({ navigation, route }: StackScreenProps<ScanInputTabParamList, 'AustRScanScreen'>) {
   const { headerHeight } = route.params;
@@ -20,6 +22,7 @@ export default function BarcodeScanScreen({ navigation, route }: StackScreenProp
   const [scanned, setScanned] = useState(false);
   const [cameraOn, setcameraOn] = useState(false);
   const { addInfo, setAddInfo } = useContext(AddContext);
+  const { userInfo } = useContext(UserContext);
 
   const scanner = React.useRef<BarCodeScanner>(null!);
   const [data, setData] = useState(null);
@@ -36,51 +39,69 @@ export default function BarcodeScanScreen({ navigation, route }: StackScreenProp
   useFocusEffect(
     useCallback(() => {
       setcameraOn(true);
-      showMessage({
-        message: "Scan Instruction",
-        description: "Locate the AUST R/L number on the package and take a picture.",
-        type: "default",
-        icon: "info",
-        autoHide: false,
-        position: { top: headerHeight },
-        floating: true,
-        textStyle: { paddingRight: 8 },
-        backgroundColor: '#222'
-      });
+      setTimeout(() => {
+        showMessage({
+          message: "Scan Instruction",
+          description: "Locate barcode on the package.",
+          type: "default",
+          icon: "info",
+          autoHide: false,
+          position: { top: headerHeight },
+          floating: true,
+          textStyle: { paddingRight: 8 },
+          backgroundColor: '#222'
+        })
+      }, 500);
       return () => {
-        setcameraOn(false);
         hideMessage();
+        setcameraOn(false);
       };
     }, [])
   );
 
   const uploadBarCode = async (barCode: any) => {
-    return fetch("", {
-
-    }).then();
+    return fetch(`https://deco3801-rever.uqcloud.net/user/medicine/search/barcode?email=${userInfo.email}&barcode=${barCode}`, {
+      method: "POST",
+      headers: {
+        Accept: "application/json",
+      },
+    })
+      .then(response => response.json())
+      .then(result => {
+        return result;
+      })
+      .catch(error => {
+        showMessage({
+          message: "Server Error",
+          description: "Cannot upload barcode to PillX server.",
+          type: "danger",
+          icon: "danger",
+          duration: 2500,
+        });
+        console.log(error);
+      });
   }
 
-  // const handleBarCodeScanned = ({ type, data }: any) => {
-  //   if (scanner.current) {
-  //     Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
-  //     const result = await uploadBarCode(data);
-  //     if (result) {
-  //       medicineResults = result.map((value: any) => ({
-  //         id: value.identifier, name: (value.name as string).trim()
-  //       }))
-  //     }
-  //     setAddInfo({
-  //       ...addInfo,
-  //       medicineResults: medicineResults,
-  //     });
-  //     setModalVisible(true);
-  //   }
-
-
-  //   setScanned(true);
-  //   setData(data);
-  //   alert(`Bar code with type ${type} and data ${data} has been scanned!`);
-  // };
+  const handleBarCodeScanned = async ({ type, data }: any) => {
+    setScanned(true);
+    if (scanner.current) {
+      Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
+      let medicineResults = [];
+      const result = await uploadBarCode(data);
+      if (result) {
+        medicineResults = result.map((value: any) => ({
+          id: value.identifier, name: (value.name as string).trim()
+        }))
+      }
+      setAddInfo({
+        ...addInfo,
+        medicineResults: medicineResults,
+      });
+      setModalVisible(true);
+    }
+    setData(data);
+    // alert(`Bar code with type ${type} and data ${data} has been scanned!`);
+  };
 
   if (hasPermission === null) {
     return <Text>Requesting for camera permission</Text>;
@@ -91,16 +112,17 @@ export default function BarcodeScanScreen({ navigation, route }: StackScreenProp
 
   return (
     <View style={{ flex: 1 }}>
-      <View style={{ flex: 0.7, flexDirection: 'column', justifyContent: 'flex-end', backgroundColor: "#000" }}>
+      <View style={{ flex: 1, flexDirection: 'column', justifyContent: 'flex-end', backgroundColor: "#000" }}>
         <BarCodeScanner
           onBarCodeScanned={scanned ? () => { } : handleBarCodeScanned}
           style={StyleSheet.absoluteFillObject}
           ref={scanner}
         />
-        {scanned && <Button title={'Tap to Scan Again'} onPress={() => setScanned(false)} />}
-      </View>
-      <View style={{ flexGrow: 0.3 }}>
-        <Text>{data}</Text>
+        {scanned && <TouchableHighlight
+          style={[styles.cameraSecondaryButton, { backgroundColor: '#222', marginLeft: 20 }]}
+          onPress={() => { setScanned(false); Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light); }}>
+          <Text style={{ color: "white", fontSize: 18, fontWeight: "600" }}>Tap to Rescan</Text>
+        </TouchableHighlight>}
       </View>
 
       <ScanResultModal modalVisible={modalVisible} setModalVisible={setModalVisible}
@@ -137,14 +159,15 @@ const styles = StyleSheet.create({
     padding: 10,
   },
   cameraSecondaryButton: {
-    alignSelf: 'flex-end',
+    alignSelf: "center",
     alignItems: 'center',
     justifyContent: 'center',
     marginBottom: 20,
-    borderRadius: 50,
+    borderRadius: 20,
     padding: 5,
-    width: 50,
-    height: 50,
+    minWidth: "40%",
+    paddingHorizontal: 25,
+    paddingVertical: 15,
   },
   cameraTextButton: {
     alignSelf: 'flex-end',

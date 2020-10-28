@@ -38,20 +38,22 @@ export default function AustRScanScreen({ navigation, route }: StackScreenProps<
   useFocusEffect(
     useCallback(() => {
       setcameraOn(true);
-      showMessage({
-        message: "Scan Instruction",
-        description: "Locate the AUST R/L number on the package and take a picture.",
-        type: "default",
-        icon: "info",
-        autoHide: false,
-        position: { top: headerHeight },
-        floating: true,
-        textStyle: { paddingRight: 8 },
-        backgroundColor: '#222'
-      });
+      setTimeout(() => {
+        showMessage({
+          message: "Scan Instruction",
+          description: "Locate the AUST R/L number on the package and take a picture.",
+          type: "default",
+          icon: "info",
+          autoHide: false,
+          position: { top: headerHeight },
+          floating: true,
+          textStyle: { paddingRight: 8 },
+          backgroundColor: '#222'
+        })
+      }, 500);
       return () => {
-        setcameraOn(false);
         hideMessage();
+        setcameraOn(false);
       };
     }, [])
   );

@@ -1,5 +1,5 @@
 import { StatusBar } from 'expo-status-bar';
-import React from 'react';
+import React, { useState } from 'react';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 import { enableScreens } from 'react-native-screens';
 import FlashMessage from "react-native-flash-message";
@@ -19,10 +19,10 @@ export default function App() {
   } else {
     return (
       <SafeAreaProvider>
-          <Navigation colorScheme={colorScheme} />
-          <StatusBar />
-          <FlashMessage position="top" />
-          <Notification />
+        <Navigation colorScheme={colorScheme} />
+        <StatusBar />
+        <FlashMessage position="top" />
+        <Notification />
       </SafeAreaProvider>
     );
   }
