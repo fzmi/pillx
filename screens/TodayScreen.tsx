@@ -25,7 +25,7 @@ export default function TodayScreen({ navigation }: StackScreenProps<TodayParamL
     setData({
       [today]: [
         { trackingName: "Med 1", medicineId: "12345", medicineName: "Medicine 1", time: new Date(), taken: true },
-        { trackingName: "Med 2", medicineId: "12345", medicineName: "Medicine 2", time: new Date(), taken: false },
+        // { trackingName: "Med 2", medicineId: "12345", medicineName: "Medicine 2", time: new Date(), taken: false },
         { trackingName: "Med 3", medicineId: "67890", medicineName: "Medicine 3", time: new Date(), taken: false }]
     });
   }, []);
@@ -42,7 +42,6 @@ export default function TodayScreen({ navigation }: StackScreenProps<TodayParamL
     })
       .then(response => response.json())
       .then(data => {
-
         console.log(data);
       })
       .catch(error => {
@@ -84,6 +83,7 @@ export default function TodayScreen({ navigation }: StackScreenProps<TodayParamL
           todayColor: Colors[colorScheme].tint,
           todayTextColor: Colors[colorScheme].tint,
         }}
+        
         items={data}
         renderItem={(item: any, firstItemInDay: any) => { return <Todo item={item} /> }}
         renderEmptyDate={emptyDate}

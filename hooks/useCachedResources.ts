@@ -42,6 +42,8 @@ export default function useCachedResources() {
           require('../assets/images/medicine/method/external.png'),
           require('../assets/images/medicine/method/oral.png'),
           require('../assets/images/medicine/method/injection.png'),
+          require('../assets/images/tutorial/tutorial1.png'),
+          require('../assets/images/tutorial/tutorial2.png'),
         ]);
         
         // Load fonts
