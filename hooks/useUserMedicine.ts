@@ -44,17 +44,16 @@ export default async function useUserMedicine() {
       }
 
       return {
-        // todo
-        trackingName: "Medicine",
+        trackingName: medicine.customName === "" ? "Medicine" : medicine.customName,
         medicineId: medicine.identifier === null ? "" : medicine.identifier,
         medicineName: medicine.name,
         instruction: medicine.identifier,
-        image: "",
+        image: require('../assets/images/pills/pill2.png'),
         frequency: {
           type: frequencyType as "day" | "week" | "month" | "dayOfWeek",
           value: frequencyValue,
         },
-        reminders: (medicine.dosageSetting.time as Array<string>).map((value: string) => new Date(0, 0, 0, parseInt(value.split(":")[0]), parseInt(value.split(":")[1]))),
+        reminders: (medicine.dosageSetting.time as Array<string>).map((value: string) => new Date(`1970-01-01T${value}.000Z`)),
         startDate: new Date(`${medicine.dosageSetting.startDate}`),
         endDate: new Date(`${medicine.dosageSetting.endDate}`)
       }

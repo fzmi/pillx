@@ -19,6 +19,7 @@ import AddTabNavigator from '../navigation/AddTabNavigator';
 import DataTabNavigator from '../navigation/DataTabNavigator';
 import EditScreen from '../screens/medicine/edit/EditScreen';
 import SettingsScreen from '../screens/profile/SettingsScreen';
+import DetailScreen from '../screens/profile/DetailScreen';
 
 const BottomTab = createBottomTabNavigator<BottomTabParamList>();
 
@@ -26,7 +27,7 @@ const BottomTab = createBottomTabNavigator<BottomTabParamList>();
 export default function BottomTabNavigator() {
   const colorScheme = useColorScheme();
   const [user, setUser] = useState({
-    userInfo: { name: '', email: '', trackings: [] as Array<Tracking> },
+    userInfo: { name: '', email: '', dateOfBirth: '', gender: '', allergies: '', trackings: [] as Array<Tracking> },
     isLoading: true
   } as any);
 
@@ -41,6 +42,9 @@ export default function BottomTabNavigator() {
           ...user.userInfo,
           name: userData?.fullName,
           email: userData?.email,
+          dateOfBirth: userData?.dateOfBirth === null ? "" : userData?.dateOfBirth,
+          gender: userData?.gender,
+          allergies: userData?.allergies,
           trackings: trackings,
         },
         isLoading: false,
@@ -123,6 +127,8 @@ function ProfileNavigator() {
         options={{ headerTitle: 'Profile', headerLargeTitle: true }} />
       <ProfileStack.Screen name="SettingsScreen" component={SettingsScreen}
         options={{ headerTitle: 'Settings' }} />
+      <ProfileStack.Screen name="DetailScreen" component={DetailScreen}
+        options={{ headerTitle: 'Edit Detail' }} />
     </ProfileStack.Navigator>
   );
 }

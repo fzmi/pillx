@@ -6,6 +6,9 @@ const UserContext = React.createContext({
   userInfo: {
     name: '',
     email: '',
+    dateOfBirth: '',
+    gender: '',
+    allergies: '',
     trackings: [] as Array<Tracking>,
   },
   setUserInfo: (data: any) => {},

@@ -9,7 +9,7 @@ import Colors from '../../constants/Colors';
 import useColorScheme from '../../hooks/useColorScheme';
 import Layout from '../../constants/Layout';
 
-export default function SettingsScreen({ navigation }: StackScreenProps<ProfileParamList, 'ProfileScreen'>) {
+export default function SettingsScreen({ navigation }: StackScreenProps<ProfileParamList, 'SettingsScreen'>) {
   const colorScheme = useColorScheme();
   const [isEnabled, setIsEnabled] = useState(false);
   const toggleSwitch = () => setIsEnabled((previousState: any) => !previousState);

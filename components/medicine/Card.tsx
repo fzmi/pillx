@@ -17,14 +17,13 @@ const Card: React.FC<Props> = ({ tracking, index }) => {
   const colorScheme = useColorScheme();
 
   // Tracking information
-  const imageUri = require('../../assets/images/pills/pill2.png');
+  const imageUri = tracking.image as number;
   const trackingName = tracking.trackingName ? tracking.trackingName : "Medicine";
   const medicineName = (tracking.medicineName && tracking.medicineName !== "null") ? tracking.medicineName : "";
   const progress = Math.max(0.08, ((new Date()).getTime() - tracking.startDate.getTime()) /
     (tracking.endDate!.getTime() - tracking.startDate.getTime()));
   const progressPercentage = `${progress * 100}%`;
   const remaining = `${timeSince(tracking.startDate, tracking.endDate!)} remaining`;
-  const reminders = [new Date()];
   const frequency = tracking.frequency;
   const days: { [key: number]: string; } = { 1: "Mon", 2: "Tue", 3: "Wed", 4: "Thu", 5: "Fri", 6: "Sat", 7: "Sun" };
 

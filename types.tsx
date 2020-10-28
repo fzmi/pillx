@@ -79,7 +79,10 @@ export type MedicineParamList = {
 export type ProfileParamList = {
   ProfileScreen: undefined;
   SettingsScreen: undefined;
-  DetailScreen: undefined;
+  DetailScreen: {
+    item: string,
+    itemName: string,
+  };
   Tutorial: undefined;
 };
 
