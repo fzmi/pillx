@@ -25,7 +25,7 @@ const ScanResultModal: React.FC<Props> = ({ modalVisible, setModalVisible, camer
           <Text style={styles.modalText}>Select Medicine</Text>
           <AddContext.Consumer>
             {({ addInfo, setAddInfo }) => (
-              <View style={{ alignItems: 'center', width: "100%" }}>
+              <View style={{ alignItems: 'center', width: "100%", height: "100%" }}>
                 {addInfo.imageUri != '' && (
                   <Image style={{ width: 100, height: 100, marginVertical: 15 }} source={{ uri: addInfo.imageUri }} />
                 )}
@@ -37,7 +37,7 @@ const ScanResultModal: React.FC<Props> = ({ modalVisible, setModalVisible, camer
                         onPress={() => {
                           setAddInfo({ ...addInfo, medicineName: result.name, medicineId: result.id });
                           setModalVisible(!modalVisible);
-                          navigation.navigate("ManualInputScreen");
+                          navigation.navigate("ManualStep1Screen");
                         }}>
                         <View style={{ flexDirection: "row", justifyContent: "space-between", alignItems: "center" }}>
                           <View>
@@ -57,7 +57,7 @@ const ScanResultModal: React.FC<Props> = ({ modalVisible, setModalVisible, camer
                     onPress={() => {
                       setAddInfo({ ...addInfo, medicineName: "" });
                       setModalVisible(!modalVisible);
-                      navigation.navigate("ManualInputScreen");
+                      navigation.navigate("ManualStep1Screen");
                     }}>
                     <View style={{ width: "100%", flexDirection: "row", justifyContent: "space-between", alignItems: "center" }}>
                       <Text style={{ fontSize: 20, marginRight: 10 }}>Add medicine manually</Text>

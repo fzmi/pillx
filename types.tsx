@@ -82,9 +82,29 @@ export type ProfileParamList = {
 };
 
 // Root stack -> Button Tab -> Medicine -> Add
-export type AddTabParamList = {
-  ScanInputScreen: undefined;
-  ManualInputScreen: undefined;
+export type AddStackParamList = {
+  ScanInput: {
+    headerHeight: any;
+  };
+  ManualStep1Screen: {
+    styles: any;
+  };
+  ManualStep2Screen: {
+    styles: any;
+  };
+  ManualStep3Screen: {
+    styles: any;
+  };
+}
+
+// Root stack -> Button Tab -> Medicine -> Add -> Scan
+export type ScanInputTabParamList = {
+  AustRScanScreen: {
+    headerHeight: any;
+  };
+  BarcodeScanScreen: {
+    headerHeight: any;
+  };
 }
 
 // Root stack -> Button Tab -> Medicine -> Data
