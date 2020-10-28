@@ -26,20 +26,20 @@ export default function DetailScreen({ navigation, route }: StackScreenProps<Pro
       setUserInfo({
         ...userInfo,
         [item]: value,
-      })
+      });
     }
   }, []);
 
   return (
     <ScrollView style={{ backgroundColor: Colors[colorScheme].profileBackgroundOuter }}>
       <View style={[styles.buttonGroup, { backgroundColor: Colors[colorScheme].profileBackgroundInner }]}>
-        <Text style={{fontSize: 18, fontWeight: "600", marginBottom: 5}}>{itemName}</Text>
+        <Text style={{ fontSize: 18, fontWeight: "600", marginBottom: 5 }}>{itemName}</Text>
         <View style={styles.fieldTextInput}>
-        <TextInput value={value} editable clearButtonMode={"while-editing"}
-          onChangeText={text => {
-            setValue(text);
-          }} style={{ fontSize: 20 }} />
-          </View>
+          <TextInput value={value} editable clearButtonMode={"while-editing"} placeholder={"Not Set"}
+            onChangeText={text => {
+              setValue(text);
+            }} style={{ fontSize: 20 }} />
+        </View>
       </View>
     </ScrollView>
   )

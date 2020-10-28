@@ -1,6 +1,6 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { View, Text } from '../../../components/Themed';
-import { TouchableOpacity, StyleSheet, Image } from 'react-native';
+import { TouchableOpacity, StyleSheet, Image, ScrollView } from 'react-native';
 import useColorScheme from '../../../hooks/useColorScheme';
 import { StackScreenProps } from '@react-navigation/stack';
 import { DataTabParamList } from '../../../types';
@@ -18,6 +18,42 @@ export default function EffectScreen({ route, navigation }: StackScreenProps<Dat
   // use this medicine id to get information
   const { medicineId } = route.params;
 
+  const [medicineData, setMedicineData] = useState<any>(null);
+
+  const getMedicine = async () => {
+    return fetch(`https://deco3801-rever.uqcloud.net/medicine/get?identifier=${medicineId}`, {
+      method: "POST",
+      headers: {
+        Accept: "application/json",
+      },
+    })
+      .then(response => response.json())
+      .then(result => {
+        if (!result) {
+          throw "No medicine found";
+        }
+        return result;
+      })
+      .catch(error => {
+        // showMessage({
+        //   message: "Search Error",
+        //   description: "No medicine found.",
+        //   type: "danger",
+        //   icon: "danger",
+        //   duration: 2500,
+        // });
+        console.log(error);
+      });
+  }
+
+  useEffect(() => {
+    (async () => {
+      const info = await getMedicine();
+      setMedicineData(info);
+    })();
+    return () => { }
+  }, []);
+
   React.useLayoutEffect(() => {
     navigation.setOptions({
       headerTitle: "Data Visualisation",
@@ -25,47 +61,51 @@ export default function EffectScreen({ route, navigation }: StackScreenProps<Dat
   }, [navigation]);
 
   return (
-  <View style={styles.container}>      
-    <View style={styles.content}>
-      <Image style={styles.pillImage} source={require("../../../assets/images/pills/pill1.png")}></Image>
-      <View style={styles.textContent}>
-        <Text style={styles.pillTitle}>Fish and Omega</Text>
-        <Text>Everyday</Text>
+    <View style={styles.container}>
+      <View style={styles.content}>
+        <Image style={styles.pillImage} source={require("../../../assets/images/pills/pill1.png")}></Image>
+        <View style={styles.textContent}>
+          <ScrollView>
+            {medicineData && (<>
+              <Text style={styles.pillTitle}>{medicineData.name}</Text>
+              <Text style={{ marginHorizontal: 25 }}>{medicineData.description}</Text>
+            </>)}
+          </ScrollView>
+        </View>
       </View>
+
+      <View
+        style={{
+          borderTopColor: '#F4F4F4',
+          borderTopWidth: 1,
+          marginVertical: 10,
+        }} />
+
+      <View style={styles.content}>
+        <Image style={styles.contentImage} source={require("../../../assets/images/medicine/effect/effect1.png")}></Image>
+      </View>
+
     </View>
-    
-    <View
-      style={{
-        borderTopColor: '#F4F4F4',
-        borderTopWidth: 1,
-        marginVertical: 10,
-      }} />
-      
-    <View style={styles.content}>
-      <Image style={styles.contentImage} source={require("../../../assets/images/medicine/effect/effect1.png")}></Image>
-    </View>
-    
-  </View>
   )
 }
 
 const styles = StyleSheet.create({
   container: {
     flexDirection: "column",
-    flex:1,
+    flex: 1,
   },
   content: {
     flex: 1,
     justifyContent: 'center',
     alignSelf: 'center',
-    alignContent:'center', 
-    alignItems: 'center', 
+    alignContent: 'center',
+    alignItems: 'center',
   },
   textContent: {
     justifyContent: 'center',
     alignSelf: 'center',
-    alignContent:'center', 
-    alignItems: 'center', 
+    alignContent: 'center',
+    alignItems: 'center',
   },
   contentImage: {
     flex: 1,
@@ -83,6 +123,9 @@ const styles = StyleSheet.create({
   pillTitle: {
     fontWeight: 'bold',
     fontSize: 20,
+    marginHorizontal: 25,
+    textAlign: "center",
+    marginVertical: 10,
   },
   pillFrequency: {
     fontSize: 15,
