@@ -41,17 +41,17 @@ const Todo: React.FC<Props> = props => {
         <View style={[styles.item, { height: props.item.height }, { backgroundColor: taken ? 'white' : '#A9A9A9' }]}>
           <View style={styles.content}>
             <View style={{ backgroundColor: "transparent" }}>
-              <View style={{ flexDirection: "row", backgroundColor: "transparent" }}>
-                <Text style={{ fontSize: 24, fontWeight: "bold", marginBottom: 4 }}>{props.item.trackingName}</Text>
-                <TouchableOpacity style={{ flex: 1, marginLeft: 3, display: "flex", alignItems: "center", justifyContent: "center" }}>
-                  <Ionicons name="ios-information-circle" size={25} color="#333" />
+              <View style={{ flexDirection: "row", backgroundColor: "transparent"}}>
+                <TouchableOpacity style={{ flex: 1, flexDirection:"row", alignItems: "flex-start" }}>
+                  <Ionicons name="ios-information-circle" size={30} color="#333" />
+                  <Text style={{ fontSize: 24, fontWeight: "bold", marginBottom: 4, marginLeft:13}}>{props.item.trackingName}</Text>
                 </TouchableOpacity>
+                <Image style={styles.pillImage} source={props.item.image} />
               </View>
 
               <Text style={{ fontSize: 18, marginBottom: 10, color: "#444" }}><Entypo name="clock" size={16} color={"#333"} />&nbsp;&nbsp;{props.item.description}</Text>
-              {/* <Text style={{ fontSize: 16, color: "#333" }}>{props.item.image}</Text> */}
             </View>
-            <Image style={styles.pillImage} source={isNaN(props.item.image) ? { uri: props.item.image } : props.item.image} />
+
           </View>
           <View style={{ display: "flex", flexDirection: "row", backgroundColor: "transparent" }}>
 
@@ -123,5 +123,8 @@ const styles = StyleSheet.create({
     maxHeight: 60,
     borderRadius: 5,
     marginRight: 5,
+    flex:1,
+    resizeMode: "contain"
+
   },
 });

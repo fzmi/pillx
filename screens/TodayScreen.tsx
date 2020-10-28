@@ -3,30 +3,40 @@ import { ActivityIndicator, DevSettings, StyleSheet } from 'react-native';
 import { Text, View } from '../components/Themed';
 import { Calendar, Agenda, CalendarList } from 'react-native-calendars';
 import { StackScreenProps } from '@react-navigation/stack';
+import Card from '../components/medicine/Card';
 
-import { TodayParamList } from '../types';
+import { TodayParamList, Tracking } from '../types';
 import Colors from '../constants/Colors';
 import useColorScheme from '../hooks/useColorScheme';
 import Todo from '../components/today/Todo';
 import UserContext from '../hooks/useUserContext';
 import { Ionicons } from '@expo/vector-icons';
 import AsyncStorage from '@react-native-community/async-storage';
+import { SafeAreaView } from 'react-native-safe-area-context';
 
 export default function TodayScreen({ navigation }: StackScreenProps<TodayParamList, 'TodayScreen'>) {
   const colorScheme = useColorScheme();
   const { userInfo, isLoading, setUserInfo } = React.useContext(UserContext);
   const [data, setData] = useState({});
 
+
+
   useEffect(() => {
     const today = new Date().toISOString().slice(0, 10);
     fetchDosages(today);
 
-    // todo: remove dummy data
+    // {userInfo.trackings.map((tracking: Tracking) => {
+    //   setData({[today]: [{trackingName:tracking.trackingName, medicineId: tracking.medicineId, medicineName:tracking.medicineName, time: new Date(), taken:true}]});
+    // })};
+
     setData({
       [today]: [
-        { trackingName: "Med 1", medicineId: "12345", medicineName: "Medicine 1", time: new Date(), taken: true },
-        // { trackingName: "Med 2", medicineId: "12345", medicineName: "Medicine 2", time: new Date(), taken: false },
-        { trackingName: "Med 3", medicineId: "67890", medicineName: "Medicine 3", time: new Date(), taken: false }]
+        { trackingName: "Panadol", medicineId: "21432", medicineName: "Panadol", time: new Date(), 
+        taken: true, description:"One tablet every four to six hours", image: require("../assets/images/pills/pill1.png")},
+        { trackingName: "Nurofen", medicineId: "94821", medicineName: "Nurofen", time: new Date(), 
+        taken: false, description:"Two tablet every four to six hours", image: require("../assets/images/pills/pill2.png") },
+        { trackingName: "Voltaren", medicineId: "67890", medicineName: "Voltaren", time: new Date(), 
+        taken: false, description:"Three tablet every four to six hours",image: require("../assets/images/pills/pill3.png") }]
     });
   }, []);
 
@@ -85,7 +95,18 @@ export default function TodayScreen({ navigation }: StackScreenProps<TodayParamL
         }}
         
         items={data}
-        renderItem={(item: any, firstItemInDay: any) => { return <Todo item={item} /> }}
+        // items={userInfo.trackings}
+
+        renderItem={(item: any, firstItemInDay: any) => { 
+          return <Todo item={item} /> 
+          // return <Text>{userInfo.trackings.length}</Text>
+          // {userInfo.trackings.map((tracking: Tracking) =>
+          //   return <Todo item={userInfo.trackings} /> 
+
+          // )}
+        return <Text>{userInfo.trackings} hellow!</Text> 
+
+        }}
         renderEmptyDate={emptyDate}
         markedDates={{
           '2020-10-03': { marked: true, selectedColor: '#724ea3' },
@@ -94,6 +115,7 @@ export default function TodayScreen({ navigation }: StackScreenProps<TodayParamL
         renderDay={(day: any, item: any) => { return (<View style={{ marginRight: 20 }} />); }}
       />
         )}
+
       {/* <CalendarList
         // Enable horizontal scrolling, default = false
         horizontal={true}
@@ -102,7 +124,12 @@ export default function TodayScreen({ navigation }: StackScreenProps<TodayParamL
         onDayPress={(day: any) => { console.log('selected day', day) }}
         hideArrows={false}
       /> */}
-    </View>
+      {/* {userInfo.trackings.map((tracking: Tracking, index: number) =>
+          // <Card key={index} tracking={tracking} cardColor='#ccc' progress={0.3} date="3 months" />
+          <Card key={index} tracking={tracking} index={index + 1} />
+      )} */}
+    </View>   
+
   );
 }
 

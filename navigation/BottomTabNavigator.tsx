@@ -73,7 +73,6 @@ export default function BottomTabNavigator() {
             <Ionicons name="md-calendar" color={color} size={focused ? 36 : 30} style={{ marginBottom: -3 }} />,
           tabBarBadge: user.userInfo.trackings ? (user.userInfo.trackings.length == 0 ? undefined : user.userInfo.trackings.length) : undefined,
         }} />
-
         <BottomTab.Screen name="Medicine" component={MedicineNavigator} options={{
           tabBarIcon: ({ color, focused }) =>
             <MaterialCommunityIcons name="pill" color={color} size={focused ? 36 : 30} style={{ marginBottom: -3 }} />,

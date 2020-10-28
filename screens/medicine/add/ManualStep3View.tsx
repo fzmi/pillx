@@ -89,9 +89,9 @@ const ManualStep3View: React.FC<Props> = ({ styles, setStep, navigation }) => {
       })
       .then(response => response.text())
       .then(result => {
-        if ((result as string).includes("Failure")) {
-          throw "Invalid dosage";
-        }
+        // if ((result as string).includes("Failure")) {
+        //   throw "Invalid dosage";
+        // }
         try {
           // save update locally
           const tracking: Tracking = {
