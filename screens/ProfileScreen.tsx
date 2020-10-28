@@ -81,6 +81,8 @@ export default function ProfileScreen({ navigation }: StackScreenProps<ProfilePa
 
         <View style={styles.buttonSeparator} lightColor="#eee" darkColor="rgba(255,255,255,0.1)" />
 
+        <View style={styles.buttonSeparator} lightColor="#eee" darkColor="rgba(255,255,255,0.1)" />
+
         <TouchableOpacity onPress={() => { navigation.navigate("Tutorial") }} style={styles.buttonItem}>
           <View style={[styles.buttonItemLeft, { backgroundColor: Colors[colorScheme].profileBackgroundInner }]}>
             <Ionicons name="md-help-circle" style={styles.buttonIcon} size={30} color={Colors[colorScheme].settingIcon} />

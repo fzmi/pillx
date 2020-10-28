@@ -1,16 +1,17 @@
 import React from 'react';
-import { Image, StyleSheet, TouchableOpacity, TextInput } from 'react-native';
+import { Image, StyleSheet, TouchableOpacity, TextInput, useColorScheme } from 'react-native';
 import { Text, View, ScrollView } from '../../components/Themed';
 import { StackScreenProps } from '@react-navigation/stack';
 import AuthContext from '../../hooks/useAuthContext';
 import Layout from '../../constants/Layout';
+import Colors from '../../constants/Colors';
 import { PublicStackParamList } from '../../types';
 
 export default function SignInScreen({ navigation }: StackScreenProps<PublicStackParamList, 'SignInScreen'>) {
   const [email, setEmail] = React.useState('');
   const [password, setPassword] = React.useState('');
   const textInput2 = React.useRef<TextInput>(null!);
-
+  const colorScheme = useColorScheme();
   const { signIn } = React.useContext(AuthContext);
 
   return (
@@ -21,6 +22,9 @@ export default function SignInScreen({ navigation }: StackScreenProps<PublicStac
           <Image style={styles.logo} source={require("../../assets/images/icons/logo.png")} />
         </View>
         <Text style={styles.title}>Sign In</Text>
+        <View style={{marginTop: 5, marginBottom: 5, paddingVertical: 10}}>
+            <Text style={styles.alertText}>Notice: PillX can not replace doctor's advice!</Text>
+        </View>
         <View style={styles.inputArea}>
           <TextInput
             autoCorrect={false}
@@ -57,6 +61,11 @@ export default function SignInScreen({ navigation }: StackScreenProps<PublicStac
           <TouchableOpacity onPress={() => navigation.navigate('RecoverScreen')} style={{marginTop: 5, marginBottom: 5, paddingVertical: 10}}>
             <Text style={styles.linkText}>Forgot password?</Text>
           </TouchableOpacity>
+
+          <TouchableOpacity onPress={() => { navigation.navigate("Tutorial") }} style={{marginTop: 5, marginBottom: 5, paddingVertical: 10}}>
+            <Text style={styles.linkText}>User Manual</Text>
+          </TouchableOpacity>
+
         </View>
       </View>
     </ScrollView>
@@ -64,6 +73,12 @@ export default function SignInScreen({ navigation }: StackScreenProps<PublicStac
 }
 
 const styles = StyleSheet.create({
+  alertText: {
+    fontSize: 15,
+    color: '#724ea3',
+    textAlign: 'center',
+    fontWeight: 'bold',
+  },
   buttonContainer: {
     backgroundColor: '#724ea3',
     paddingVertical: 15,

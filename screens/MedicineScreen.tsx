@@ -54,10 +54,15 @@ export default function MedicineScreen({ navigation }: StackScreenProps<Medicine
         {!isLoading && (!userInfo.trackings || !userInfo.trackings.length) && (
           <View style={{ flex: 1, alignItems: "center", justifyContent: "center", paddingHorizontal: 30 }}>
             <Text style={{ fontSize: 26, textAlign: "center", fontWeight: "600" }}>No Medicine Trackings</Text>
-            <Text style={{ marginVertical: 12, marginBottom: 20, fontSize: 16, textAlign: "center" }}>Tap the button below or on the top-right to add a new tracking.</Text>
+            <Text style={{ marginVertical: 12, marginBottom: 20, fontSize: 16, textAlign: "center" }}>Tap the button below or on the top-right to add a new tracking.
+            </Text>
             <TouchableOpacity style={{ paddingVertical: 12, paddingHorizontal: 30, backgroundColor: Colors[colorScheme].buttonBlue, borderRadius: 20 }}
               onPress={() => { navigation.navigate("Add"); }}>
               <Text style={{ color: "white", fontSize: 18, fontWeight: "600" }}>New Medicine Tracking</Text>
+            </TouchableOpacity>
+            <TouchableOpacity style={{ paddingVertical: 12, paddingHorizontal: 30, marginVertical:10, backgroundColor: Colors[colorScheme].buttonBlue, borderRadius: 20 }}
+              onPress={() => { navigation.navigate("Tutorial"); }}>
+              <Text style={{ color: "white", fontSize: 18, fontWeight: "600" }}>Tutorial</Text>
             </TouchableOpacity>
           </View>
         )}

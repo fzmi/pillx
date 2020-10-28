@@ -1,17 +1,20 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useContext } from 'react';
 import { Alert, Button, StyleSheet, TouchableOpacity, Image } from 'react-native';
 import { View, Text } from '../Themed';
 import { Entypo, Ionicons } from '@expo/vector-icons';
 import Colors from '../../constants/Colors';
+import UserContext from '../../hooks/useUserContext';
 import useColorScheme from '../../hooks/useColorScheme';
 import * as Haptics from 'expo-haptics';
 
 interface Props {
-  item: any;
+  item: any,
+  // tracking: Tracking
 }
 
 const Todo: React.FC<Props> = props => {
   const colorScheme = useColorScheme();
+  const { userInfo, isLoading } = useContext(UserContext);
   const [taken, setTaken] = useState(false);
 
   useEffect(() => {
@@ -56,6 +59,10 @@ const Todo: React.FC<Props> = props => {
               // backgroundColor: Colors[colorScheme].buttonBlue, 
               backgroundColor: taken ? (Colors[colorScheme].buttonBlue) : ("#696969"),
               padding: 10, borderRadius: 20, flex: 3, margin: 5, display: "flex", flexDirection: "row", justifyContent: "center", alignItems: "center"
+            }} 
+            onPress={() => {
+              Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
+              taken ? (takenAlert()) : (takenCancelAlert())
             }}>
               <Ionicons name="ios-checkmark-circle" size={30} color={"white"} />
 
