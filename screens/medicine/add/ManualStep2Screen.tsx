@@ -2,19 +2,17 @@ import React, { useContext, useState } from 'react';
 import { TouchableOpacity } from 'react-native';
 import { ScrollView, Text, View } from '../../../components/Themed';
 import { AntDesign, Entypo } from '@expo/vector-icons';
+import { StackScreenProps } from '@react-navigation/stack';
 
+import { AddStackParamList, Tracking } from '../../../types';
 import Colors from '../../../constants/Colors';
 import useColorScheme from '../../../hooks/useColorScheme';
 import StepIndicator from '../../../components/medicine/add/StepIndicator';
 import AddContext from '../../../hooks/useAddContext';
 import DateTimePickerModal from "react-native-modal-datetime-picker";
 
-interface Props {
-  styles: any;
-  setStep: React.Dispatch<React.SetStateAction<number>>;
-}
-
-const ManualStep2View: React.FC<Props> = ({ styles, setStep }) => {
+export default function ManualStep2Screen({ navigation, route }: StackScreenProps<AddStackParamList, 'ManualStep1Screen'>) {
+  const { styles } = route.params;
   const colorScheme = useColorScheme();
   const { addInfo, setAddInfo } = useContext(AddContext);
 
@@ -23,6 +21,7 @@ const ManualStep2View: React.FC<Props> = ({ styles, setStep }) => {
 
   const handleConfirm = (date: Date) => {
     date.setSeconds(0);
+    date.setMilliseconds(0);
     setReminders((array: Array<Date>) => [...array, date]);
     setShowReminderModal(false);
   };
@@ -64,13 +63,17 @@ const ManualStep2View: React.FC<Props> = ({ styles, setStep }) => {
           </View>
 
           <TouchableOpacity onPress={() => {
-            setStep(3);
+            setAddInfo({
+              ...addInfo,
+              reminders: reminders,
+            });
+            navigation.navigate("ManualStep3Screen", { styles: styles });
           }} style={styles.buttonContainer}>
             <Text style={styles.buttonText}>Next Step</Text>
             <Entypo name="chevron-thin-right" size={24} color="#000" />
           </TouchableOpacity>
 
-          <TouchableOpacity onPress={() => { setStep(1); }} style={styles.backButtonContainer}>
+          <TouchableOpacity onPress={() => { navigation.goBack() }} style={styles.backButtonContainer}>
             <Entypo name="chevron-thin-left" size={24} color="white" />
             <Text style={styles.backButtonText}>Previous Step</Text>
           </TouchableOpacity>
@@ -91,5 +94,3 @@ const ManualStep2View: React.FC<Props> = ({ styles, setStep }) => {
 }
 
 // styles are defined in ManualInputScreen
-
-export default ManualStep2View;

@@ -60,9 +60,9 @@ export default function MedicineScreen({ navigation }: StackScreenProps<Medicine
               onPress={() => { navigation.navigate("Add"); }}>
               <Text style={{ color: "white", fontSize: 18, fontWeight: "600" }}>New Medicine Tracking</Text>
             </TouchableOpacity>
-            <TouchableOpacity style={{ paddingVertical: 12, paddingHorizontal: 30, marginVertical:10, backgroundColor: Colors[colorScheme].buttonBlue, borderRadius: 20 }}
+            <TouchableOpacity style={{ paddingVertical: 12, paddingHorizontal: 30, marginVertical: 10, backgroundColor: Colors[colorScheme].buttonBlue, borderRadius: 20 }}
               onPress={() => { navigation.navigate("Tutorial"); }}>
-              <Text style={{ color: "white", fontSize: 18, fontWeight: "600" }}>Tutorial</Text>
+              <Text style={{ color: "white", fontSize: 18, fontWeight: "600" }}>How to Use</Text>
             </TouchableOpacity>
           </View>
         )}

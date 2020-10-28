@@ -4,12 +4,12 @@ import { ScrollView, Text, View } from '../../../components/Themed';
 
 import { AntDesign, Entypo } from '@expo/vector-icons';
 import { StackActions } from '@react-navigation/native';
-import { StackNavigationProp } from '@react-navigation/stack';
+import { StackNavigationProp, StackScreenProps } from '@react-navigation/stack';
 import { showMessage } from "react-native-flash-message";
 import { TouchableWithoutFeedback } from 'react-native-gesture-handler';
 import AsyncStorage from '@react-native-community/async-storage';
 
-import { AddTabParamList, Tracking } from '../../../types';
+import { AddStackParamList, Tracking } from '../../../types';
 import { schedulePushNotification } from '../../../components/Notification';
 import Colors from '../../../constants/Colors';
 import useColorScheme from '../../../hooks/useColorScheme';
@@ -19,13 +19,8 @@ import * as Haptics from 'expo-haptics';
 
 import UserContext from '../../../hooks/useUserContext';
 
-interface Props {
-  styles: any;
-  setStep: React.Dispatch<React.SetStateAction<number>>;
-  navigation: StackNavigationProp<AddTabParamList, "ManualInputScreen">;
-}
-
-const ManualStep3View: React.FC<Props> = ({ styles, setStep, navigation }) => {
+export default function ManualStep3Screen({ navigation, route }: StackScreenProps<AddStackParamList, 'ManualStep1Screen'>) {
+  const { styles } = route.params;
   const colorScheme = useColorScheme();
   const { addInfo, setAddInfo } = useContext(AddContext);
   const { userInfo, setUserInfo, isLoading } = useContext(UserContext);
@@ -53,9 +48,10 @@ const ManualStep3View: React.FC<Props> = ({ styles, setStep, navigation }) => {
     const medicineId = addInfo.medicineId;
     const email = userInfo.email;
     const reminders = addInfo.reminders;
+    const trackingName = addInfo.trackingName;
 
     // log update to server
-    await fetch(`https://deco3801-rever.uqcloud.net/user/medicine/add?email=${email}&identifier=${medicineId}`, {
+    await fetch(`https://deco3801-rever.uqcloud.net/user/medicine/add?email=${email}&identifier=${medicineId}&customName=${trackingName}`, {
       method: "POST",
     })
       .then(response => response.text())
@@ -70,7 +66,7 @@ const ManualStep3View: React.FC<Props> = ({ styles, setStep, navigation }) => {
             (addInfo.frequency.value as Array<number>).includes(index + 1) ? !value : value);
           return fetch(`https://deco3801-rever.uqcloud.net/user/medicine/dosage/add/weekdays?email=${email}` +
             `&identifier=${medicineId}&startDate=${startDate.toISOString().split('T')[0]}` +
-            `&endDate=${endDate.toISOString().split('T')[0]}&time=${startDate.toISOString().split('T')[1]}` +
+            `&endDate=${endDate.toISOString().split('T')[0]}&time=${reminders.map(reminder => reminder.toISOString().split("T")[1]).join(",")}` +
             `&weekdays=${weekdays}`, {
             method: "POST",
           })
@@ -80,7 +76,7 @@ const ManualStep3View: React.FC<Props> = ({ styles, setStep, navigation }) => {
           const intervalType = addInfo.frequency.type.toUpperCase() + "S";
           const url = `https://deco3801-rever.uqcloud.net/user/medicine/dosage/add/interval?email=${email}` +
             `&identifier=${medicineId}&startDate=${startDate.toISOString().split('T')[0]}` +
-            `&endDate=${endDate.toISOString().split('T')[0]}&time=${startDate.toISOString().split('T')[1]}` +
+            `&endDate=${endDate.toISOString().split('T')[0]}&time=${reminders.map(reminder => reminder.toISOString().split("T")[1]).join(",")}` +
             `&intervalType=${intervalType}&interval=${addInfo.frequency.value}`;
           return fetch(url, {
             method: "POST",
@@ -122,7 +118,9 @@ const ManualStep3View: React.FC<Props> = ({ styles, setStep, navigation }) => {
       })
       .then(() => {
         Haptics.notificationAsync(Haptics.NotificationFeedbackType.Success);
-        navigation.dispatch(StackActions.popToTop());
+        // navigation.popToTop();
+        // navigation.goBack();
+        navigation.dangerouslyGetParent()?.goBack();
       })
       .catch(error => {
         showMessage({
@@ -177,7 +175,7 @@ const ManualStep3View: React.FC<Props> = ({ styles, setStep, navigation }) => {
             <AntDesign name="plus" size={24} color="#000" />
           </TouchableOpacity>
 
-          <TouchableOpacity onPress={() => { setStep(2); }} style={styles.backButtonContainer}>
+          <TouchableOpacity onPress={() => { navigation.goBack() }} style={styles.backButtonContainer}>
             <Entypo name="chevron-thin-left" size={24} color="white" />
             <Text style={styles.backButtonText}>Previous Step</Text>
           </TouchableOpacity>
@@ -188,5 +186,3 @@ const ManualStep3View: React.FC<Props> = ({ styles, setStep, navigation }) => {
 }
 
 // styles are defined in ManualInputScreen
-
-export default ManualStep3View;

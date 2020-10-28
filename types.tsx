@@ -72,19 +72,41 @@ export type MedicineParamList = {
   EditScreen: {
     medicineId: any;
   };
+  Tutorial: undefined;
 };
 
 // Root stack -> Button Tab -> Profile
 export type ProfileParamList = {
   ProfileScreen: undefined;
   SettingsScreen: undefined;
+  DetailScreen: undefined;
   Tutorial: undefined;
 };
 
 // Root stack -> Button Tab -> Medicine -> Add
-export type AddTabParamList = {
-  ScanInputScreen: undefined;
-  ManualInputScreen: undefined;
+export type AddStackParamList = {
+  ScanInput: {
+    headerHeight: any;
+  };
+  ManualStep1Screen: {
+    styles: any;
+  };
+  ManualStep2Screen: {
+    styles: any;
+  };
+  ManualStep3Screen: {
+    styles: any;
+  };
+}
+
+// Root stack -> Button Tab -> Medicine -> Add -> Scan
+export type ScanInputTabParamList = {
+  AustRScanScreen: {
+    headerHeight: any;
+  };
+  BarcodeScanScreen: {
+    headerHeight: any;
+  };
 }
 
 // Root stack -> Button Tab -> Medicine -> Data

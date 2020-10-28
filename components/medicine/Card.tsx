@@ -57,7 +57,7 @@ const Card: React.FC<Props> = ({ tracking, index }) => {
         </View>
         <View style={styles.infoContainer}>
           <MaterialCommunityIcons name="bell-ring-outline" size={25} color="black" />
-          <Text style={styles.infoText}>{tracking.reminders.map(reminder => reminder.toISOString().split("T")[1]).join(",")}</Text>
+          <Text style={styles.infoText}>{tracking.reminders.map(reminder => reminder.toLocaleTimeString([], { hour: 'numeric', minute: '2-digit' })).join(", ")}</Text>
         </View>
 
         <View style={[styles.separator, { marginTop: 10 }]}></View>

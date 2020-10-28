@@ -29,7 +29,7 @@ export default function ProfileScreen({ navigation }: StackScreenProps<ProfilePa
 
       {/* Details */}
       <View style={[styles.buttonGroup, { backgroundColor: Colors[colorScheme].profileBackgroundInner }]}>
-        <TouchableOpacity onPress={() => { }} style={styles.buttonItem}>
+        <TouchableOpacity onPress={() => { navigation.navigate("DetailScreen"); }} style={styles.buttonItem}>
           <View style={[styles.buttonItemLeft, { backgroundColor: Colors[colorScheme].profileBackgroundInner }]}>
             <Image style={styles.buttonImage} source={require("../assets/images/profile/Name.png")} />
             <Text style={styles.buttonTextLeft}>Name</Text>
@@ -40,7 +40,7 @@ export default function ProfileScreen({ navigation }: StackScreenProps<ProfilePa
 
         <View style={styles.buttonSeparator} lightColor="#eee" darkColor="rgba(255,255,255,0.1)" />
 
-        <TouchableOpacity onPress={() => { }} style={styles.buttonItem}>
+        <TouchableOpacity onPress={() => { navigation.navigate("DetailScreen"); }} style={styles.buttonItem}>
           <View style={[styles.buttonItemLeft, { backgroundColor: Colors[colorScheme].profileBackgroundInner }]}>
             <Image style={styles.buttonImage} source={require("../assets/images/profile/DOB.png")} />
             <Text style={styles.buttonTextLeft}>DOB</Text>
@@ -50,7 +50,7 @@ export default function ProfileScreen({ navigation }: StackScreenProps<ProfilePa
 
         <View style={styles.buttonSeparator} lightColor="#eee" darkColor="rgba(255,255,255,0.1)" />
 
-        <TouchableOpacity onPress={() => { }} style={styles.buttonItem}>
+        <TouchableOpacity onPress={() => { navigation.navigate("DetailScreen"); }} style={styles.buttonItem}>
           <View style={[styles.buttonItemLeft, { backgroundColor: Colors[colorScheme].profileBackgroundInner }]}>
             <Image style={styles.buttonImage} source={require("../assets/images/profile/Gender.png")} />
             <Text style={styles.buttonTextLeft}>Gender</Text>
@@ -60,7 +60,7 @@ export default function ProfileScreen({ navigation }: StackScreenProps<ProfilePa
 
         <View style={styles.buttonSeparator} lightColor="#eee" darkColor="rgba(255,255,255,0.1)" />
 
-        <TouchableOpacity onPress={() => { }} style={styles.buttonItem}>
+        <TouchableOpacity onPress={() => { navigation.navigate("DetailScreen"); }} style={styles.buttonItem}>
           <View style={[styles.buttonItemLeft, { backgroundColor: Colors[colorScheme].profileBackgroundInner }]}>
             <Image style={styles.buttonImage} source={require("../assets/images/profile/Allergen.png")} />
             <Text style={styles.buttonTextLeft}>Allergies</Text>

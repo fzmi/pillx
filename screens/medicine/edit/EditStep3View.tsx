@@ -48,9 +48,10 @@ const EditStep3View: React.FC<Props> = ({ styles, setStep, navigation }) => {
     }
     const medicineId = addInfo.medicineId;
     const email = userInfo.email;
+    const trackingName = addInfo.trackingName;
 
     // log update to server
-    await fetch(`https://deco3801-rever.uqcloud.net/user/medicine/add?email=${email}&identifier=${medicineId}`, {
+    await fetch(`https://deco3801-rever.uqcloud.net/user/medicine/add?email=${email}&identifier=${medicineId}&customName=${trackingName}`, {
       method: "POST",
     })
       .then(response => response.text())
