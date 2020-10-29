@@ -40,9 +40,16 @@ export default function TutorialScreen({ navigation }:
           <Image style={styles.tutorialImage} source={require("../../assets/images/tutorial/tutorial2.png")} />
         </View>
 
-        <View style={[styles.cardStyle]}>
-          <Text style={styles.tutorialText}>PillX aims to help patients to better understand their existing medication provided by doctor. 
-          It does not provide users with any diagnosis and medical advices. Please seek help from your doctor for any inqury about medicines.</Text>
+        <View style={styles.cardStyle}>
+          <Image style={styles.tutorialImage} source={require("../../assets/images/tutorial/tutorial3.png")} />
+        </View>
+
+        <View style={styles.cardStyle}>
+          <Image style={styles.tutorialImage} source={require("../../assets/images/tutorial/tutorial4.png")} />
+        </View>
+
+        <View style={styles.cardStyle}>
+          <Image style={styles.tutorialImage} source={require("../../assets/images/tutorial/tutorial5.png")} />
         </View>
 
       </ScrollView>
