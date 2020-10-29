@@ -20,6 +20,9 @@ export default function EffectScreen({ route, navigation }: StackScreenProps<Dat
 
   const [medicineData, setMedicineData] = useState<any>(null);
 
+  const [effect, setEffect] = useState<string>("");
+
+
   const getMedicine = async () => {
     return fetch(`https://deco3801-rever.uqcloud.net/medicine/get?identifier=${medicineId}`, {
       method: "POST",
@@ -50,9 +53,11 @@ export default function EffectScreen({ route, navigation }: StackScreenProps<Dat
     (async () => {
       const info = await getMedicine();
       setMedicineData(info);
+      setEffect(medicineData.actionSites)
     })();
     return () => { }
   }, []);
+
 
   React.useLayoutEffect(() => {
     navigation.setOptions({
@@ -84,7 +89,14 @@ export default function EffectScreen({ route, navigation }: StackScreenProps<Dat
         }} />
 
       <View style={styles.content}>
-        <Image style={styles.contentImage} source={require("../../../assets/images/medicine/effect/effect1.png")}></Image>
+        {effect == "HEART" ?
+        <Image style={styles.contentImage} source={require("../../../assets/images/medicine/effect/heart.png")}></Image> :
+        effect == "PANCREAS" ?
+        <Image style={styles.contentImage} source={require("../../../assets/images/medicine/effect/pancreas.png")}></Image> :
+        effect == "AREA_APPLIED" ?
+        <Image style={styles.contentImage} source={require("../../../assets/images/medicine/effect/skin.png")}></Image> :
+        <Image style={styles.contentImage} source={require("../../../assets/images/medicine/effect/head.png")}></Image>
+        }
       </View>
     </View>
   )
