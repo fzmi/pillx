@@ -38,10 +38,28 @@ const Todo: React.FC<Props> = props => {
   return (
     <View style={{ backgroundColor: "transparent" }}>
       {taken ? (
-        <View style={[styles.item, { height: props.item.height }, { backgroundColor: taken ? 'white' : '#A9A9A9' }]}>
+        <TouchableOpacity
+        style={[styles.item, { height: props.item.height }, { backgroundColor:'#E4E4E4'}]}
+        onPress={() => {
+          Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
+          taken ? (takenAlert()) : (takenCancelAlert())
+        }}>
+        <View style={styles.content}>
+          <View style={{ backgroundColor: "transparent", flexDirection: "row", flex: 1 }}>
+            <View style={{ flexDirection: "row", backgroundColor: "transparent", flex: 1 }}>
+              <Text style={{ fontSize: 24, fontWeight: "bold", marginBottom: 4 }}>{props.item.trackingName}</Text>
+            </View>
+            <Ionicons name="ios-checkmark-circle" size={30} color={Colors[colorScheme].buttonBlue} />
+
+          </View>
+        </View>
+      </TouchableOpacity>
+
+      ) : (
+        <View style={[styles.item, { height: props.item.height }, { backgroundColor: taken ?  '#A9A9A9' : 'white'  }]}>
           <View style={styles.content}>
-            <View style={{ backgroundColor: "transparent" }}>
-              <View style={{ flexDirection: "row", backgroundColor: "transparent"}}>
+            <View style={{ backgroundColor: "transparent", flex: 1}}>
+              <View style={{ flexDirection: "row", backgroundColor: "transparent", flex: 1}}>
                 <TouchableOpacity style={{ flex: 1, flexDirection:"row", alignItems: "flex-start" }}>
                   <Ionicons name="ios-information-circle" size={30} color="#333" />
                   <Text style={{ fontSize: 24, fontWeight: "bold", marginBottom: 4, marginLeft:13}}>{props.item.trackingName}</Text>
@@ -50,6 +68,7 @@ const Todo: React.FC<Props> = props => {
               </View>
 
               <Text style={{ fontSize: 18, marginBottom: 10, color: "#444" }}><Entypo name="clock" size={16} color={"#333"} />&nbsp;&nbsp;{props.item.description}</Text>
+
             </View>
 
           </View>
@@ -57,7 +76,7 @@ const Todo: React.FC<Props> = props => {
 
             <TouchableOpacity style={{
               // backgroundColor: Colors[colorScheme].buttonBlue, 
-              backgroundColor: taken ? (Colors[colorScheme].buttonBlue) : ("#696969"),
+              backgroundColor: Colors[colorScheme].buttonBlue,
               padding: 10, borderRadius: 20, flex: 3, margin: 5, display: "flex", flexDirection: "row", justifyContent: "center", alignItems: "center"
             }} 
             onPress={() => {
@@ -67,7 +86,7 @@ const Todo: React.FC<Props> = props => {
               <Ionicons name="ios-checkmark-circle" size={30} color={"white"} />
 
               <Text style={{ fontSize: 20, color: "#fff", marginLeft: 10, fontWeight: "500" }}>
-                {taken ? ("Take") : ("Already Taken")}
+                Take
               </Text>
 
             </TouchableOpacity>
@@ -75,23 +94,7 @@ const Todo: React.FC<Props> = props => {
 
           </View>
         </View>
-      ) : (
-          <TouchableOpacity
-            style={[styles.item, { height: props.item.height }, { backgroundColor: taken ? 'white' : '#E4E4E4' }]}
-            onPress={() => {
-              Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
-              taken ? (takenAlert()) : (takenCancelAlert())
-            }}>
-            <View style={styles.content}>
-              <View style={{ backgroundColor: "transparent", flexDirection: "row", flex: 1 }}>
-                <View style={{ flexDirection: "row", backgroundColor: "transparent", flex: 1 }}>
-                  <Text style={{ fontSize: 24, fontWeight: "bold", marginBottom: 4 }}>{props.item.trackingName}</Text>
-                </View>
-                <Ionicons name="ios-checkmark-circle" size={30} color={Colors[colorScheme].buttonBlue} />
-
-              </View>
-            </View>
-          </TouchableOpacity>
+          
         )}
     </View>
   )
