@@ -16,7 +16,7 @@ import useColorScheme from '../../../hooks/useColorScheme';
 import StepIndicator from '../../../components/medicine/add/StepIndicator';
 import AddContext from '../../../hooks/useAddContext';
 import * as Haptics from 'expo-haptics';
-
+import useTodayreminders from '../../../hooks/useTodayReminders';
 import UserContext from '../../../hooks/useUserContext';
 
 export default function ManualStep3Screen({ navigation, route }: StackScreenProps<AddStackParamList, 'ManualStep1Screen'>) {
@@ -103,7 +103,7 @@ export default function ManualStep3Screen({ navigation, route }: StackScreenProp
           setUserInfo({
             ...userInfo,
             trackings: [...userInfo.trackings, tracking],
-          })
+          });
         } catch (error) {
           throw "Cannot save medicine locally";
         }
@@ -114,8 +114,16 @@ export default function ManualStep3Screen({ navigation, route }: StackScreenProp
           icon: "success",
           duration: 3000,
         })
+        // return useTodayreminders(new Date().toISOString().slice(0, 10));
         return schedulePushNotification();
       })
+      // .then((dosages) => {
+      //   setUserInfo({
+      //     ...userInfo,
+      //     todayReminders: dosages,
+      //   });
+      //   return schedulePushNotification();
+      // })
       .then(() => {
         Haptics.notificationAsync(Haptics.NotificationFeedbackType.Success);
         // navigation.popToTop();

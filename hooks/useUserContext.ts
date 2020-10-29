@@ -10,6 +10,7 @@ const UserContext = React.createContext({
     gender: '',
     allergies: '',
     trackings: [] as Array<Tracking>,
+    todayReminders: [] as Array<any>,
   },
   setUserInfo: (data: any) => {},
   isLoading: true,

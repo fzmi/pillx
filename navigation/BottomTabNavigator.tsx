@@ -20,6 +20,7 @@ import DataTabNavigator from '../navigation/DataTabNavigator';
 import EditScreen from '../screens/medicine/edit/EditScreen';
 import SettingsScreen from '../screens/profile/SettingsScreen';
 import DetailScreen from '../screens/profile/DetailScreen';
+import useTodayReminders from '../hooks/useTodayReminders';
 
 const BottomTab = createBottomTabNavigator<BottomTabParamList>();
 
@@ -27,7 +28,7 @@ const BottomTab = createBottomTabNavigator<BottomTabParamList>();
 export default function BottomTabNavigator() {
   const colorScheme = useColorScheme();
   const [user, setUser] = useState({
-    userInfo: { name: '', email: '', dateOfBirth: '', gender: '', allergies: '', trackings: [] as Array<Tracking> },
+    userInfo: { name: '', email: '', dateOfBirth: '', gender: '', allergies: '', trackings: [] as Array<Tracking>, todayReminders: [] as Array<any>, },
     isLoading: true
   } as any);
 
@@ -36,6 +37,7 @@ export default function BottomTabNavigator() {
     (async () => {
       const userData = await useUserData();
       const trackings = await useUserMedicine();
+      const todayReminders = await useTodayReminders(new Date().toISOString().slice(0, 10));
       setUser({
         ...user,
         userInfo: {
@@ -46,6 +48,7 @@ export default function BottomTabNavigator() {
           gender: userData?.gender,
           allergies: userData?.allergies,
           trackings: trackings,
+          todayReminders: todayReminders as Array<any>,
         },
         isLoading: false,
       });
@@ -75,7 +78,7 @@ export default function BottomTabNavigator() {
           // https://icons.expo.fyi/
           tabBarIcon: ({ color, focused }) =>
             <Ionicons name="md-calendar" color={color} size={focused ? 36 : 30} style={{ marginBottom: -3 }} />,
-          tabBarBadge: user.userInfo.trackings ? (user.userInfo.trackings.length == 0 ? undefined : user.userInfo.trackings.length) : undefined,
+          tabBarBadge: user.userInfo.todayReminders.length === 0 ? undefined : user.userInfo.todayReminders.length,
         }} />
         <BottomTab.Screen name="Medicine" component={MedicineNavigator} options={{
           tabBarIcon: ({ color, focused }) =>

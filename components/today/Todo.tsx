@@ -35,73 +35,68 @@ const Todo: React.FC<Props> = props => {
       { cancelable: false },
     );
 
-    function formatDate(string){
-      var options = { year: 'numeric', month: 'long', day: 'numeric' };
-      return new Date(string).toLocaleDateString([],options);
-  }
-
   return (
     <View style={{ backgroundColor: "transparent" }}>
       {taken ? (
         <TouchableOpacity
-        style={[styles.item, { height: props.item.height }, { backgroundColor:'#E4E4E4'}]}
-        onPress={() => {
-          Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
-          taken ? (takenAlert()) : (takenCancelAlert())
-        }}>
-        <View style={styles.content}>
-          <View style={{ backgroundColor: "transparent", flexDirection: "row", flex: 1 }}>
-            <View style={{ flexDirection: "row", backgroundColor: "transparent", flex: 1 }}>
-              <Text style={{ fontSize: 24, fontWeight: "bold", marginBottom: 4 }}>{props.item.trackingName}</Text>
-            </View>
-            <Ionicons name="ios-checkmark-circle" size={30} color={Colors[colorScheme].buttonBlue} />
+          style={[styles.item, { height: props.item.height }, { backgroundColor: '#E4E4E4' }]}
+          onPress={() => {
+            Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
+            taken ? (takenAlert()) : (takenCancelAlert())
+          }}>
+          <View style={styles.content}>
+            <View style={{ backgroundColor: "transparent", flexDirection: "row", flex: 1 }}>
+              <View style={{ flexDirection: "row", backgroundColor: "transparent", flex: 1 }}>
+                <Text style={{ fontSize: 24, fontWeight: "bold", marginBottom: 4 }}>{props.item.trackingName}</Text>
+              </View>
+              <Ionicons name="ios-checkmark-circle" size={30} color={Colors[colorScheme].buttonBlue} />
 
+            </View>
           </View>
-        </View>
-      </TouchableOpacity>
+        </TouchableOpacity>
 
       ) : (
-        <View style={[styles.item, { height: props.item.height }, { backgroundColor: taken ?  '#A9A9A9' : 'white'  }]}>
-          <View style={styles.content}>
-            <View style={{ backgroundColor: "transparent", flex: 1}}>
-              <View style={{ flexDirection: "row", backgroundColor: "transparent", flex: 1}}>
-                <TouchableOpacity style={{ flex: 1, flexDirection:"row", alignItems: "flex-start" }}>
-                  <Ionicons name="ios-information-circle" size={30} color="#333" />
-                  <Text style={{ fontSize: 24, fontWeight: "bold", marginBottom: 4, marginLeft:13}}>{props.item.trackingName}</Text>
-                </TouchableOpacity>
-                <Image style={styles.pillImage} source={props.item.image} />
+          <View style={[styles.item, { height: props.item.height }, { backgroundColor: taken ? '#A9A9A9' : 'white' }]}>
+            <View style={styles.content}>
+              <View style={{ backgroundColor: "transparent", flex: 1 }}>
+                <View style={{ flexDirection: "row", backgroundColor: "transparent", flex: 1 }}>
+                  <TouchableOpacity style={{ flex: 1, flexDirection: "row", alignItems: "flex-start" }}>
+                    <Ionicons name="ios-information-circle" size={30} color="#333" />
+                    <Text style={{ fontSize: 24, fontWeight: "bold", marginBottom: 4, marginLeft: 13 }}>{props.item.trackingName}</Text>
+                  </TouchableOpacity>
+                  <Image style={styles.pillImage} source={props.item.image} />
+                </View>
+
+                <Text style={{ fontSize: 18, marginBottom: 10, color: "#444" }}><Entypo name="clock" size={16} color={"#333"} />&nbsp;&nbsp;{props.item.time.toLocaleTimeString([], { hour: 'numeric', minute: '2-digit' })}</Text>
+                <Text style={{ fontSize: 18, color: "#444" }}>{props.item.description}</Text>
+
+
               </View>
 
-              <Text style={{ fontSize: 18, marginBottom: 10, color: "#444" }}><Entypo name="clock" size={16} color={"#333"} />&nbsp;&nbsp;{props.item.time.toString()}</Text>
-              <Text style={{ fontSize: 18, color: "#444" }}>{props.item.description}</Text>
-
-
             </View>
+            <View style={{ display: "flex", flexDirection: "row", backgroundColor: "transparent" }}>
 
-          </View>
-          <View style={{ display: "flex", flexDirection: "row", backgroundColor: "transparent" }}>
+              <TouchableOpacity style={{
+                // backgroundColor: Colors[colorScheme].buttonBlue, 
+                backgroundColor: Colors[colorScheme].buttonBlue,
+                padding: 10, borderRadius: 20, flex: 3, margin: 5, display: "flex", flexDirection: "row", justifyContent: "center", alignItems: "center"
+              }}
+                onPress={() => {
+                  Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
+                  taken ? (takenAlert()) : (takenCancelAlert())
+                }}>
+                <Ionicons name="ios-checkmark-circle" size={30} color={"white"} />
 
-            <TouchableOpacity style={{
-              // backgroundColor: Colors[colorScheme].buttonBlue, 
-              backgroundColor: Colors[colorScheme].buttonBlue,
-              padding: 10, borderRadius: 20, flex: 3, margin: 5, display: "flex", flexDirection: "row", justifyContent: "center", alignItems: "center"
-            }} 
-            onPress={() => {
-              Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
-              taken ? (takenAlert()) : (takenCancelAlert())
-            }}>
-              <Ionicons name="ios-checkmark-circle" size={30} color={"white"} />
-
-              <Text style={{ fontSize: 20, color: "#fff", marginLeft: 10, fontWeight: "500" }}>
-                Take
+                <Text style={{ fontSize: 20, color: "#fff", marginLeft: 10, fontWeight: "500" }}>
+                  Take
               </Text>
 
-            </TouchableOpacity>
-            {/* <TouchableOpacity style={{ borderColor: "#333", borderWidth: 1, borderRadius: 5, flex: 1, margin: 5, display: "flex", alignItems: "center", justifyContent: "center" }}> */}
+              </TouchableOpacity>
+              {/* <TouchableOpacity style={{ borderColor: "#333", borderWidth: 1, borderRadius: 5, flex: 1, margin: 5, display: "flex", alignItems: "center", justifyContent: "center" }}> */}
 
+            </View>
           </View>
-        </View>
-          
+
         )}
     </View>
   )
@@ -133,7 +128,7 @@ const styles = StyleSheet.create({
     maxHeight: 60,
     borderRadius: 5,
     marginRight: 5,
-    flex:1,
+    flex: 1,
     resizeMode: "contain"
 
   },

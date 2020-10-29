@@ -13,6 +13,7 @@ import UserContext from '../hooks/useUserContext';
 import { Ionicons } from '@expo/vector-icons';
 import AsyncStorage from '@react-native-community/async-storage';
 import { useFocusEffect } from '@react-navigation/native';
+import useTodayreminders from '../hooks/useTodayReminders';
 import { SafeAreaView } from 'react-native-safe-area-context';
 
 export default function TodayScreen({ navigation }: StackScreenProps<TodayParamList, 'TodayScreen'>) {
@@ -24,46 +25,36 @@ export default function TodayScreen({ navigation }: StackScreenProps<TodayParamL
     useCallback(() => {
       (async () => {
         const today = new Date().toISOString().slice(0, 10);
-        const dosages = await fetchDosages(today);
-        let data = [] as Array<any>;
-
-        dosages.map((medicine: any) => {
-          data = data.concat(medicine.times.map((reminder: any) => ({
-            trackingName: medicine.medicine.customName,
-            medicineName: medicine.medicine.name,
-            medicineId: medicine.medicine.identifier,
-            time: new Date(reminder.time),
-            taken: reminder.taken,
-            description: medicine.medicine.dosageDescription,
-            image: require("../assets/images/pills/pill1.png")
-          })));
-        });
-
+        const dosages = await useTodayreminders(today);
         setData({
-          [today]: data,
-        })
+          [today]: dosages,
+        });
+        // setUserInfo({
+        //   ...userInfo,
+        //   todayReminders: dosages,
+        // });
       })();
     }, [])
   );
 
   // Get the dosages for a certain day
-  const fetchDosages = async (isoDate: string) => {
-    const userToken = await AsyncStorage.getItem('userToken');
-    return fetch(`https://deco3801-rever.uqcloud.net/user/medicine/getAllOnDate?email=${userToken}&onDate=${isoDate}`, {
-      method: 'GET',
-      headers: {
-        Accept: "application/json",
-        'Content-Type': 'application/json',
-      }
-    })
-      .then(response => response.json())
-      .then(data => {
-        return data;
-      })
-      .catch(error => {
-        console.log(error);
-      })
-  }
+  // const fetchDosages = async (isoDate: string) => {
+  //   const userToken = await AsyncStorage.getItem('userToken');
+  //   return fetch(`https://deco3801-rever.uqcloud.net/user/medicine/getAllOnDate?email=${userToken}&onDate=${isoDate}`, {
+  //     method: 'GET',
+  //     headers: {
+  //       Accept: "application/json",
+  //       'Content-Type': 'application/json',
+  //     }
+  //   })
+  //     .then(response => response.json())
+  //     .then(data => {
+  //       return data;
+  //     })
+  //     .catch(error => {
+  //       console.log(error);
+  //     })
+  // }
 
   useLayoutEffect(() => {
     navigation.setOptions({
