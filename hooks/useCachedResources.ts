@@ -36,14 +36,18 @@ export default function useCachedResources() {
           require('../assets/images/pills/pill1.png'),
           require('../assets/images/pills/pill2.png'),
           require('../assets/images/pills/pill3.png'),
-          require('../assets/images/medicine/effect/effect1.png'),
-          require('../assets/images/medicine/effect/effect2.png'),
-          require('../assets/images/medicine/effect/effect3.png'),
-          require('../assets/images/medicine/method/external.png'),
+          require('../assets/images/medicine/effect/head.png'),
+          require('../assets/images/medicine/effect/heart.png'),
+          require('../assets/images/medicine/effect/pancreas.png'),
+          require('../assets/images/medicine/effect/skin.png'),
           require('../assets/images/medicine/method/oral.png'),
+          require('../assets/images/medicine/method/external.png'),
           require('../assets/images/medicine/method/injection.png'),
           require('../assets/images/tutorial/tutorial1.png'),
           require('../assets/images/tutorial/tutorial2.png'),
+          require('../assets/images/tutorial/tutorial3.png'),
+          require('../assets/images/tutorial/tutorial4.png'),
+          require('../assets/images/tutorial/tutorial5.png'),
         ]);
         
         // Load fonts

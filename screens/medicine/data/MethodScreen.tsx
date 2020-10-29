@@ -15,7 +15,7 @@ export default function MethodScreen({ route, navigation }: StackScreenProps<Dat
   const [medicineData, setMedicineData] = useState<any>(null);
 
   const [method, setMethod] = useState<string>("");
-
+  
   const getMedicine = async () => {
     return fetch(`https://deco3801-rever.uqcloud.net/medicine/get?identifier=${medicineId}`, {
       method: "POST",
