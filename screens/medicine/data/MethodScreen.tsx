@@ -55,8 +55,8 @@ export default function MethodScreen({ route, navigation }: StackScreenProps<Dat
         <View style={styles.textContent}>
           {medicineData && (<>
             <Text style={styles.pillTitle}>{medicineData.name}</Text>
-            <Text>{medicineData.dosageDescription}</Text>
-            <Text>{medicineData.administrationMethod.join(",")}</Text>
+            <Text style={{ fontSize: 18, marginVertical: 10 }}>{medicineData.dosageDescription}</Text>
+            <Text style={{ fontSize: 22, fontWeight: "700" }}>{medicineData.administrationMethod.join(",")}</Text>
           </>)}
         </View>
       </View>
@@ -106,7 +106,7 @@ const styles = StyleSheet.create({
   },
   pillTitle: {
     fontWeight: 'bold',
-    fontSize: 20,
+    fontSize: 24,
     marginHorizontal: 25,
     textAlign: "center",
     marginVertical: 10,

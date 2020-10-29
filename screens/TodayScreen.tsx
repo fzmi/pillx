@@ -23,7 +23,7 @@ export default function TodayScreen({ navigation }: StackScreenProps<TodayParamL
 
   useEffect(() => {
     const today = new Date().toISOString().slice(0, 10);
-    fetchDosages(today);
+    const data = fetchDosages(today);
 
     // {userInfo.trackings.map((tracking: Tracking) => {
     //   setData({[today]: [{trackingName:tracking.trackingName, medicineId: tracking.medicineId, medicineName:tracking.medicineName, time: new Date(), taken:true}]});
@@ -52,7 +52,7 @@ export default function TodayScreen({ navigation }: StackScreenProps<TodayParamL
     })
       .then(response => response.json())
       .then(data => {
-        console.log(data);
+        return data;
       })
       .catch(error => {
         console.log(error);

@@ -63,15 +63,17 @@ export default function EffectScreen({ route, navigation }: StackScreenProps<Dat
   return (
     <View style={styles.container}>
       <View style={styles.content}>
-        <Image style={styles.pillImage} source={require("../../../assets/images/pills/pill1.png")}></Image>
-        <View style={styles.textContent}>
-          <ScrollView>
+        <ScrollView>
+          <Image style={styles.pillImage} source={require("../../../assets/images/pills/pill1.png")}></Image>
+          <View style={styles.textContent}>
+
             {medicineData && (<>
               <Text style={styles.pillTitle}>{medicineData.name}</Text>
-              <Text style={{ marginHorizontal: 25 }}>{medicineData.description}</Text>
+              <Text style={{ marginHorizontal: 25, fontSize: 18 }}>{medicineData.description}</Text>
             </>)}
-          </ScrollView>
-        </View>
+
+          </View>
+        </ScrollView>
       </View>
 
       <View
@@ -84,7 +86,6 @@ export default function EffectScreen({ route, navigation }: StackScreenProps<Dat
       <View style={styles.content}>
         <Image style={styles.contentImage} source={require("../../../assets/images/medicine/effect/effect1.png")}></Image>
       </View>
-
     </View>
   )
 }
@@ -122,7 +123,7 @@ const styles = StyleSheet.create({
   },
   pillTitle: {
     fontWeight: 'bold',
-    fontSize: 20,
+    fontSize: 24,
     marginHorizontal: 25,
     textAlign: "center",
     marginVertical: 10,
