@@ -14,6 +14,8 @@ export default function MethodScreen({ route, navigation }: StackScreenProps<Dat
 
   const [medicineData, setMedicineData] = useState<any>(null);
 
+  const [method, setMethod] = useState<string>("");
+
   const getMedicine = async () => {
     return fetch(`https://deco3801-rever.uqcloud.net/medicine/get?identifier=${medicineId}`, {
       method: "POST",
@@ -44,6 +46,7 @@ export default function MethodScreen({ route, navigation }: StackScreenProps<Dat
     (async () => {
       const info = await getMedicine();
       setMedicineData(info);
+      setMethod(medicineData.administrationMethod);
     })();
     return () => { }
   }, []);
@@ -68,7 +71,11 @@ export default function MethodScreen({ route, navigation }: StackScreenProps<Dat
           marginVertical: 10,
         }} />
       <View style={styles.content}>
-        <Image style={styles.contentImage} source={require("../../../assets/images/medicine/method/external.png")}></Image>
+        {method == "ORAL" ? 
+        <Image style={styles.contentImage} source={require("../../../assets/images/medicine/method/oral.png")}></Image> :
+        method== "INJECTION" ? 
+         <Image style={styles.contentImage} source={require("../../../assets/images/medicine/method/injection.png")}></Image> :
+         <Image style={styles.contentImage} source={require("../../../assets/images/medicine/method/external.png")}></Image> }
       </View>
     </View>
   )
