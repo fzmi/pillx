@@ -19,25 +19,41 @@ export default function TodayScreen({ navigation }: StackScreenProps<TodayParamL
   const { userInfo, isLoading, setUserInfo } = React.useContext(UserContext);
   const [data, setData] = useState({});
 
-
-
   useEffect(() => {
-    const today = new Date().toISOString().slice(0, 10);
-    const data = fetchDosages(today);
+    (async () => {
+      const today = new Date().toISOString().slice(0, 10);
+      const dosages = await fetchDosages(today);
+      // console.log(dosages);
 
-    // {userInfo.trackings.map((tracking: Tracking) => {
-    //   setData({[today]: [{trackingName:tracking.trackingName, medicineId: tracking.medicineId, medicineName:tracking.medicineName, time: new Date(), taken:true}]});
-    // })};
+      // {userInfo.trackings.map((tracking: Tracking) => {
+      //   setData({[today]: [{trackingName:tracking.trackingName, medicineId: tracking.medicineId, medicineName:tracking.medicineName, time: new Date(), taken:true}]});
+      // })};
 
-    setData({
-      [today]: [
-        { trackingName: "Panadol", medicineId: "21432", medicineName: "Panadol", time: new Date(), 
-        taken: true, description:"One tablet every four to six hours", image: require("../assets/images/pills/pill1.png")},
-        { trackingName: "Nurofen", medicineId: "94821", medicineName: "Nurofen", time: new Date(), 
-        taken: false, description:"Two tablet every four to six hours", image: require("../assets/images/pills/pill2.png") },
-        { trackingName: "Voltaren", medicineId: "67890", medicineName: "Voltaren", time: new Date(), 
-        taken: false, description:"Three tablet every four to six hours",image: require("../assets/images/pills/pill3.png") }]
-    });
+      let data = [];
+
+      dosages.map((medicine: any) => {
+
+      });
+      // {dosages.map((tracking: Tracking) => {
+      //   setData({[today]: [{trackingName:tracking.trackingName, medicineId: tracking.medicineId, medicineName:tracking.medicineName, time: new Date(), taken:true}]});
+      // })};
+
+      setData({
+        [today]: [
+          {
+            trackingName: "Panadol", medicineId: "21432", medicineName: "Panadol", time: new Date(),
+            taken: true, description: "One tablet every four to six hours", image: require("../assets/images/pills/pill1.png")
+          },
+          {
+            trackingName: "Nurofen", medicineId: "94821", medicineName: "Nurofen", time: new Date(),
+            taken: false, description: "Two tablet every four to six hours", image: require("../assets/images/pills/pill2.png")
+          },
+          {
+            trackingName: "Voltaren", medicineId: "67890", medicineName: "Voltaren", time: new Date(),
+            taken: false, description: "Three tablet every four to six hours", image: require("../assets/images/pills/pill3.png")
+          }]
+      });
+    })();
   }, []);
 
   // Get the dosages for a certain day
@@ -93,18 +109,18 @@ export default function TodayScreen({ navigation }: StackScreenProps<TodayParamL
           todayColor: Colors[colorScheme].tint,
           todayTextColor: Colors[colorScheme].tint,
         }}
-        
+
         items={data}
         // items={userInfo.trackings}
 
-        renderItem={(item: any, firstItemInDay: any) => { 
-          return <Todo item={item} /> 
+        renderItem={(item: any, firstItemInDay: any) => {
+          return <Todo item={item} />
           // return <Text>{userInfo.trackings.length}</Text>
           // {userInfo.trackings.map((tracking: Tracking) =>
           //   return <Todo item={userInfo.trackings} /> 
 
           // )}
-        return <Text>{userInfo.trackings} hellow!</Text> 
+          return <Text>{userInfo.trackings} hellow!</Text>
 
         }}
         renderEmptyDate={emptyDate}
@@ -128,7 +144,7 @@ export default function TodayScreen({ navigation }: StackScreenProps<TodayParamL
           // <Card key={index} tracking={tracking} cardColor='#ccc' progress={0.3} date="3 months" />
           <Card key={index} tracking={tracking} index={index + 1} />
       )} */}
-    </View>   
+    </View>
 
   );
 }
