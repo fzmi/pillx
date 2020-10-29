@@ -1,4 +1,4 @@
-import React, { useLayoutEffect, useState, useEffect } from 'react';
+import React, { useLayoutEffect, useState, useEffect, useCallback } from 'react';
 import { ActivityIndicator, DevSettings, StyleSheet } from 'react-native';
 import { Text, View } from '../components/Themed';
 import { Calendar, Agenda, CalendarList } from 'react-native-calendars';
@@ -12,6 +12,7 @@ import Todo from '../components/today/Todo';
 import UserContext from '../hooks/useUserContext';
 import { Ionicons } from '@expo/vector-icons';
 import AsyncStorage from '@react-native-community/async-storage';
+import { useFocusEffect } from '@react-navigation/native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 
 export default function TodayScreen({ navigation }: StackScreenProps<TodayParamList, 'TodayScreen'>) {
@@ -19,45 +20,31 @@ export default function TodayScreen({ navigation }: StackScreenProps<TodayParamL
   const { userInfo, isLoading, setUserInfo } = React.useContext(UserContext);
   const [data, setData] = useState({});
 
-  useEffect(() => {
-    (async () => {
-      const today = new Date().toISOString().slice(0, 10);
-      const dosages = await fetchDosages(today);
-      let data = [] as Array<any>;
+  useFocusEffect(
+    useCallback(() => {
+      (async () => {
+        const today = new Date().toISOString().slice(0, 10);
+        const dosages = await fetchDosages(today);
+        let data = [] as Array<any>;
 
-      dosages.map((medicine: any) => {
-        data = data.concat(medicine.times.map((reminder: any) => ({
-          trackingName: medicine.medicine.customName,
-          medicineName: medicine.medicine.name,
-          medicineId: medicine.medicine.identifier,
-          time: new Date(reminder.time),
-          taken: reminder.taken,
-          description: medicine.medicine.dosageDescription,
-          image: require("../assets/images/pills/pill1.png")
-        })));
-      });
+        dosages.map((medicine: any) => {
+          data = data.concat(medicine.times.map((reminder: any) => ({
+            trackingName: medicine.medicine.customName,
+            medicineName: medicine.medicine.name,
+            medicineId: medicine.medicine.identifier,
+            time: new Date(reminder.time),
+            taken: reminder.taken,
+            description: medicine.medicine.dosageDescription,
+            image: require("../assets/images/pills/pill1.png")
+          })));
+        });
 
-      setData({
-        [today]: data,
-      })
-
-      // setData({
-      //   [today]: [
-      //     {
-      //       trackingName: "Panadol", medicineId: "21432", medicineName: "Panadol", time: new Date(),
-      //       taken: true, description: "One tablet every four to six hours", image: require("../assets/images/pills/pill1.png")
-      //     },
-      //     {
-      //       trackingName: "Nurofen", medicineId: "94821", medicineName: "Nurofen", time: new Date(),
-      //       taken: false, description: "Two tablet every four to six hours", image: require("../assets/images/pills/pill2.png")
-      //     },
-      //     {
-      //       trackingName: "Voltaren", medicineId: "67890", medicineName: "Voltaren", time: new Date(),
-      //       taken: false, description: "Three tablet every four to six hours", image: require("../assets/images/pills/pill3.png")
-      //     }]
-      // });
-    })();
-  }, []);
+        setData({
+          [today]: data,
+        })
+      })();
+    }, [])
+  );
 
   // Get the dosages for a certain day
   const fetchDosages = async (isoDate: string) => {
