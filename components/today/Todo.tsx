@@ -35,6 +35,11 @@ const Todo: React.FC<Props> = props => {
       { cancelable: false },
     );
 
+    function formatDate(string){
+      var options = { year: 'numeric', month: 'long', day: 'numeric' };
+      return new Date(string).toLocaleDateString([],options);
+  }
+
   return (
     <View style={{ backgroundColor: "transparent" }}>
       {taken ? (
@@ -67,7 +72,9 @@ const Todo: React.FC<Props> = props => {
                 <Image style={styles.pillImage} source={props.item.image} />
               </View>
 
-              <Text style={{ fontSize: 18, marginBottom: 10, color: "#444" }}><Entypo name="clock" size={16} color={"#333"} />&nbsp;&nbsp;{props.item.description}</Text>
+              <Text style={{ fontSize: 18, marginBottom: 10, color: "#444" }}><Entypo name="clock" size={16} color={"#333"} />&nbsp;&nbsp;{props.item.time.toString()}</Text>
+              <Text style={{ fontSize: 18, color: "#444" }}>{props.item.description}</Text>
+
 
             </View>
 

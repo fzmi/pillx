@@ -1,10 +1,11 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useCallback } from 'react';
 import { View, Text } from '../../../components/Themed';
 import { TouchableOpacity, StyleSheet, Image, ScrollView } from 'react-native';
 import useColorScheme from '../../../hooks/useColorScheme';
 import { StackScreenProps } from '@react-navigation/stack';
 import { DataTabParamList } from '../../../types';
 import UserContext from '../../../hooks/useUserContext';
+import { useFocusEffect } from '@react-navigation/native';
 
 
 interface Props {
@@ -49,11 +50,18 @@ export default function EffectScreen({ route, navigation }: StackScreenProps<Dat
       });
   }
 
+  useFocusEffect(
+    useCallback(() => {
+      (async () => {
+        setEffect(medicineData.actionSites)
+      })();
+    }, [])
+  );
+
   useEffect(() => {
     (async () => {
       const info = await getMedicine();
       setMedicineData(info);
-      setEffect(medicineData.actionSites)
     })();
     return () => { }
   }, []);
@@ -88,7 +96,7 @@ export default function EffectScreen({ route, navigation }: StackScreenProps<Dat
           marginVertical: 10,
         }} />
 
-      <View style={styles.content}>
+      <View style={styles.content}> 
         {effect == "HEART" ?
         <Image style={styles.contentImage} source={require("../../../assets/images/medicine/effect/heart.png")}></Image> :
         effect == "PANCREAS" ?

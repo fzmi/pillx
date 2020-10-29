@@ -1,9 +1,10 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useCallback } from 'react';
 import { View, Text } from '../../../components/Themed';
 import { TouchableOpacity, StyleSheet, Image } from 'react-native';
 import { StackScreenProps } from '@react-navigation/stack';
 import { DataTabParamList } from '../../../types';
 import UserContext from '../../../hooks/useUserContext';
+import { useFocusEffect } from '@react-navigation/native';
 
 export default function MethodScreen({ route, navigation }: StackScreenProps<DataTabParamList, 'MethodScreen'>) {
   // contains user info
@@ -41,6 +42,15 @@ export default function MethodScreen({ route, navigation }: StackScreenProps<Dat
         console.log(error);
       });
   }
+
+
+  useFocusEffect(
+    useCallback(() => {
+      (async () => {
+        setMethod(medicineData.administrationMethod)
+      })();
+    }, [])
+  );
 
   useEffect(() => {
     (async () => {
