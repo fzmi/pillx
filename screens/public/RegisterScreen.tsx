@@ -82,7 +82,7 @@ export default function RegisterScreen({ navigation }: StackScreenProps<PublicSt
 
 const styles = StyleSheet.create({
   buttonContainer: {
-    backgroundColor: '#2e78b7',
+    backgroundColor: '#724ea3',
     paddingVertical: 15,
     borderRadius: 8,
     marginTop: 20,
@@ -110,7 +110,7 @@ const styles = StyleSheet.create({
   },
   linkText: {
     fontSize: 18,
-    color: '#2e78b7',
+    color: '#724ea3',
     textAlign: 'center',
     fontWeight: 'bold',
     marginTop: 30,
@@ -124,6 +124,6 @@ const styles = StyleSheet.create({
     marginBottom: 30,
     fontSize: 30,
     fontWeight: 'bold',
-    color: '#2e78b7',
+    color: '#724ea3',
   },
 });

@@ -75,7 +75,6 @@ export default function BottomTabNavigator() {
         style: { height: Platform.OS == 'ios' ? 90 : 60, paddingVertical: 0 }
       }}>
         <BottomTab.Screen name="Today" component={TodayNavigator} options={{
-          // https://icons.expo.fyi/
           tabBarIcon: ({ color, focused }) =>
             <Ionicons name="md-calendar" color={color} size={focused ? 36 : 30} style={{ marginBottom: -3 }} />,
           tabBarBadge: user.userInfo.todayReminders.length === 0 ? undefined : user.userInfo.todayReminders.length,
