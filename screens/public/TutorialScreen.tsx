@@ -80,6 +80,7 @@ const styles = StyleSheet.create({
     width: CARD_WIDTH,
     height: CARD_HEIGHT,
     borderRadius: 20,
+    resizeMode: 'contain',
   },
   tutorialText : {
     fontSize: 20,

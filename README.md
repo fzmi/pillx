@@ -1,7 +1,5 @@
 # PillX
-**This project is currently in development.**
-
-PillX with React Native, TypeScript &amp; Expo
+PillX is a medication information and tracking app written in React Native, TypeScript &amp; Expo.
 
 [![runs with expo](https://img.shields.io/badge/Runs%20with%20Expo-000.svg?style=flat-square&logo=EXPO&labelColor=f3f3f3&logoColor=000)](https://expo.io/)
 
